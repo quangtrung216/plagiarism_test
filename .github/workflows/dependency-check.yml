@@ -14,10 +14,22 @@ jobs:
       uses: actions/checkout@v4
 
     # Frontend Dependency Check
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'pnpm'
+        cache-dependency-path: frontend/pnpm-lock.yaml
+
+    - name: Install pnpm
+      uses: pnpm/action-setup@v4
+      with:
+        version: 9
+        run_install: false
+
     - name: Frontend Dependency Check
       working-directory: frontend
       run: |
-        npm install -g pnpm
         pnpm install
         # Using npm audit as an example - you might want to use other tools like Snyk
         # pnpm audit || true  # Continue even if vulnerabilities are found
