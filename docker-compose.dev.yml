@@ -1,0 +1,117 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  db:
+    image: postgres:15-alpine
+    container_name: plagiarism_db_dev
+    restart: always
+    environment:
+      POSTGRES_DB: plagiarism_detection
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - postgres_data_dev:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - plagiarism_network
+
+  # RabbitMQ Message Broker
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: plagiarism_rabbitmq_dev
+    restart: always
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    volumes:
+      - rabbitmq_data_dev:/var/lib/rabbitmq
+    ports:
+      - "5672:5672"  # AMQP protocol port
+      - "15672:15672"  # Management UI port
+    networks:
+      - plagiarism_network
+
+  # Backend API Service
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: plagiarism_backend_dev
+    restart: always
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/plagiarism_detection
+      - SECRET_KEY=your-super-secret-key-change-this-in-production
+      - RABBITMQ_HOST=rabbitmq
+      - RABBITMQ_PORT=5672
+      - RABBITMQ_USER=guest
+      - RABBITMQ_PASSWORD=guest
+      - FILE_PROCESSING_QUEUE=file_processing_queue
+    depends_on:
+      - db
+      - rabbitmq
+    networks:
+      - plagiarism_network
+    volumes:
+      - ./backend:/app
+      - /app/__pycache__
+      - uploads_data_dev:/app/uploads
+    command: python -m uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+
+  # File Processor Service
+  file_processor:
+    build:
+      context: ./file_processor
+      dockerfile: Dockerfile
+    container_name: plagiarism_file_processor_dev
+    restart: always
+    environment:
+      - RABBITMQ_HOST=rabbitmq
+      - RABBITMQ_PORT=5672
+      - RABBITMQ_USER=guest
+      - RABBITMQ_PASSWORD=guest
+      - FILE_PROCESSING_QUEUE=file_processing_queue
+      - PREFETCH_COUNT=1
+      - UPLOAD_DIR=/app/backend/uploads
+    depends_on:
+      - rabbitmq
+    networks:
+      - plagiarism_network
+    volumes:
+      - ./file_processor:/app
+      - /app/__pycache__
+      - uploads_data_dev:/app/backend/uploads
+
+  # Frontend Service
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: plagiarism_frontend_dev
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+    depends_on:
+      - backend
+    networks:
+      - plagiarism_network
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    command: pnpm dev
+
+# Volumes
+volumes:
+  postgres_data_dev:
+  rabbitmq_data_dev:
+  uploads_data_dev:
+
+# Networks
+networks:
+  plagiarism_network:
+    driver: bridge

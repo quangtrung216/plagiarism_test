@@ -1,0 +1,50 @@
+repos:
+  # Black for Python code formatting
+  - repo: https://github.com/psf/black
+    rev: 23.12.1
+    hooks:
+      - id: black
+        name: black
+        entry: black
+        language: system
+        types: [python]
+        exclude: ^(frontend/|docs/)
+
+  # Flake8 for Python linting
+  - repo: https://github.com/pycqa/flake8
+    rev: 6.1.0
+    hooks:
+      - id: flake8
+        name: flake8
+        entry: flake8
+        language: system
+        types: [python]
+        exclude: ^(frontend/|docs/)
+        args: [--config=setup.cfg]
+
+  # Prettier for code formatting
+  - repo: local
+    hooks:
+      - id: prettier
+        name: prettier
+        entry: scripts/prettier-check.bat
+        language: script
+        types: [javascript, jsx, ts, tsx, css, scss, html, json, yaml, markdown]
+        files: ^frontend/
+        pass_filenames: false
+  # ESLint for JavaScript/TypeScript linting
+  - repo: local
+    hooks:
+      - id: eslint
+        name: eslint
+        entry: scripts/eslint-check.bat
+        language: script
+        files: ^frontend/.*\.(js|jsx|ts|tsx)$
+        pass_filenames: false
+  # Commit message validation
+  - repo: https://github.com/compilerla/conventional-pre-commit
+    rev: v3.1.0
+    hooks:
+      - id: conventional-pre-commit
+        stages: [commit-msg]
+        args: []

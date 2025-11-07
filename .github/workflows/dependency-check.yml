@@ -1,0 +1,43 @@
+name: Dependency Security Check
+
+on:
+  schedule:
+    - cron: '0 2 * * 1'  # Run every Monday at 2 AM UTC
+  workflow_dispatch:
+
+jobs:
+  security-check:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    # Frontend Dependency Check
+    - name: Frontend Dependency Check
+      working-directory: frontend
+      run: |
+        npm install -g pnpm
+        pnpm install
+        # Using npm audit as an example - you might want to use other tools like Snyk
+        # pnpm audit || true  # Continue even if vulnerabilities are found
+
+    # Backend Dependency Check
+    - name: Backend Dependency Check
+      working-directory: backend
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        # Using pip-audit to check for known vulnerabilities
+        pip install pip-audit
+        pip-audit || true  # Continue even if vulnerabilities are found
+
+    # File Processor Dependency Check
+    - name: File Processor Dependency Check
+      working-directory: file_processor
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        # Using pip-audit to check for known vulnerabilities
+        pip install pip-audit
+        pip-audit || true  # Continue even if vulnerabilities are found
