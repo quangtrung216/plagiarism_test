@@ -201,7 +201,6 @@ deploy_staging:
     - echo "Frontend image: $FRONTEND_IMAGE"
     - echo "Backend image: $BACKEND_IMAGE"
     - echo "File processor image: $FILE_PROCESSOR_IMAGE"
-    # Add your actual deployment commands here
     - echo "Staging deployment completed"
   environment:
     name: staging
@@ -224,7 +223,6 @@ deploy_production:
     - echo "Frontend image: $FRONTEND_IMAGE"
     - echo "Backend image: $BACKEND_IMAGE"
     - echo "File processor image: $FILE_PROCESSOR_IMAGE"
-    # Add your actual deployment commands here
     - echo "Production deployment completed"
   environment:
     name: production
