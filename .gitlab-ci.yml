@@ -1,0 +1,234 @@
+# GitLab CI/CD Pipeline for Plagiarism Detection Application
+
+stages:
+  - code_quality
+  - build
+  - docker_build
+  - deploy
+
+variables:
+  DOCKER_DRIVER: overlay2
+  DOCKER_TLS_CERTDIR: "/certs"
+  FRONTEND_IMAGE: $CI_REGISTRY_IMAGE/frontend:$CI_COMMIT_SHORT_SHA
+  BACKEND_IMAGE: $CI_REGISTRY_IMAGE/backend:$CI_COMMIT_SHORT_SHA
+  FILE_PROCESSOR_IMAGE: $CI_REGISTRY_IMAGE/file_processor:$CI_COMMIT_SHORT_SHA
+
+# Code Quality Jobs
+code_quality_frontend:
+  stage: code_quality
+  image: node:20
+  cache:
+    key: frontend-pnpm
+    paths:
+      - frontend/node_modules/
+  before_script:
+    - cd frontend
+    - npm install -g pnpm
+    - pnpm install --frozen-lockfile
+  script:
+    - pnpm run lint
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: '$CI_COMMIT_BRANCH == "main" || $CI_COMMIT_BRANCH == "master"'
+
+code_quality_backend:
+  stage: code_quality
+  image: python:3.11
+  cache:
+    key: backend-pip
+    paths:
+      - backend/.cache/pip/
+  before_script:
+    - cd backend
+    - python -m pip install --upgrade pip
+    - pip install -r requirements.txt
+    - pip install flake8 black
+  script:
+    - flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+    - black --check .
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: '$CI_COMMIT_BRANCH == "main" || $CI_COMMIT_BRANCH == "master"'
+
+code_quality_file_processor:
+  stage: code_quality
+  image: python:3.11
+  cache:
+    key: file-processor-pip
+    paths:
+      - file_processor/.cache/pip/
+  before_script:
+    - cd file_processor
+    - python -m pip install --upgrade pip
+    - pip install -r requirements.txt
+    - pip install flake8 black
+  script:
+    - flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+    - black --check .
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: '$CI_COMMIT_BRANCH == "main" || $CI_COMMIT_BRANCH == "master"'
+
+# Build Jobs
+build_frontend:
+  stage: build
+  image: node:20
+  needs:
+    - code_quality_frontend
+  cache:
+    key: frontend-pnpm
+    paths:
+      - frontend/node_modules/
+  before_script:
+    - cd frontend
+    - npm install -g pnpm
+    - pnpm install --frozen-lockfile
+  script:
+    - pnpm run build
+  artifacts:
+    paths:
+      - frontend/.next/
+    expire_in: 1 day
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: '$CI_COMMIT_BRANCH == "main" || $CI_COMMIT_BRANCH == "master"'
+
+build_backend:
+  stage: build
+  image: python:3.11
+  needs:
+    - code_quality_backend
+  cache:
+    key: backend-pip
+    paths:
+      - backend/.cache/pip/
+  before_script:
+    - cd backend
+    - python -m pip install --upgrade pip
+    - pip install -r requirements.txt
+  script:
+    - echo "Backend build completed"
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: '$CI_COMMIT_BRANCH == "main" || $CI_COMMIT_BRANCH == "master"'
+
+build_file_processor:
+  stage: build
+  image: python:3.11
+  needs:
+    - code_quality_file_processor
+  cache:
+    key: file-processor-pip
+    paths:
+      - file_processor/.cache/pip/
+  before_script:
+    - cd file_processor
+    - python -m pip install --upgrade pip
+    - pip install -r requirements.txt
+  script:
+    - echo "File processor build completed"
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: '$CI_COMMIT_BRANCH == "main" || $CI_COMMIT_BRANCH == "master"'
+
+# Docker Build Jobs (only on main/master branch)
+docker_build_frontend:
+  stage: docker_build
+  image: docker:20.10.16
+  services:
+    - docker:20.10.16-dind
+  needs:
+    - build_frontend
+  variables:
+    DOCKER_TLS_CERTDIR: "/certs"
+  before_script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  script:
+    - cd frontend
+    - docker build -t $FRONTEND_IMAGE .
+    - docker push $FRONTEND_IMAGE
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main" || $CI_COMMIT_BRANCH == "master"'
+
+docker_build_backend:
+  stage: docker_build
+  image: docker:20.10.16
+  services:
+    - docker:20.10.16-dind
+  needs:
+    - build_backend
+  variables:
+    DOCKER_TLS_CERTDIR: "/certs"
+  before_script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  script:
+    - cd backend
+    - docker build -t $BACKEND_IMAGE .
+    - docker push $BACKEND_IMAGE
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main" || $CI_COMMIT_BRANCH == "master"'
+
+docker_build_file_processor:
+  stage: docker_build
+  image: docker:20.10.16
+  services:
+    - docker:20.10.16-dind
+  needs:
+    - build_file_processor
+  variables:
+    DOCKER_TLS_CERTDIR: "/certs"
+  before_script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  script:
+    - cd file_processor
+    - docker build -t $FILE_PROCESSOR_IMAGE .
+    - docker push $FILE_PROCESSOR_IMAGE
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main" || $CI_COMMIT_BRANCH == "master"'
+
+# Deploy to Staging (automatic on main/master)
+deploy_staging:
+  stage: deploy
+  image: alpine:latest
+  needs:
+    - docker_build_frontend
+    - docker_build_backend
+    - docker_build_file_processor
+  before_script:
+    - apk add --no-cache curl
+  script:
+    - echo "Deploying to staging environment"
+    - echo "Frontend image: $FRONTEND_IMAGE"
+    - echo "Backend image: $BACKEND_IMAGE"
+    - echo "File processor image: $FILE_PROCESSOR_IMAGE"
+    # Add your actual deployment commands here
+    - echo "Staging deployment completed"
+  environment:
+    name: staging
+    url: https://staging.plagiarism-detector.com
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main" || $CI_COMMIT_BRANCH == "master"'
+
+# Deploy to Production (manual)
+deploy_production:
+  stage: deploy
+  image: alpine:latest
+  needs:
+    - docker_build_frontend
+    - docker_build_backend
+    - docker_build_file_processor
+  before_script:
+    - apk add --no-cache curl
+  script:
+    - echo "Deploying to production environment"
+    - echo "Frontend image: $FRONTEND_IMAGE"
+    - echo "Backend image: $BACKEND_IMAGE"
+    - echo "File processor image: $FILE_PROCESSOR_IMAGE"
+    # Add your actual deployment commands here
+    - echo "Production deployment completed"
+  environment:
+    name: production
+    url: https://plagiarism-detector.com
+  when: manual
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main" || $CI_COMMIT_BRANCH == "master"'
