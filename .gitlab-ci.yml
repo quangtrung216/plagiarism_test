@@ -197,11 +197,11 @@ deploy_staging:
   before_script:
     - apk add --no-cache curl
   script:
-    - echo "Deploying to staging environment"
-    - echo "Frontend image: $FRONTEND_IMAGE"
-    - echo "Backend image: $BACKEND_IMAGE"
-    - echo "File processor image: $FILE_PROCESSOR_IMAGE"
-    - echo "Staging deployment completed"
+    - 'echo "Deploying to staging environment"'
+    - 'echo "Frontend image: $FRONTEND_IMAGE"'
+    - 'echo "Backend image: $BACKEND_IMAGE"'
+    - 'echo "File processor image: $FILE_PROCESSOR_IMAGE"'
+    - 'echo "Staging deployment completed"'
   environment:
     name: staging
     url: https://staging.plagiarism-detector.com
@@ -219,11 +219,11 @@ deploy_production:
   before_script:
     - apk add --no-cache curl
   script:
-    - echo "Deploying to production environment"
-    - echo "Frontend image: $FRONTEND_IMAGE"
-    - echo "Backend image: $BACKEND_IMAGE"
-    - echo "File processor image: $FILE_PROCESSOR_IMAGE"
-    - echo "Production deployment completed"
+    - 'echo "Deploying to production environment"'
+    - 'echo "Frontend image: $FRONTEND_IMAGE"'
+    - 'echo "Backend image: $BACKEND_IMAGE"'
+    - 'echo "File processor image: $FILE_PROCESSOR_IMAGE"'
+    - 'echo "Production deployment completed"'
   environment:
     name: production
     url: https://plagiarism-detector.com
