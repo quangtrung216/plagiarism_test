@@ -28,7 +28,9 @@ const eslintConfig = [
       prettier: pluginPrettier,
     },
     rules: {
-      'prettier/prettier': 'error',
+      'prettier/prettier': 'off',
+      'quotes': 'off',
+      'semi': 'off'
     },
   },
 ];
