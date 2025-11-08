@@ -2,7 +2,7 @@ import psycopg2
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 from sqlmodel import SQLModel
 from app.core.config import settings
-from app.database.session import engine
+from sqlalchemy import create_engine
 
 
 def create_database_if_not_exists():
@@ -37,13 +37,22 @@ def create_database_if_not_exists():
     cursor.close()
     conn.close()
 
+    # Now create an engine specifically for the newly created database
+    # This ensures we can connect to the database for table creation
+    db_engine = create_engine(settings.DATABASE_URL, echo=True)
+    return db_engine
+
 
 def init_db():
-    # First create the database if it doesn't exist
-    create_database_if_not_exists()
+    # First create the database if it doesn't exist and get the engine
+    db_engine = create_database_if_not_exists()
+
+    # Import all models here to ensure they are registered with SQLModel
+    from app.models.user import User  # noqa: F401
 
     # Then create all tables
-    SQLModel.metadata.create_all(engine)
+    SQLModel.metadata.create_all(db_engine)
+    print("All tables created successfully!")
 
 
 if __name__ == "__main__":
