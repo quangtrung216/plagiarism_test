@@ -1,14 +1,30 @@
-from sqlmodel import SQLModel, Field
+from sqlmodel import SQLModel, Field, Relationship
 from datetime import datetime
-from typing import Optional
+from typing import Optional, List, TYPE_CHECKING
+from enum import Enum
+
+if TYPE_CHECKING:
+    from app.models.topic import Topic
+    from app.models.topic_member import TopicMember
+    from app.models.submission import Submission
+
+    # Added permission models
+    from app.models.permission import UserRoleAssignment
+
+
+class UserRole(str, Enum):
+    STUDENT = "student"
+    TEACHER = "teacher"
+    ADMIN = "admin"
 
 
 class UserBase(SQLModel):
-    username: str = Field(unique=True, index=True)
+    username: str = Field(unique=True, index=True, max_length=50)
     email: str = Field(unique=True, index=True)
     is_active: bool = True
     is_superuser: bool = False
     full_name: Optional[str] = None
+    role: UserRole
 
 
 class User(UserBase, table=True):
@@ -17,8 +33,23 @@ class User(UserBase, table=True):
     created_at: datetime = Field(default_factory=datetime.utcnow)
     updated_at: datetime = Field(default_factory=datetime.utcnow)
 
-    # Relationship with other models (if needed)
-    # documents: List["Document"] = Relationship(back_populates="owner")
+    # Relationships
+    topics: List["Topic"] = Relationship(back_populates="teacher")
+    topic_memberships: List["TopicMember"] = Relationship(
+        sa_relationship_kwargs={"foreign_keys": "TopicMember.student_id"}
+    )
+    submissions: List["Submission"] = Relationship(
+        sa_relationship_kwargs={"foreign_keys": "Submission.student_id"}
+    )
+
+    # Role-specific relationships (optional based on user role)
+    teacher_profile: Optional["Teacher"] = Relationship(back_populates="user")
+    student_profile: Optional["Student"] = Relationship(back_populates="user")
+
+    # Permission system relationships
+    assigned_roles: List["UserRoleAssignment"] = Relationship(
+        sa_relationship_kwargs={"foreign_keys": "UserRoleAssignment.user_id"}
+    )
 
 
 class UserCreate(UserBase):
@@ -39,5 +70,43 @@ class UserOut(UserBase):
     updated_at: datetime
 
 
-class UserInDB(User):
-    pass
+class UserInDB(SQLModel):
+    id: int
+    username: str
+    email: str
+    is_active: bool
+    is_superuser: bool
+    full_name: Optional[str]
+    role: UserRole
+    hashed_password: str
+    created_at: datetime
+    updated_at: datetime
+
+
+# Teacher-specific model
+class Teacher(SQLModel, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    user_id: int = Field(foreign_key="user.id", unique=True)
+    department: Optional[str] = None
+    qualification: Optional[str] = None
+    specialization: Optional[str] = None
+    employee_id: Optional[str] = None  # Staff ID or employee number
+    hire_date: Optional[datetime] = None
+
+    # Relationships
+    user: User = Relationship(back_populates="teacher_profile")
+
+
+# Student-specific model
+class Student(SQLModel, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    user_id: int = Field(foreign_key="user.id", unique=True)
+    student_id: str = Field(unique=True)  # Student enrollment number
+    major: Optional[str] = None
+    year: Optional[int] = None
+    semester: Optional[int] = None
+    enrollment_date: Optional[datetime] = None
+    graduation_date: Optional[datetime] = None
+
+    # Relationships
+    user: User = Relationship(back_populates="student_profile")

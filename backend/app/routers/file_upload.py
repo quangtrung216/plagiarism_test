@@ -1,49 +1,37 @@
-"""
-Example of how to integrate file processing with RabbitMQ in an API endpoint
-This would be added to a router in the backend application
-"""
+from fastapi import APIRouter, UploadFile, File, HTTPException, Depends
+from sqlmodel import Session
+from app.database.session import get_session
+from app.core.auth import get_current_user
+from app.core.permission_checker import PermissionChecker
+from app.models.user import User
 
-from fastapi import APIRouter, UploadFile, File, HTTPException
-from typing import Dict, Any
-import uuid
-from app.utils.rabbitmq_publisher import send_file_for_processing
-from app.utils.minio_client import upload_file_to_minio
-
-router = APIRouter()
+router = APIRouter(prefix="/file-upload", tags=["file upload"])
 
 
-@router.post("/upload-file/")
-async def upload_file(file: UploadFile = File(...)):
+@router.post("/upload/")
+async def upload_file(
+    file: UploadFile = File(...),
+    current_user: User = Depends(get_current_user),
+    session: Session = Depends(get_session),
+    permission_check: bool = Depends(PermissionChecker("manage_documents")),
+):
     """
-    Upload a file to MinIO and send its reference for processing via RabbitMQ
+    Example endpoint for uploading a file with permission checking.
+    Requires 'manage_documents' permission.
     """
+    # Assert that authenticated users must have a valid ID
+    assert current_user.id is not None, "Authenticated user must have a valid ID"
+
     try:
-        # Read file content
+        # In a real implementation, you would save the file to storage
         content = await file.read()
+        file_size = len(content)
 
-        # Upload file to MinIO
-        file_name = file.filename if file.filename else "unnamed_file"
-        object_name = upload_file_to_minio(content, file_name)
-
-        file_data: Dict[str, Any] = {
-            "file_id": str(uuid.uuid4()),
-            "file_name": file.filename,
-            "object_name": object_name,
-            "file_type": file.content_type,
+        return {
+            "filename": file.filename,
+            "content_type": file.content_type,
+            "size": file_size,
+            "message": "File uploaded successfully",
         }
-
-        # Send file for processing via RabbitMQ
-        success = send_file_for_processing(file_data)
-
-        if success:
-            return {
-                "message": "File uploaded to MinIO and sent for processing",
-                "file_id": file_data["file_id"],
-            }
-        else:
-            raise HTTPException(
-                status_code=500, detail="Failed to send file for processing"
-            )
-
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error processing file: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Error uploading file: {str(e)}")

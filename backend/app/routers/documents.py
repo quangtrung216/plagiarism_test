@@ -1,8 +1,9 @@
-from fastapi import APIRouter, UploadFile, File, HTTPException, Depends, status
+from fastapi import APIRouter, UploadFile, File, HTTPException, Depends
 from sqlmodel import Session
 from typing import List, Dict, Any
 from app.database.session import get_session
 from app.core.auth import get_current_user
+from app.core.permission_checker import PermissionChecker
 from app.models.user import User
 from app.utils.minio_client import (
     upload_file_to_minio,
@@ -13,26 +14,20 @@ from app.utils.minio_client import (
 router = APIRouter()
 
 
-def check_super_user(current_user: User = Depends(get_current_user)):
-    """Dependency to check if the current user is a super user"""
-    if not current_user.is_superuser:
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN,
-            detail="Not enough permissions. Only super users can access this endpoint.",
-        )
-    return current_user
-
-
 @router.post("/upload/", summary="Upload a document")
 async def upload_document(
     file: UploadFile = File(...),
-    current_user: User = Depends(check_super_user),
+    current_user: User = Depends(get_current_user),
     session: Session = Depends(get_session),
+    check_permission: bool = Depends(PermissionChecker("manage_documents")),
 ):
     """
     Upload a document to MinIO storage.
-    Only accessible by super users.
+    Requires 'manage_documents' permission.
     """
+    # Assert that authenticated users must have a valid ID
+    assert current_user.id is not None, "Authenticated user must have a valid ID"
+
     try:
         # Read file content
         content = await file.read()
@@ -57,13 +52,17 @@ async def upload_document(
 def list_documents(
     skip: int = 0,
     limit: int = 100,
-    current_user: User = Depends(check_super_user),
+    current_user: User = Depends(get_current_user),
     session: Session = Depends(get_session),
+    check_permission: bool = Depends(PermissionChecker("view_documents")),
 ):
     """
     List all documents stored in MinIO.
-    Only accessible by super users.
+    Requires 'view_documents' permission.
     """
+    # Assert that authenticated users must have a valid ID
+    assert current_user.id is not None, "Authenticated user must have a valid ID"
+
     try:
         # List objects in MinIO bucket
         object_list = list_files_in_minio()
@@ -93,13 +92,17 @@ def list_documents(
 @router.delete("/{object_name}", summary="Delete a document")
 def delete_document(
     object_name: str,
-    current_user: User = Depends(check_super_user),
+    current_user: User = Depends(get_current_user),
     session: Session = Depends(get_session),
+    check_permission: bool = Depends(PermissionChecker("manage_documents")),
 ):
     """
     Delete a document from MinIO by its object name.
-    Only accessible by super users.
+    Requires 'manage_documents' permission.
     """
+    # Assert that authenticated users must have a valid ID
+    assert current_user.id is not None, "Authenticated user must have a valid ID"
+
     try:
         # Delete file from MinIO
         success = delete_file_from_minio(object_name)
@@ -119,13 +122,17 @@ def search_documents(
     query: str,
     skip: int = 0,
     limit: int = 100,
-    current_user: User = Depends(check_super_user),
+    current_user: User = Depends(get_current_user),
     session: Session = Depends(get_session),
+    check_permission: bool = Depends(PermissionChecker("view_documents")),
 ):
     """
     Search documents by name in MinIO.
-    Only accessible by super users.
+    Requires 'view_documents' permission.
     """
+    # Assert that authenticated users must have a valid ID
+    assert current_user.id is not None, "Authenticated user must have a valid ID"
+
     try:
         # List objects in MinIO bucket with prefix filter
         object_list = list_files_in_minio(prefix=query)
