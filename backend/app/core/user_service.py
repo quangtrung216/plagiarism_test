@@ -1,5 +1,6 @@
 from typing import List, Optional
-from sqlmodel import select
+from datetime import datetime
+from sqlmodel import select, col
 from app.models.user import User, UserCreate, UserUpdate
 from app.core.security import get_password_hash
 
@@ -16,6 +17,30 @@ def get_user_by_email(session, email: str) -> Optional[User]:
 def get_user_by_username(session, username: str) -> Optional[User]:
     statement = select(User).where(User.username == username)
     return session.exec(statement).first()
+
+
+def find_users_by_username(
+    session, username: str, skip: int = 0, limit: int = 100
+) -> List[User]:
+    statement = (
+        select(User)
+        .where(col(User.username).like(f"%{username}%"))
+        .offset(skip)
+        .limit(limit)
+    )
+    return session.exec(statement).all()
+
+
+def find_users_by_fullname(
+    session, fullname: str, skip: int = 0, limit: int = 100
+) -> List[User]:
+    statement = (
+        select(User)
+        .where(col(User.full_name).like(f"%{fullname}%"))
+        .offset(skip)
+        .limit(limit)
+    )
+    return session.exec(statement).all()
 
 
 def get_users(session, skip: int = 0, limit: int = 100) -> List[User]:
@@ -56,6 +81,27 @@ def update_user(session, user_id: int, user_update: UserUpdate) -> Optional[User
         db_user.is_superuser = user_update.is_superuser
     if user_update.password is not None:
         db_user.hashed_password = get_password_hash(user_update.password)
+
+    session.add(db_user)
+    session.commit()
+    session.refresh(db_user)
+    return db_user
+
+
+def update_user_profile(
+    session, user_id: int, full_name: Optional[str]
+) -> Optional[User]:
+    """Update only the user's personal information (full_name)"""
+    db_user = session.get(User, user_id)
+    if not db_user:
+        return None
+
+    # Only update the full_name field
+    if full_name is not None:
+        db_user.full_name = full_name
+
+    # Update the updated_at timestamp
+    db_user.updated_at = datetime.utcnow()
 
     session.add(db_user)
     session.commit()

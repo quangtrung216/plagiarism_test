@@ -29,6 +29,10 @@ class UserUpdate(UserBase):
     password: Optional[str] = None
 
 
+class UserProfileUpdate(SQLModel):
+    full_name: Optional[str] = None
+
+
 class UserOut(UserBase):
     id: int
     created_at: datetime

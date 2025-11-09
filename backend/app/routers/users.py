@@ -2,8 +2,17 @@ from typing import List
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlmodel import Session
 from app.database.session import get_session
-from app.core.user_service import get_user, get_users, update_user, delete_user
-from app.models.user import User, UserUpdate, UserOut
+from app.core.user_service import (
+    get_user,
+    get_users,
+    update_user,
+    update_user_profile,
+    delete_user,
+    get_user_by_username,
+    find_users_by_username,
+    find_users_by_fullname,
+)
+from app.models.user import User, UserUpdate, UserOut, UserProfileUpdate
 from app.core.auth import get_current_user
 
 router = APIRouter()
@@ -12,6 +21,57 @@ router = APIRouter()
 @router.get("/me", response_model=UserOut)
 def read_users_me(current_user: User = Depends(get_current_user)):
     return current_user
+
+
+@router.get("/username/{username}", response_model=UserOut)
+def read_user_by_username(
+    username: str,
+    session: Session = Depends(get_session),
+    current_user: User = Depends(get_current_user),
+):
+    if not current_user.is_superuser:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN, detail="Not enough permissions"
+        )
+
+    db_user = get_user_by_username(session, username)
+    if not db_user:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="User not found"
+        )
+    return db_user
+
+
+@router.get("/search/username/", response_model=List[UserOut])
+def search_users_by_username_endpoint(
+    username: str,
+    skip: int = 0,
+    limit: int = 100,
+    session: Session = Depends(get_session),
+    current_user: User = Depends(get_current_user),
+):
+    if not current_user.is_superuser:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN, detail="Not enough permissions"
+        )
+    users = find_users_by_username(session, username, skip=skip, limit=limit)
+    return users
+
+
+@router.get("/search/fullname/", response_model=List[UserOut])
+def search_users_by_fullname_endpoint(
+    fullname: str,
+    skip: int = 0,
+    limit: int = 100,
+    session: Session = Depends(get_session),
+    current_user: User = Depends(get_current_user),
+):
+    if not current_user.is_superuser:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN, detail="Not enough permissions"
+        )
+    users = find_users_by_fullname(session, fullname, skip=skip, limit=limit)
+    return users
 
 
 @router.get("/{user_id}", response_model=UserOut)
@@ -61,6 +121,24 @@ def update_user_endpoint(
         )
 
     db_user = update_user(session, user_id, user_update)
+    if not db_user:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="User not found"
+        )
+    return db_user
+
+
+@router.put("/me", response_model=UserOut)
+def update_user_profile_endpoint(
+    user_update: UserProfileUpdate,
+    session: Session = Depends(get_session),
+    current_user: User = Depends(get_current_user),
+):
+    # Ensure current_user.id is not None (which shouldn't happen for authenticated users)
+    assert current_user.id is not None, "Current user must have an ID"
+
+    # Update only the user's personal information (full_name)
+    db_user = update_user_profile(session, current_user.id, user_update.full_name)
     if not db_user:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="User not found"
