@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  db:
+    image: postgres:15-alpine
+    container_name: plagiarism_db
+    restart: always
+    environment:
+      POSTGRES_DB: plagiarism_detection
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123456
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - plagiarism_network
+
+# Volumes
+volumes:
+  postgres_data:
+
+# Networks
+networks:
+  plagiarism_network:
+    driver: bridge

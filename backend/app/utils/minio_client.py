@@ -46,10 +46,12 @@ def upload_file_to_minio(
         object_name = f"{uuid.uuid4()}{file_extension}"
 
         # Upload file
+        from io import BytesIO
+
         minio_client.put_object(
             bucket_name,
             object_name,
-            data=bytes(file_data),
+            data=BytesIO(file_data),
             length=len(file_data),
             content_type="application/octet-stream",
         )
@@ -118,3 +120,31 @@ def delete_file_from_minio(object_name: str, bucket_name: Optional[str] = None) 
     except Exception as e:
         print(f"Error: {e}")
         raise Exception(f"Failed to delete file: {e}")
+
+
+def list_files_in_minio(
+    bucket_name: Optional[str] = None, prefix: Optional[str] = None
+):
+    """
+    List files in MinIO bucket
+
+    Args:
+        bucket_name: Bucket name (uses default if not provided)
+        prefix: Prefix to filter objects
+
+    Returns:
+        List of objects in the bucket
+    """
+    try:
+        if bucket_name is None:
+            bucket_name = settings.MINIO_BUCKET_NAME
+
+        # List objects in MinIO bucket
+        objects = minio_client.list_objects(bucket_name, prefix=prefix, recursive=True)
+        return list(objects)
+    except S3Error as e:
+        print(f"MinIO error: {e}")
+        raise Exception(f"Failed to list files in MinIO: {e}")
+    except Exception as e:
+        print(f"Error: {e}")
+        raise Exception(f"Failed to list files: {e}")
