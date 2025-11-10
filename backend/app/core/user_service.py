@@ -55,6 +55,7 @@ def create_user(session, user_create: UserCreate) -> User:
         full_name=user_create.full_name,
         is_active=user_create.is_active,
         is_superuser=user_create.is_superuser,
+        role=user_create.role,
         hashed_password=get_password_hash(user_create.password),
     )
     session.add(db_user)

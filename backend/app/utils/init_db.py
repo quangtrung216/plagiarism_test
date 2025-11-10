@@ -5,8 +5,20 @@ from app.core.config import settings
 from sqlalchemy import create_engine
 from sqlmodel import Session
 from app.database.session import engine
-from app.models.user import User, UserRole
-from app.models.permission import Role
+
+# Import all models to ensure they are registered with SQLModel
+# This is important to avoid circular dependency issues during table creation
+from app.models.user import User, UserRole, Teacher, Student  # noqa: F401
+from app.models.permission import (  # noqa: F401
+    Role,
+    UserRoleAssignment,
+    Permission,
+    RolePermission,
+)  # noqa: F401
+from app.models.topic import Topic  # noqa: F401
+from app.models.topic_member import TopicMember  # noqa: F401
+from app.models.submission import Submission, SubmissionHistory  # noqa: F401
+
 from app.core.permission_service import PermissionService
 from app.core.security import get_password_hash
 
@@ -125,7 +137,6 @@ def seed_initial_data(session: Session):
 
             if admin_role and teacher_role and student_role:
                 # Assign roles to users
-                from app.models.permission import UserRoleAssignment
                 from datetime import datetime
 
                 # Assign admin role to admin user
@@ -210,6 +221,14 @@ def create_database_if_not_exists():
 
 
 if __name__ == "__main__":
+    import sys
+
+    if len(sys.argv) > 1 and sys.argv[1] == "reset":
+        reset_db()
+        print("Database reset successfully!")
+    else:
+        init_db()
+        print("Database initialized successfully!")
     import sys
 
     if len(sys.argv) > 1 and sys.argv[1] == "reset":

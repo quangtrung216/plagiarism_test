@@ -2,11 +2,10 @@ from sqlmodel import SQLModel, Field, Relationship
 from typing import Optional, TYPE_CHECKING
 from datetime import datetime
 from app.models.enums import MemberStatus
-from app.models.user import User
 
 if TYPE_CHECKING:
+    from app.models.user import User, Student
     from app.models.topic import Topic
-    from app.models.user import Student
 
 
 class TopicMemberBase(SQLModel):
@@ -23,17 +22,26 @@ class TopicMember(TopicMemberBase, table=True):
     responded_by: Optional[int] = Field(default=None, foreign_key="user.id")
 
     # Relationships
-    topic: "Topic" = Relationship(back_populates="members")
-    student: User = Relationship(
-        sa_relationship_kwargs={"foreign_keys": "TopicMember.student_id"}
+    topic: "Topic" = Relationship(
+        back_populates="members", sa_relationship_kwargs={"lazy": "selectin"}
     )
-    responder: Optional[User] = Relationship(
-        sa_relationship_kwargs={"foreign_keys": "TopicMember.responded_by"}
+    student: "User" = Relationship(
+        sa_relationship_kwargs={
+            "foreign_keys": "TopicMember.student_id",
+            "lazy": "selectin",
+        }
+    )
+    responder: Optional["User"] = Relationship(
+        sa_relationship_kwargs={
+            "foreign_keys": "TopicMember.responded_by",
+            "lazy": "selectin",
+        }
     )
     student_profile: Optional["Student"] = Relationship(
         sa_relationship_kwargs={
             "primaryjoin": "and_(foreign(TopicMember.student_id) == Student.user_id)",
             "viewonly": True,
+            "lazy": "selectin",
         }
     )
 

@@ -2,13 +2,12 @@ from sqlmodel import SQLModel, Field, Relationship
 from typing import List, Optional, TYPE_CHECKING
 from datetime import datetime
 from app.models.enums import TopicStatus
-from app.models.user import User
 import sqlalchemy.dialects.postgresql as pg
 
 if TYPE_CHECKING:
+    from app.models.user import User, Teacher
     from app.models.topic_member import TopicMember
     from app.models.submission import Submission
-    from app.models.user import Teacher
 
 
 class TopicBase(SQLModel):
@@ -29,15 +28,22 @@ class Topic(TopicBase, table=True):
     updated_at: datetime = Field(default_factory=datetime.utcnow)
 
     # Relationships
-    teacher: "User" = Relationship(back_populates="topics")
+    teacher: "User" = Relationship(
+        back_populates="topics", sa_relationship_kwargs={"lazy": "selectin"}
+    )
     teacher_profile: Optional["Teacher"] = Relationship(
         sa_relationship_kwargs={
             "primaryjoin": "and_(foreign(Topic.teacher_id) == Teacher.user_id)",
             "viewonly": True,
+            "lazy": "selectin",
         }
     )
-    members: List["TopicMember"] = Relationship(back_populates="topic")
-    submissions: List["Submission"] = Relationship(back_populates="topic")
+    members: List["TopicMember"] = Relationship(
+        back_populates="topic", sa_relationship_kwargs={"lazy": "selectin"}
+    )
+    submissions: List["Submission"] = Relationship(
+        back_populates="topic", sa_relationship_kwargs={"lazy": "selectin"}
+    )
 
 
 class TopicCreate(TopicBase):

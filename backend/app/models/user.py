@@ -34,21 +34,36 @@ class User(UserBase, table=True):
     updated_at: datetime = Field(default_factory=datetime.utcnow)
 
     # Relationships
-    topics: List["Topic"] = Relationship(back_populates="teacher")
+    topics: List["Topic"] = Relationship(
+        back_populates="teacher", sa_relationship_kwargs={"lazy": "selectin"}
+    )
     topic_memberships: List["TopicMember"] = Relationship(
-        sa_relationship_kwargs={"foreign_keys": "TopicMember.student_id"}
+        sa_relationship_kwargs={
+            "foreign_keys": "TopicMember.student_id",
+            "lazy": "selectin",
+        }
     )
     submissions: List["Submission"] = Relationship(
-        sa_relationship_kwargs={"foreign_keys": "Submission.student_id"}
+        sa_relationship_kwargs={
+            "foreign_keys": "Submission.student_id",
+            "lazy": "selectin",
+        }
     )
 
     # Role-specific relationships (optional based on user role)
-    teacher_profile: Optional["Teacher"] = Relationship(back_populates="user")
-    student_profile: Optional["Student"] = Relationship(back_populates="user")
+    teacher_profile: Optional["Teacher"] = Relationship(
+        back_populates="user", sa_relationship_kwargs={"lazy": "selectin"}
+    )
+    student_profile: Optional["Student"] = Relationship(
+        back_populates="user", sa_relationship_kwargs={"lazy": "selectin"}
+    )
 
     # Permission system relationships
     assigned_roles: List["UserRoleAssignment"] = Relationship(
-        sa_relationship_kwargs={"foreign_keys": "UserRoleAssignment.user_id"}
+        sa_relationship_kwargs={
+            "foreign_keys": "UserRoleAssignment.user_id",
+            "lazy": "selectin",
+        }
     )
 
 
@@ -94,7 +109,9 @@ class Teacher(SQLModel, table=True):
     hire_date: Optional[datetime] = None
 
     # Relationships
-    user: User = Relationship(back_populates="teacher_profile")
+    user: "User" = Relationship(
+        back_populates="teacher_profile", sa_relationship_kwargs={"lazy": "selectin"}
+    )
 
 
 # Student-specific model
@@ -109,4 +126,6 @@ class Student(SQLModel, table=True):
     graduation_date: Optional[datetime] = None
 
     # Relationships
-    user: User = Relationship(back_populates="student_profile")
+    user: "User" = Relationship(
+        back_populates="student_profile", sa_relationship_kwargs={"lazy": "selectin"}
+    )
