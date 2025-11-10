@@ -2,12 +2,11 @@ from sqlmodel import SQLModel, Field, Relationship
 from typing import Optional, List, TYPE_CHECKING
 from datetime import datetime
 from app.models.enums import SubmissionStatus
-from app.models.user import User
 import sqlalchemy.dialects.postgresql as pg
 
 if TYPE_CHECKING:
+    from app.models.user import User, Student
     from app.models.topic import Topic
-    from app.models.user import Student
 
 
 class SubmissionBase(SQLModel):
@@ -28,17 +27,25 @@ class Submission(SubmissionBase, table=True):
     checked_at: Optional[datetime] = None
 
     # Relationships
-    topic: "Topic" = Relationship(back_populates="submissions")
-    student: User = Relationship(
-        sa_relationship_kwargs={"foreign_keys": "Submission.student_id"}
+    topic: "Topic" = Relationship(
+        back_populates="submissions", sa_relationship_kwargs={"lazy": "selectin"}
+    )
+    student: "User" = Relationship(
+        sa_relationship_kwargs={
+            "foreign_keys": "Submission.student_id",
+            "lazy": "selectin",
+        }
     )
     student_profile: Optional["Student"] = Relationship(
         sa_relationship_kwargs={
             "primaryjoin": "and_(foreign(Submission.student_id) == Student.user_id)",
             "viewonly": True,
+            "lazy": "selectin",
         }
     )
-    histories: List["SubmissionHistory"] = Relationship(back_populates="submission")  # type: ignore
+    histories: List["SubmissionHistory"] = Relationship(
+        back_populates="submission", sa_relationship_kwargs={"lazy": "selectin"}
+    )  # type: ignore
 
 
 class SubmissionCreate(SubmissionBase):
@@ -70,8 +77,13 @@ class SubmissionHistory(SubmissionHistoryBase, table=True):
     created_at: datetime = Field(default_factory=datetime.utcnow)
 
     # Relationships
-    submission: Optional["Submission"] = Relationship(back_populates="histories")  # type: ignore
-    topic: "Topic" = Relationship()
-    student: User = Relationship(
-        sa_relationship_kwargs={"foreign_keys": "SubmissionHistory.student_id"}
+    submission: Optional["Submission"] = Relationship(
+        back_populates="histories", sa_relationship_kwargs={"lazy": "selectin"}
+    )  # type: ignore
+    topic: "Topic" = Relationship(sa_relationship_kwargs={"lazy": "selectin"})
+    student: "User" = Relationship(
+        sa_relationship_kwargs={
+            "foreign_keys": "SubmissionHistory.student_id",
+            "lazy": "selectin",
+        }
     )

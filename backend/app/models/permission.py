@@ -51,7 +51,9 @@ class Permission(PermissionBase, table=True):
     updated_at: datetime = Field(default_factory=datetime.utcnow)
 
     # Relationships
-    role_permissions: List["RolePermission"] = Relationship(back_populates="permission")
+    role_permissions: List["RolePermission"] = Relationship(
+        back_populates="permission", sa_relationship_kwargs={"lazy": "selectin"}
+    )
 
 
 class RoleBase(SQLModel):
@@ -74,8 +76,12 @@ class Role(RoleBase, table=True):
     updated_at: datetime = Field(default_factory=datetime.utcnow)
 
     # Relationships
-    role_permissions: List["RolePermission"] = Relationship(back_populates="role")
-    user_roles: List["UserRoleAssignment"] = Relationship(back_populates="role")
+    role_permissions: List["RolePermission"] = Relationship(
+        back_populates="role", sa_relationship_kwargs={"lazy": "selectin"}
+    )
+    user_roles: List["UserRoleAssignment"] = Relationship(
+        back_populates="role", sa_relationship_kwargs={"lazy": "selectin"}
+    )
 
 
 class RolePermissionBase(SQLModel):
@@ -93,8 +99,12 @@ class RolePermission(RolePermissionBase, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
 
     # Relationships
-    role: "Role" = Relationship(back_populates="role_permissions")
-    permission: "Permission" = Relationship(back_populates="role_permissions")
+    role: "Role" = Relationship(
+        back_populates="role_permissions", sa_relationship_kwargs={"lazy": "selectin"}
+    )
+    permission: "Permission" = Relationship(
+        back_populates="role_permissions", sa_relationship_kwargs={"lazy": "selectin"}
+    )
 
 
 class UserRoleAssignmentBase(SQLModel):
@@ -126,11 +136,19 @@ class UserRoleAssignment(UserRoleAssignmentBase, table=True):
 
     # Relationships
     user: "User" = Relationship(
-        sa_relationship_kwargs={"foreign_keys": "UserRoleAssignment.user_id"}
+        sa_relationship_kwargs={
+            "foreign_keys": "UserRoleAssignment.user_id",
+            "lazy": "selectin",
+        }
     )
-    role: "Role" = Relationship(back_populates="user_roles")
+    role: "Role" = Relationship(
+        back_populates="user_roles", sa_relationship_kwargs={"lazy": "selectin"}
+    )
     granter: "User" = Relationship(
-        sa_relationship_kwargs={"foreign_keys": "UserRoleAssignment.granted_by"}
+        sa_relationship_kwargs={
+            "foreign_keys": "UserRoleAssignment.granted_by",
+            "lazy": "selectin",
+        }
     )
 
 

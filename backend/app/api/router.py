@@ -1,6 +1,5 @@
 from fastapi import APIRouter
 from app.routers import auth, users, documents, permissions, file_upload
-from app.examples.permission_example import router as example_router
 
 api_router = APIRouter()
 
@@ -13,4 +12,3 @@ api_router.include_router(
 api_router.include_router(
     file_upload.router, prefix="/file-upload", tags=["file upload"]
 )
-api_router.include_router(example_router, prefix="/examples", tags=["examples"])
