@@ -3,6 +3,8 @@ from typing import List, Optional, TYPE_CHECKING
 from datetime import datetime
 from app.models.enums import TopicStatus
 import sqlalchemy.dialects.postgresql as pg
+import secrets
+import string
 
 if TYPE_CHECKING:
     from app.models.user import User, Teacher
@@ -20,12 +22,27 @@ class TopicBase(SQLModel):
     allowed_extensions: List[str] = Field(
         default=["pdf", "doc", "docx", "txt"], sa_type=pg.ARRAY(pg.VARCHAR)
     )
+    code: str = Field(default=None, max_length=20, unique=True, index=True)
+    public: bool = Field(default=False)
+    require_approval: bool = Field(default=True)
 
 
 class Topic(TopicBase, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     created_at: datetime = Field(default_factory=datetime.utcnow)
     updated_at: datetime = Field(default_factory=datetime.utcnow)
+
+    # Generate a unique code before inserting
+    def __init__(self, **data):
+        if "code" not in data or data["code"] is None:
+            data["code"] = self.generate_unique_code()
+        super().__init__(**data)
+
+    @staticmethod
+    def generate_unique_code(length=8):
+        """Generate a unique code for the topic"""
+        characters = string.ascii_uppercase + string.digits
+        return "".join(secrets.choice(characters) for _ in range(length))
 
     # Relationships
     teacher: "User" = Relationship(
@@ -57,3 +74,5 @@ class TopicUpdate(SQLModel):
     deadline: Optional[datetime] = None
     max_file_size: Optional[int] = None
     allowed_extensions: Optional[List[str]] = None
+    public: Optional[bool] = None
+    require_approval: Optional[bool] = None
