@@ -229,11 +229,3 @@ if __name__ == "__main__":
     else:
         init_db()
         print("Database initialized successfully!")
-    import sys
-
-    if len(sys.argv) > 1 and sys.argv[1] == "reset":
-        reset_db()
-        print("Database reset successfully!")
-    else:
-        init_db()
-        print("Database initialized successfully!")
