@@ -11,6 +11,7 @@ export interface RegisterRequest extends Record<string, unknown> {
   email: string;
   password: string;
   full_name?: string;
+  role?: string;
 }
 
 export interface AuthResponse {
@@ -49,11 +50,30 @@ class AuthService {
     );
   }
 
-  async register(userData: RegisterRequest): Promise<RegisterResponse> {
-    return apiClient.post<RegisterResponse, RegisterRequest>(
-      '/api/v1/auth/register',
-      userData
-    );
+  async register(
+    userData: RegisterRequest,
+    classOrDepartment?: string
+  ): Promise<RegisterResponse> {
+    // If we have role-specific data, use the enhanced registration endpoint
+    if (((userData.role === 'student' || userData.role === 'teacher') && classOrDepartment)) {
+      // Create the request payload
+      const payload = {
+        ...userData,
+        class_or_department: classOrDepartment
+      };
+
+      // Make the request with JSON data
+      return apiClient.post<RegisterResponse, typeof payload>(
+        '/api/v1/auth/register',
+        payload
+      );
+    } else {
+      // Use the standard registration endpoint
+      return apiClient.post<RegisterResponse, RegisterRequest>(
+        '/api/v1/auth/register',
+        userData
+      );
+    }
   }
 
   async getCurrentUser(token?: string): Promise<MyUser> {
