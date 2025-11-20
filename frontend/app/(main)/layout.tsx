@@ -3,8 +3,10 @@ import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
 import AuthorizationProvider from '@/providers/AuthorizationProvider';
 import { validateRequest } from '../auth';
+import Sidebar from '@/components/Sidebar';
+import UserMenu from '@/components/UserMenu';
 
-export default async function AuthenticatedLayout({
+export default async function DashboardLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -24,7 +26,24 @@ export default async function AuthenticatedLayout({
   // Pass user and token to the provider
   return (
     <AuthorizationProvider value={{ user: user, token: token }}>
-      {children}
+      <div className="flex h-screen">
+        {/* Sidebar */}
+        <Sidebar role={user.role} />
+        
+        {/* Main Content */}
+        <div className="flex flex-col flex-1 overflow-hidden">
+          {/* Top Bar */}
+          <header className="flex items-center justify-between p-4 border-b">
+            <h2 className="text-xl font-semibold">Dashboard</h2>
+            <UserMenu />
+          </header>
+          
+          {/* Page Content */}
+          <main className="flex-1 overflow-y-auto p-4">
+            {children}
+          </main>
+        </div>
+      </div>
     </AuthorizationProvider>
   );
 }

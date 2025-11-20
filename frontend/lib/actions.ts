@@ -3,7 +3,7 @@
 import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
 import authService from '@/services/authService';
-import { LoginRequest } from '@/services/authService';
+import { LoginRequest, RegisterRequest } from '@/services/authService';
 
 export async function signIn(formData: FormData) {
   try {
@@ -25,14 +25,49 @@ export async function signIn(formData: FormData) {
 
       return { success: true };
     } else {
-      return { success: false, error: 'Invalid credentials' };
+      return { success: false, error: 'Thông tin tài khoản không chính xác. Vui lòng thử lại.' };
     }
   } catch (error: unknown) {
     console.error('Sign in error:', error);
     if (error instanceof Error) {
-      return { success: false, error: error.message || 'Failed to sign in' };
+      return { success: false, error: error.message || 'Đăng nhập thất bại. Vui lòng thử lại.' };
     }
-    return { success: false, error: 'Failed to sign in' };
+    return { success: false, error: 'Đăng nhập thất bại' };
+  }
+}
+
+export async function register(formData: FormData, role: 'student' | 'teacher') {
+  try {
+    const username = formData.get('username') as string;
+    const email = formData.get('email') as string;
+    const password = formData.get('password') as string;
+    const fullName = formData.get('fullName') as string;
+    const classOrDepartment = formData.get('classOrDepartment') as string;
+
+    // Prepare registration data
+    const registerData: RegisterRequest = {
+      username,
+      email,
+      password,
+      full_name: fullName,
+      role: role === 'student' ? 'student' : 'teacher',
+    };
+
+    // Call the authentication service with enhanced registration
+    const result = await authService.register(registerData, classOrDepartment);
+
+    if (result.user_id) {
+      return { success: true };
+    } else {
+      return { success: false, error: 'Đăng ký thất bại' };
+    }
+  } catch (error: unknown) {
+    console.error('Registration error:', error);
+    if (error instanceof Error) {
+
+      return { success: false, error: error.message || 'Đăng ký thất bại. Vui lòng thử lại.' };
+    }
+    return { success: false, error: 'Đăng ký thất bại. Vui lòng thử lại.' };
   }
 }
 
