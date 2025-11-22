@@ -36,9 +36,9 @@ const UserMenu: React.FC = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-          <Avatar className="h-8 w-8">
-            <AvatarImage src="" alt={user.full_name} />
+        <Button variant="ghost" className="relative p-0 cursor-pointer">
+          <Avatar className="h-12 w-12">
+            <AvatarImage src="/icons/avata.png" alt={user.full_name} />
             <AvatarFallback>{getUserInitials()}</AvatarFallback>
           </Avatar>
         </Button>

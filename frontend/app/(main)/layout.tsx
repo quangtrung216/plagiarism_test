@@ -29,15 +29,15 @@ export default async function DashboardLayout({
       <div className="flex h-screen">
         {/* Sidebar */}
         <Sidebar role={user.role} />
-        
+
         {/* Main Content */}
-        <div className="flex flex-col flex-1 overflow-hidden">
+        <div className="flex flex-col flex-1 overflow-hidden bg-[#C0EEC033]">
           {/* Top Bar */}
-          <header className="flex items-center justify-between p-4 border-b">
-            <h2 className="text-xl font-semibold">Dashboard</h2>
+          <header className="flex items-center justify-end p-5 gap-2">
             <UserMenu />
+            <span className="font-bold text-md">Xin chào, {user.full_name}</span>
           </header>
-          
+
           {/* Page Content */}
           <main className="flex-1 overflow-y-auto p-4">
             {children}
