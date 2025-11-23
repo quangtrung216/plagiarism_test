@@ -33,7 +33,7 @@ export default function LandingPage() {
             <p className="text-lg text-gray-600">
               Giải pháp AI phát hiện sao chép nhanh, giúp bạn viết đúng và tự tin hơn mỗi ngày.
             </p>
-            <button className="bg-primary text-white font-bold py-4 px-8 w-55 rounded-lg shadow-lg hover:bg-red-600 transition-all transform hover:scale-105 flex items-center justify-center space-x-2">
+            <button className="bg-primary text-white font-bold py-4 px-8 w-55 rounded-lg shadow-lg hover:bg-red-600 transition-all transform hover:scale-105 flex items-center justify-center space-x-2 cursor-pointer">
               <span>Bắt đầu</span>
               <svg className="h-6 w-6" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M8 5v14l11-7z" />
@@ -147,7 +147,7 @@ export default function LandingPage() {
                 </svg>
                 <span>Đăng nhập tài khoản</span>
               </div>
-              <button className="mt-auto bg-primary text-white font-semibold py-3 px-8 rounded-full shadow-md hover:bg-red-600 transition-all">
+              <button className="mt-auto bg-primary text-white font-semibold py-3 px-8 rounded-full shadow-md hover:bg-red-600 transition-all cursor-pointer">
                 Bắt đầu ngay
               </button>
             </div>
@@ -161,7 +161,7 @@ export default function LandingPage() {
                 </svg>
                 <span>Tải lên bài viết cần kiểm tra</span>
               </div>
-              <button className="mt-auto bg-primary text-white font-semibold py-3 px-8 rounded-full shadow-md hover:bg-red-600 transition-all">
+              <button className="mt-auto bg-primary text-white font-semibold py-3 px-8 rounded-full shadow-md hover:bg-red-600 transition-all cursor-pointer">
                 Bắt đầu ngay
               </button>
             </div>
@@ -175,7 +175,7 @@ export default function LandingPage() {
                 </svg>
                 <span>Nhận kết quả chính xác</span>
               </div>
-              <button className="mt-auto bg-primary text-white font-semibold py-3 px-8 rounded-full shadow-md hover:bg-red-600 transition-all">
+              <button className="mt-auto bg-primary text-white font-semibold py-3 px-8 rounded-full shadow-md hover:bg-red-600 transition-all cursor-pointer">
                 Bắt đầu ngay
               </button>
             </div>
@@ -201,7 +201,7 @@ export default function LandingPage() {
             <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4 max-w-100">Cải thiện tính chính xác bài viết của bạn!</h2>
             <p className="text-gray-600">Kiểm tra đạo văn và cho ra bài viết tốt nhất.</p>
           </div>
-          <button className="bg-primary text-white text-[#ffffff] font-bold py-3 px-8 w-60 h-16 rounded-md shadow-2xl hover:bg-red-600 transition-all transform hover:scale-105">
+          <button className="bg-primary text-white text-[#ffffff] font-bold py-3 px-8 w-60 h-16 rounded-md shadow-2xl hover:bg-red-600 transition-all transform hover:scale-105 cursor-pointer">
             Trải nghiệm ngay
           </button>
         </div>
