@@ -7,3 +7,22 @@ export interface MyUser {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface Topic {
+  id: number;
+  title: string;
+  code: string;
+  description?: string;
+  public: boolean;
+  teacher_id: number;
+  status?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface Document {
+  object_name: string;
+  size: number;
+  last_modified: string;
+  content_type?: string;
+}
