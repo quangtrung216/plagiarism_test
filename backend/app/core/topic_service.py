@@ -1,8 +1,9 @@
 from typing import List, Optional
 from sqlmodel import Session, select, col
+from sqlalchemy.orm import selectinload
 from app.models.topic import Topic, TopicCreate, TopicUpdate
 from app.models.topic_member import TopicMember, TopicMemberCreate, TopicMemberUpdate
-from app.models.enums import MemberStatus, TopicStatus
+from app.models.enums import MemberStatus
 from datetime import datetime
 
 
@@ -15,9 +16,9 @@ class TopicService:
     def create_topic(self, topic_data: TopicCreate, user_id: int) -> Topic:
         """Create a new topic"""
         # Set the teacher_id to the current user's id
-        topic_data.teacher_id = user_id
 
-        db_topic = Topic(**topic_data.dict())
+        db_topic = Topic(**topic_data.model_dump())
+        db_topic.teacher_id = user_id
         self.session.add(db_topic)
         self.session.commit()
         self.session.refresh(db_topic)
@@ -25,11 +26,18 @@ class TopicService:
 
     def get_topic(self, topic_id: int) -> Optional[Topic]:
         """Get a topic by ID"""
-        return self.session.get(Topic, topic_id)
+        statement = (
+            select(Topic)
+            .options(selectinload(Topic.teacher))
+            .where(Topic.id == topic_id)
+        )
+        return self.session.exec(statement).first()
 
     def get_topic_by_code(self, code: str) -> Optional[Topic]:
         """Get a topic by code"""
-        statement = select(Topic).where(Topic.code == code)
+        statement = (
+            select(Topic).options(selectinload(Topic.teacher)).where(Topic.code == code)
+        )
         return self.session.exec(statement).first()
 
     def update_topic(
@@ -73,17 +81,14 @@ class TopicService:
         self,
         skip: int = 0,
         limit: int = 100,
-        status: Optional[TopicStatus] = None,
         title: Optional[str] = None,
         code: Optional[str] = None,
         user_role: Optional[str] = None,
     ) -> List[Topic]:
         """Search topics with optional filters"""
-        query = select(Topic)
+        query = select(Topic).options(selectinload(Topic.teacher))
 
         # Apply filters
-        if status:
-            query = query.where(Topic.status == status)
         if title:
             query = query.where(col(Topic.title).like(f"%{title}%"))
         if code:
@@ -104,10 +109,6 @@ class TopicService:
         db_topic = self.session.get(Topic, topic_id)
         if not db_topic:
             raise ValueError("Topic not found")
-
-        # Check if topic is active
-        if db_topic.status != TopicStatus.ACTIVE:
-            raise ValueError("Topic is not active for joining")
 
         # If topic doesn't require approval, automatically accept the student
         if not db_topic.require_approval:
@@ -199,10 +200,11 @@ class TopicService:
     ) -> List[Topic]:
         """Get topics created by user (if teacher) or joined by user (if student)"""
         if user_role == "teacher":
-            # Get topics created by the teacher
+            # Get topics created by the teacher with teacher information
             topics = list(
                 self.session.exec(
                     select(Topic)
+                    .options(selectinload(Topic.teacher))
                     .where(Topic.teacher_id == user_id)
                     .offset(skip)
                     .limit(limit)
@@ -225,7 +227,11 @@ class TopicService:
             if not topic_ids:
                 return []
 
-            topics_query = select(Topic).where(col(Topic.id).in_(topic_ids))
+            topics_query = (
+                select(Topic)
+                .options(selectinload(Topic.teacher))
+                .where(col(Topic.id).in_(topic_ids))
+            )
             topics = list(self.session.exec(topics_query).all())
             return topics
         else:
@@ -238,18 +244,28 @@ class TopicService:
         skip: int = 0,
         limit: int = 100,
     ) -> List[TopicMember]:
-        """Get students in a topic"""
+        """Get students in a topic with full student information"""
         # Check if topic exists
         db_topic = self.session.get(Topic, topic_id)
         if not db_topic:
             raise ValueError("Topic not found")
 
-        # Get topic members
-        query = select(TopicMember).where(TopicMember.topic_id == topic_id)
+        # Get topic members with student and student_profile information
+        query = (
+            select(TopicMember)
+            .options(
+                selectinload(TopicMember.student),  # Load student (User) information
+                selectinload(
+                    TopicMember.student_profile
+                ),  # Load student profile information
+            )
+            .where(TopicMember.topic_id == topic_id)
+        )
 
         # Apply status filter if provided
         if status:
             query = query.where(TopicMember.status == status)
 
         topic_members = list(self.session.exec(query.offset(skip).limit(limit)).all())
+
         return topic_members

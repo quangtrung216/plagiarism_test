@@ -7,7 +7,7 @@ from app.core.config import settings
 engine = None
 try:
     engine = create_engine(
-        settings.DATABASE_URL, echo=True, pool_pre_ping=True, pool_recycle=300
+        settings.DATABASE_URL, echo=False, pool_pre_ping=True, pool_recycle=300
     )
 except Exception as e:
     # Engine creation may fail if database doesn't exist yet

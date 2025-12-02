@@ -1,26 +1,32 @@
-import apiClient from './apiClient';
+import { http } from '@/lib/http';
+import { Document } from '@/types';
 
-const BASE_PATH = '/api/v1/documents';
+export const documentService = {
+    listDocuments: async (): Promise<Document[]> => {
+        return http<Document[]>('/documents');
+    },
 
-class DocumentService {
-    async listDocuments(skip = 0, limit = 100) {
-        return apiClient.get(`${BASE_PATH}?skip=${skip}&limit=${limit}`);
-    }
+    searchDocuments: async (query: string): Promise<Document[]> => {
+        return http<Document[]>('/documents/search/', {
+            params: { query: query },
+        });
+    },
 
-    async uploadDocument(file: File) {
+    uploadDocument: async (file: File): Promise<void> => {
         const formData = new FormData();
         formData.append('file', file);
-        return apiClient.post(`${BASE_PATH}/upload/`, formData);
-    }
 
-    async deleteDocument(objectName: string) {
-        return apiClient.delete(`${BASE_PATH}/${encodeURIComponent(objectName)}`);
-    }
+        return http<void>('/documents/upload/', {
+            method: 'POST',
+            body: formData,
+        });
+    },
 
-    async searchDocuments(query: string, skip = 0, limit = 100) {
-        return apiClient.get(`${BASE_PATH}/search/?query=${encodeURIComponent(query)}&skip=${skip}&limit=${limit}`);
-    }
-}
+    deleteDocument: async (objectName: string): Promise<void> => {
+        return http<void>(`/documents/${encodeURIComponent(objectName)}`, {
+            method: 'DELETE',
+        });
+    },
+};
 
-const documentService = new DocumentService();
 export default documentService;

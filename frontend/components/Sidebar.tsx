@@ -26,6 +26,7 @@ interface SidebarProps {
 
 const Sidebar: React.FC<SidebarProps> = ({ role }) => {
   const pathname = usePathname();
+  console.log('Role:', role);
 
   // Define menu items based on user role
   const getMenuItems = (): MenuItem[] => {
@@ -36,13 +37,14 @@ const Sidebar: React.FC<SidebarProps> = ({ role }) => {
     if (role === 'student') {
       return [
         ...commonItems,
-        { title: 'Kiểm tra theo chủ đề', href: '/topics', icon: <BookOpen className="h-4 w-4" /> },
+        { title: 'Chủ đề khả dụng', href: '/student-topics', icon: <BookOpen className="h-4 w-4" /> },
+        { title: 'Chủ đề đã tham gia', href: '/topics', icon: <BookOpen className="h-4 w-4" /> },
         { title: 'Tài liệu của tôi', href: '/my-documents', icon: <FileText className="h-4 w-4" /> },
       ];
-    } else if (role === 'lecturer') {
+    } else if (role === 'teacher') {
       return [
         ...commonItems,
-        { title: 'Chủ đề', href: '/topics', icon: <BookOpen className="h-4 w-4" /> },
+        { title: 'Quản lý chủ đề', href: '/manage-topics', icon: <BookOpen className="h-4 w-4" /> },
       ];
     }
 

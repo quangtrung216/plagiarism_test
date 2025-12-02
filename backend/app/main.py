@@ -4,17 +4,19 @@ from app.core.config import settings
 from app.middleware.logging_middleware import LoggingMiddleware
 from app.api.router import api_router
 from app.middleware.exception_handler import ExceptionHandlerMiddleware
+from app.utils.init_db import init_db
 
 app = FastAPI(
     title=settings.PROJECT_NAME, openapi_url=f"{settings.PREFIX}/openapi.json"
 )
+
 
 # Add middlewares
 app.add_middleware(ExceptionHandlerMiddleware)
 app.add_middleware(LoggingMiddleware)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[str(origin) for origin in settings.BACKEND_CORS_ORIGINS],
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -22,6 +24,12 @@ app.add_middleware(
 
 # Include routers
 app.include_router(api_router, prefix=settings.PREFIX)
+
+
+@app.on_event("startup")
+async def startup_event():
+    """Initialize database when app starts"""
+    init_db()
 
 
 @app.get("/")

@@ -4,6 +4,8 @@ import React, { useEffect, useState, ChangeEvent } from "react";
 import documentService from "../../../services/documentService";
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Document } from "@/types";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 export default function MyDocumentsPage() {
   const [documents, setDocuments] = useState<Document[]>([]);
@@ -98,34 +100,41 @@ export default function MyDocumentsPage() {
           <CardTitle>Danh sách Tài liệu</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="mb-8 max-w-md mx-auto px-4 py-2 bg-gray-100 rounded-full flex items-center gap-2">
-            <input
+          <div className="mb-8 px-4 py-2 bg-gray-100 rounded-full flex items-center gap-2">
+            <Input
               type="text"
-              placeholder="Enter document name"
+              placeholder="Nhập tên tài liệu"
               className="flex-grow bg-gray-200 rounded-full px-4 py-2 focus:outline-none"
               value={searchQuery}
               onChange={onSearchChange}
             />
-            <button
+            <Button
               type="button"
               className="bg-green-800 hover:bg-green-900 text-white px-4 py-2 rounded-full flex items-center gap-2"
               onClick={onSearchSubmit}
-              aria-label="Search"
+              aria-label="Tìm kiếm"
             >
-              Search
-            </button>
+              <svg
+                className="w-5 h-5 fill-current"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+              >
+                <path d="M21 20l-5.59-5.59A7.92 7.92 0 0016 10a8 8 0 10-8 8 7.92 7.92 0 004.41-1.59L20 21zM10 16a6 6 0 110-12 6 6 0 010 12z" />
+              </svg>
+              Tìm kiếm
+            </Button>
           </div>
 
-          <div className="mb-8 max-w-md mx-auto px-4 py-2 flex items-center gap-2">
-            <input type="file" onChange={onFileChange} />
-            <button
+          <div className="mb-8 px-4 py-2 flex items-center gap-2">
+            <Input type="file" onChange={onFileChange} />
+            <Button
               type="button"
               className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded"
               onClick={onUpload}
               disabled={!fileToUpload}
             >
               Upload
-            </button>
+            </Button>
           </div>
 
           <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
@@ -141,7 +150,8 @@ export default function MyDocumentsPage() {
                   <p className="text-xs text-gray-400">Last Modified: {new Date(doc.last_modified).toLocaleString()}</p>
                 </div>
                 <div className="mt-auto flex justify-end gap-2">
-                  <button
+                  <Button
+                    variant="outline"
                     className="text-red-600 hover:text-red-800"
                     onClick={() => onDelete(doc.object_name)}
                     aria-label={`Delete document ${doc.object_name}`}
@@ -161,7 +171,7 @@ export default function MyDocumentsPage() {
                         d="M6 18L18 6M6 6l12 12"
                       />
                     </svg>
-                  </button>
+                  </Button>
                 </div>
               </div>
             ))}

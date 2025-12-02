@@ -126,6 +126,15 @@ def seed_initial_data(session: Session):
             session.commit()
             session.refresh(student_user)
 
+            # Create student profile for the default student user
+            student_profile = Student(
+                user_id=student_user.id,  # type: ignore
+                student_id="STU001",
+                major="Computer Science",
+            )
+            session.add(student_profile)
+            session.commit()
+
             # Assign roles to users using the permission service
             admin_role = session.exec(select(Role).where(Role.name == "admin")).first()
             teacher_role = session.exec(
@@ -216,7 +225,7 @@ def create_database_if_not_exists():
 
     # Now create an engine specifically for the newly created database
     # This ensures we can connect to the database for table creation
-    db_engine = create_engine(settings.DATABASE_URL, echo=True)
+    db_engine = create_engine(settings.DATABASE_URL, echo=False)
     return db_engine
 
 

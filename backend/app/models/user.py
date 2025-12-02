@@ -38,16 +38,18 @@ class User(UserBase, table=True):
         back_populates="teacher", sa_relationship_kwargs={"lazy": "selectin"}
     )
     topic_memberships: List["TopicMember"] = Relationship(
+        back_populates="student",
         sa_relationship_kwargs={
             "foreign_keys": "TopicMember.student_id",
             "lazy": "selectin",
-        }
+        },
     )
     submissions: List["Submission"] = Relationship(
+        back_populates="student",
         sa_relationship_kwargs={
             "foreign_keys": "Submission.student_id",
             "lazy": "selectin",
-        }
+        },
     )
 
     # Role-specific relationships (optional based on user role)
@@ -60,10 +62,11 @@ class User(UserBase, table=True):
 
     # Permission system relationships
     assigned_roles: List["UserRoleAssignment"] = Relationship(
+        back_populates="user",
         sa_relationship_kwargs={
             "foreign_keys": "UserRoleAssignment.user_id",
             "lazy": "selectin",
-        }
+        },
     )
 
 

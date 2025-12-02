@@ -16,17 +16,15 @@ export const validateRequest = cache(
         return { user: null, token: null };
       }
 
-      // Set the token in the auth service
-      authService.setToken(token);
-
       // Fetch user data
-      const user = await authService.getCurrentUser();
+      // The http client automatically attaches the token from cookies on the server
+      const user = await authService.me();
 
       if (!user) {
         return { user: null, token: null };
       }
 
-      return { user, token };
+      return { user: user as unknown as MyUser, token };
     } catch (error: unknown) {
       console.error('Authentication error:', error);
       return { user: null, token: null };

@@ -136,10 +136,11 @@ class UserRoleAssignment(UserRoleAssignmentBase, table=True):
 
     # Relationships
     user: "User" = Relationship(
+        back_populates="assigned_roles",
         sa_relationship_kwargs={
             "foreign_keys": "UserRoleAssignment.user_id",
             "lazy": "selectin",
-        }
+        },
     )
     role: "Role" = Relationship(
         back_populates="user_roles", sa_relationship_kwargs={"lazy": "selectin"}

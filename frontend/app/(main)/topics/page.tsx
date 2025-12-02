@@ -1,8 +1,9 @@
 "use client";
 
 import React, { useEffect, useState, ChangeEvent } from "react";
-import topicService from "../../../services/topicService";
+import { getMyTopics, createTopic, updateTopic, deleteTopic } from "../../../services/topicService";
 import { Topic } from "@/types";
+import { useAuthorization } from "@/providers/AuthorizationProvider";
 import {
   Dialog,
   DialogTrigger,
@@ -14,6 +15,10 @@ import {
   DialogClose,
 } from "../../../components/ui/dialog";
 import { useForm } from "react-hook-form";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Checkbox } from "@/components/ui/checkbox";
 
 type TopicFormData = {
   title: string;
@@ -37,6 +42,8 @@ const TopicsPage: React.FC = () => {
   const [selectedTopic, setSelectedTopic] = useState<Topic | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const { user } = useAuthorization();
+  
   const {
     register,
     handleSubmit,
@@ -47,11 +54,11 @@ const TopicsPage: React.FC = () => {
   const fetchTopics = async () => {
     setLoading(true);
     try {
-      const data = await topicService.getMyTopics();
+      const data = await getMyTopics();
       setTopics(data);
       setError(null);
     } catch {
-      setError("Failed to fetch topics");
+      setError("Lỗi khi tải dữ liệu. Vui lòng thử lại.");
     }
     setLoading(false);
   };
@@ -80,31 +87,35 @@ const TopicsPage: React.FC = () => {
   const onSubmit = async (data: TopicFormData) => {
     try {
       if (selectedTopic) {
-        await topicService.updateTopic(selectedTopic.id, data);
+        await updateTopic(selectedTopic.id, data);
       } else {
-        await topicService.createTopic(data);
+        await createTopic(data);
       }
       setDialogOpen(false);
       fetchTopics();
     } catch {
-      setError("Failed to save topic");
+      setError("Lỗi khi lưu chủ đề");
     }
   };
 
-  const deleteTopic = async (topicId: number) => {
-    if (!confirm("Are you sure you want to delete this topic?")) {
+  const deleteTopicHandler = async (topicId: number) => {
+    if (!confirm("Bạn có chắc chắn muốn xóa chủ đề này không??")) {
       return;
     }
     try {
-      await topicService.deleteTopic(topicId);
+      await deleteTopic(topicId);
       fetchTopics();
     } catch {
-      setError("Failed to delete topic");
+      setError("Lỗi khi xóa chủ đề");
     }
   };
 
   const onSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
+  };
+
+  const handleSearch = () => {
+    fetchTopics();
   };
 
   const filteredTopics = topics.filter((topic) =>
@@ -114,7 +125,7 @@ const TopicsPage: React.FC = () => {
   if (loading)
     return (
       <div className="min-h-screen flex items-center justify-center">
-        Loading topics...
+        Đang tải dữ liệu...
       </div>
     );
   if (error)
@@ -124,24 +135,109 @@ const TopicsPage: React.FC = () => {
       </div>
     );
 
+  // If user is a student, show a simpler view
+  if (user?.role === "student") {
+    return (
+      <div className="bg-white min-h-screen p-6">
+        <h1 className="text-3xl font-bold mb-6">Chủ đề tham gia của tôi</h1>
+
+        {/* Search Bar */}
+        <div className="mb-8 max-w-md mx-auto px-4 py-2 bg-gray-100 rounded-full flex items-center gap-2">
+          <Input
+            type="text"
+            placeholder="Tìm kiếm chủ đề của tôi..."
+            className="flex-grow bg-gray-200 rounded-full px-4 py-2 focus:outline-none"
+            value={searchQuery}
+            onChange={onSearchChange}
+          />
+          <Button
+            type="button"
+            className="bg-green-800 hover:bg-green-900 text-white px-4 py-2 rounded-full flex items-center gap-2"
+            onClick={handleSearch}
+            aria-label="Search"
+          >
+            <svg
+              className="w-5 h-5 fill-current"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+            >
+              <path d="M21 20l-5.59-5.59A7.92 7.92 0 0016 10a8 8 0 10-8 8 7.92 7.92 0 004.41-1.59L20 21zM10 16a6 6 0 110-12 6 6 0 010 12z" />
+            </svg>
+            Search
+          </Button>
+        </div>
+
+        {/* Grid topic cards */}
+        <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+          {filteredTopics.length === 0 && (
+            <p className="text-center col-span-full">Bạn chưa tham gia bất kỳ chủ đề nào.</p>
+          )}
+          {filteredTopics.map((topic, index) => {
+            const color = pastelColors[index % pastelColors.length];
+            const avatarLetter = topic.title.charAt(0).toUpperCase();
+
+            return (
+              <div
+                key={topic.id}
+                className="relative rounded-xl shadow-md overflow-hidden flex flex-col h-64"
+              >
+                {/* Header with pastel background */}
+                <div
+                  className={`relative flex flex-col justify-center px-6 h-1/3 ${color}`}
+                >
+                  <h2 className="font-bold text-lg">{topic.title}</h2>
+                  <span className="text-sm">{`Người tạo: ${topic.teacher_info?.full_name || topic.teacher_info?.username || `Teacher ${topic.teacher_id}`}`}</span>
+                  {/* Avatar */}
+                  <div className="absolute top-full right-6 transform -translate-y-1/2">
+                    <div className="w-16 h-16 rounded-full bg-white border border-gray-300 flex items-center justify-center text-2xl font-bold text-gray-700 shadow">
+                      {avatarLetter}
+                    </div>
+                  </div>
+                </div>
+                {/* Body */}
+                <div className="bg-white flex-grow px-6 py-4">
+                  {/* Display description as deadline substitute or other info */}
+                  <p className="text-gray-700">{topic.description || ""}</p>
+                </div>
+                {/* Footer */}
+                <div className="border-t border-gray-200 px-6 py-3 flex justify-end gap-2 bg-white">
+                  <Button
+                    variant="outline"
+                    className="text-green-600 hover:text-green-800"
+                    onClick={() => openEditDialog(topic)}
+                  >
+                    Đi đến chủ đề
+                  </Button>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    );
+  }
+
+  // Teacher view (existing functionality) - updated to match Figma design
   return (
     <div className="bg-white min-h-screen p-6">
-      <h1 className="text-3xl font-bold mb-6">Topics Management</h1>
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-3xl font-bold">Quản lý chủ đề</h1>
+      </div>
 
-      {/* Search Bar */}
-      <div className="mb-8 max-w-md mx-auto px-4 py-2 bg-gray-100 rounded-full flex items-center gap-2">
-        <input
+      {/* Search Bar - matching Figma design */}
+      <div className="mb-8 px-4 py-2 bg-gray-100 rounded-full flex items-center gap-2">
+        <Input
           type="text"
-          placeholder="Enter topic code"
+          placeholder="Nhập mã chủ đề"
           className="flex-grow bg-gray-200 rounded-full px-4 py-2 focus:outline-none"
           value={searchQuery}
           onChange={onSearchChange}
         />
-        <button
+        <Button
           type="button"
           className="bg-green-800 hover:bg-green-900 text-white px-4 py-2 rounded-full flex items-center gap-2"
-          onClick={() => { }}
-          aria-label="Search"
+          onClick={handleSearch}
+          aria-label="Tìm kiếm"
         >
           <svg
             className="w-5 h-5 fill-current"
@@ -150,14 +246,28 @@ const TopicsPage: React.FC = () => {
           >
             <path d="M21 20l-5.59-5.59A7.92 7.92 0 0016 10a8 8 0 10-8 8 7.92 7.92 0 004.41-1.59L20 21zM10 16a6 6 0 110-12 6 6 0 010 12z" />
           </svg>
-          Search
-        </button>
+          Tìm kiếm
+        </Button>
+        <Button
+          onClick={openCreateDialog}
+          className="bg-green-800 hover:bg-green-900 text-white px-4 py-2 rounded-full flex items-center gap-2"
+          aria-label="Tạo mới"
+        >
+          <svg
+            className="w-5 h-5 fill-current"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+          >
+            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+          </svg>
+          Tạo mới
+        </Button>
       </div>
 
       {/* Grid topic cards */}
       <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
         {filteredTopics.length === 0 && (
-          <p className="text-center col-span-full">No topics found.</p>
+          <p className="text-center col-span-full">Không tìm thấy chủ đề nào.</p>
         )}
         {filteredTopics.map((topic, index) => {
           const color = pastelColors[index % pastelColors.length];
@@ -173,7 +283,7 @@ const TopicsPage: React.FC = () => {
                 className={`relative flex flex-col justify-center px-6 h-1/3 ${color}`}
               >
                 <h2 className="font-bold text-lg">{topic.title}</h2>
-                <span className="text-sm">{`Lecturer: ${topic.teacher_id}`}</span>
+                <span className="text-sm">{`Giảng viên: ${topic.teacher_id}`}</span>
                 {/* Avatar */}
                 <div className="absolute top-full right-6 transform -translate-y-1/2">
                   <div className="w-16 h-16 rounded-full bg-white border border-gray-300 flex items-center justify-center text-2xl font-bold text-gray-700 shadow">
@@ -184,15 +294,16 @@ const TopicsPage: React.FC = () => {
               {/* Body */}
               <div className="bg-white flex-grow px-6 py-4">
                 {/* Display description as deadline substitute or other info */}
-                <p className="text-gray-700">{topic.description || "No description"}</p>
+                <p className="text-gray-700">{topic.description || ""}</p>
               </div>
               {/* Footer */}
               <div className="border-t border-gray-200 px-6 py-3 flex justify-end gap-2 bg-white">
-                <button
+                <Button
+                  variant="outline"
                   className="text-red-600 hover:text-red-800"
-                  onClick={() => deleteTopic(topic.id)}
-                  aria-label={`Leave or logout ${topic.title}`}
-                  title="Leave"
+                  onClick={() => deleteTopicHandler(topic.id)}
+                  aria-label={`Delete ${topic.title}`}
+                  title="Delete"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -205,15 +316,16 @@ const TopicsPage: React.FC = () => {
                       strokeLinecap="round"
                       strokeLinejoin="round"
                       strokeWidth={2}
-                      d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1m0-12v1"
+                      d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
                     />
                   </svg>
-                </button>
-                <button
+                </Button>
+                <Button
+                  variant="outline"
                   className="text-green-600 hover:text-green-800"
                   onClick={() => openEditDialog(topic)}
-                  aria-label={`View detail for ${topic.title}`}
-                  title="View Detail"
+                  aria-label={`Edit ${topic.title}`}
+                  title="Edit"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -226,10 +338,10 @@ const TopicsPage: React.FC = () => {
                       strokeLinecap="round"
                       strokeLinejoin="round"
                       strokeWidth={2}
-                      d="M15 10l4.553-2.276A2 2 0 0122 9.618v4.764a2 2 0 01-2.447 1.894L15 14M9 21H6a2 2 0 01-2-2v-3m0-4v-3a2 2 0 012-2h3m3-2h0a4 4 0 014 4v1.5"
+                      d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
                     />
                   </svg>
-                </button>
+                </Button>
               </div>
             </div>
           );
@@ -241,7 +353,7 @@ const TopicsPage: React.FC = () => {
         <DialogTrigger asChild></DialogTrigger>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>{selectedTopic ? "Edit Topic" : "Create Topic"}</DialogTitle>
+            <DialogTitle>{selectedTopic ? "Cập nhật chủ đề" : "Tạo chủ đề"}</DialogTitle>
             <DialogDescription>
               {selectedTopic
                 ? "Update the topic details and save."
@@ -254,59 +366,41 @@ const TopicsPage: React.FC = () => {
               <label className="block mb-1 font-semibold" htmlFor="title">
                 Title
               </label>
-              <input
+              <Input
                 id="title"
                 {...register("title", { required: true })}
-                className="w-full rounded border px-3 py-2"
               />
               {errors.title && (
-                <span className="text-red-600">Title is required</span>
-              )}
-            </div>
-            <div>
-              <label className="block mb-1 font-semibold" htmlFor="code">
-                Code
-              </label>
-              <input
-                id="code"
-                {...register("code", { required: true })}
-                className="w-full rounded border px-3 py-2"
-              />
-              {errors.code && (
-                <span className="text-red-600">Code is required</span>
+                <span className="text-red-600">Tên không được để trống</span>
               )}
             </div>
             <div>
               <label className="block mb-1 font-semibold" htmlFor="description">
                 Description
               </label>
-              <textarea
+              <Textarea
                 id="description"
                 {...register("description")}
-                className="w-full rounded border px-3 py-2"
               />
             </div>
-            <div>
-              <label className="inline-flex items-center gap-2">
-                <input type="checkbox" {...register("public")} />
+            <div className="flex items-center space-x-2">
+              <Checkbox id="public" {...register("public")} />
+              <label
+                htmlFor="public"
+                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+              >
                 Public
               </label>
             </div>
 
             <DialogFooter>
-              <button
-                type="submit"
-                className="rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
-              >
+              <Button type="submit">
                 Save
-              </button>
+              </Button>
               <DialogClose asChild>
-                <button
-                  type="button"
-                  className="ml-2 rounded border border-gray-300 px-4 py-2 hover:bg-gray-100"
-                >
+                <Button variant="outline">
                   Cancel
-                </button>
+                </Button>
               </DialogClose>
             </DialogFooter>
           </form>

@@ -11,14 +11,17 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { useAuthorization } from '@/providers/AuthorizationProvider';
+import { signOut } from '@/lib/actions';
 
 const UserMenu: React.FC = () => {
   const { user } = useAuthorization();
   const router = useRouter();
 
-  const handleLogout = () => {
-    // Clear token and redirect to sign-in page
-    document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+  const handleLogout = async () => {
+    // Use server action to clear token
+    await signOut();
+    
+    // Redirect to sign-in page regardless of result
     router.push('/sign-in');
   };
 

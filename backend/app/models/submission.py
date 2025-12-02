@@ -31,10 +31,11 @@ class Submission(SubmissionBase, table=True):
         back_populates="submissions", sa_relationship_kwargs={"lazy": "selectin"}
     )
     student: "User" = Relationship(
+        back_populates="submissions",
         sa_relationship_kwargs={
             "foreign_keys": "Submission.student_id",
             "lazy": "selectin",
-        }
+        },
     )
     student_profile: Optional["Student"] = Relationship(
         sa_relationship_kwargs={

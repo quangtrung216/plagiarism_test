@@ -6,10 +6,369 @@ from app.core.auth import get_current_user
 from app.core.topic_service import TopicService
 from app.models.user import User
 from app.models.topic import Topic, TopicCreate, TopicUpdate
+from app.schemas.topic import TopicOut, TeacherInfo
 from app.models.topic_member import TopicMember, TopicMemberUpdate
-from app.models.enums import MemberStatus, TopicStatus
+from app.schemas.topic_member import TopicMemberOut, StudentInfo, StudentProfileInfo
+from app.models.enums import MemberStatus
 
 router = APIRouter()
+
+
+# Search topics
+@router.get("/", response_model=List[TopicOut])
+def search_topics(
+    *,
+    skip: int = 0,
+    limit: int = 100,
+    title: Optional[str] = None,
+    code: Optional[str] = None,
+    session: Session = Depends(get_session),
+    current_user: User = Depends(get_current_user),
+):
+    """Search topics with optional filters"""
+    topic_service = TopicService(session)
+    topics = topic_service.search_topics(skip, limit, title, code, current_user.role)
+
+    # Convert Topic objects to TopicOut objects with teacher info
+    topics_out = []
+    for topic in topics:
+        teacher_info = (
+            TeacherInfo(
+                id=topic.teacher.id,
+                full_name=topic.teacher.full_name,
+                username=topic.teacher.username,
+            )
+            if topic.teacher
+            else None
+        )
+
+        topic_out = TopicOut(
+            id=topic.id,
+            title=topic.title,
+            description=topic.description,
+            teacher_id=topic.teacher_id,
+            deadline=topic.deadline,
+            max_file_size=topic.max_file_size,
+            allowed_extensions=topic.allowed_extensions,
+            code=topic.code,
+            public=topic.public,
+            require_approval=topic.require_approval,
+            max_uploads=topic.max_uploads,
+            threshold=topic.threshold,
+            created_at=topic.created_at,
+            updated_at=topic.updated_at,
+            teacher_info=teacher_info,
+        )
+        topics_out.append(topic_out)
+
+    return topics_out
+
+
+# Get topics created by current user (teacher) or joined by user (student)
+@router.get("/my-topics", response_model=List[TopicOut])
+def get_my_topics(
+    *,
+    skip: int = 0,
+    limit: int = 100,
+    session: Session = Depends(get_session),
+    current_user: User = Depends(get_current_user),
+):
+    """Get topics created by the current user (teacher) or joined by user (student)"""
+    # Ensure user ID is not None
+    if current_user.id is None:
+        raise HTTPException(
+            status_code=fastapi_status.HTTP_400_BAD_REQUEST,
+            detail="User ID is required",
+        )
+
+    topic_service = TopicService(session)
+    topics = topic_service.get_user_topics(
+        current_user.id, current_user.role, skip, limit
+    )
+
+    topics_out = []
+    for topic in topics:
+        teacher_info = (
+            TeacherInfo(
+                id=topic.teacher.id,
+                full_name=topic.teacher.full_name,
+                username=topic.teacher.username,
+            )
+            if topic.teacher
+            else None
+        )
+
+        topic_out = TopicOut(
+            id=topic.id,
+            title=topic.title,
+            description=topic.description,
+            teacher_id=topic.teacher_id,
+            deadline=topic.deadline,
+            max_file_size=topic.max_file_size,
+            allowed_extensions=topic.allowed_extensions,
+            code=topic.code,
+            public=topic.public,
+            require_approval=topic.require_approval,
+            max_uploads=topic.max_uploads,
+            threshold=topic.threshold,
+            created_at=topic.created_at,
+            updated_at=topic.updated_at,
+            teacher_info=teacher_info,
+        )
+        topics_out.append(topic_out)
+
+    return topics_out
+
+
+# Get topics user has joined (student) - alternative endpoint
+@router.get("/my-joined-topics", response_model=List[TopicOut])
+def get_my_joined_topics(
+    *,
+    status: Optional[MemberStatus] = None,
+    skip: int = 0,
+    limit: int = 100,
+    session: Session = Depends(get_session),
+    current_user: User = Depends(get_current_user),
+):
+    """Get topics the current user has joined"""
+    # Ensure user ID is not None
+    if current_user.id is None:
+        raise HTTPException(
+            status_code=fastapi_status.HTTP_400_BAD_REQUEST,
+            detail="User ID is required",
+        )
+
+    # This is the same as my-topics for students, but with explicit status filtering
+    topic_service = TopicService(session)
+
+    # For students, we want to filter by membership status
+    if current_user.role == "student":
+        # Get topic members for this student with specified status
+        query = select(TopicMember).where(TopicMember.student_id == current_user.id)
+
+        # Apply status filter if provided
+        if status:
+            query = query.where(TopicMember.status == status)
+
+        topic_members = list(session.exec(query.offset(skip).limit(limit)).all())
+
+        # Get the topics from the topic members
+        topic_ids = [tm.topic_id for tm in topic_members]
+        if not topic_ids:
+            return []
+
+        # Use col() function for proper SQL IN clause
+        topics_query = select(Topic).where(col(Topic.id).in_(topic_ids))
+        topics = list(session.exec(topics_query).all())
+
+        # Convert Topic objects to TopicOut objects with teacher info
+        topics_out = []
+        for topic in topics:
+            teacher_info = (
+                TeacherInfo(
+                    id=topic.teacher.id,
+                    full_name=topic.teacher.full_name,
+                    username=topic.teacher.username,
+                )
+                if topic.teacher
+                else None
+            )
+
+            topic_out = TopicOut(
+                id=topic.id,
+                title=topic.title,
+                description=topic.description,
+                teacher_id=topic.teacher_id,
+                deadline=topic.deadline,
+                max_file_size=topic.max_file_size,
+                allowed_extensions=topic.allowed_extensions,
+                code=topic.code,
+                public=topic.public,
+                require_approval=topic.require_approval,
+                max_uploads=topic.max_uploads,
+                threshold=topic.threshold,
+                created_at=topic.created_at,
+                updated_at=topic.updated_at,
+                teacher_info=teacher_info,
+            )
+            topics_out.append(topic_out)
+
+        return topics_out
+    else:
+        # For teachers, return their created topics
+        topics = topic_service.get_user_topics(
+            current_user.id, current_user.role, skip, limit
+        )
+
+        # Convert Topic objects to TopicOut objects with teacher info
+        topics_out = []
+        for topic in topics:
+            teacher_info = (
+                TeacherInfo(
+                    id=topic.teacher.id,
+                    full_name=topic.teacher.full_name,
+                    username=topic.teacher.username,
+                )
+                if topic.teacher
+                else None
+            )
+
+            topic_out = TopicOut(
+                id=topic.id,
+                title=topic.title,
+                description=topic.description,
+                teacher_id=topic.teacher_id,
+                deadline=topic.deadline,
+                max_file_size=topic.max_file_size,
+                allowed_extensions=topic.allowed_extensions,
+                code=topic.code,
+                public=topic.public,
+                require_approval=topic.require_approval,
+                max_uploads=topic.max_uploads,
+                threshold=topic.threshold,
+                created_at=topic.created_at,
+                updated_at=topic.updated_at,
+                teacher_info=teacher_info,
+            )
+            topics_out.append(topic_out)
+
+        return topics_out
+
+
+# Get topic by code
+@router.get("/code/{code}", response_model=TopicOut)
+def get_topic_by_code(
+    *,
+    code: str,
+    session: Session = Depends(get_session),
+    current_user: User = Depends(get_current_user),
+):
+    """Get a topic by its code"""
+    topic_service = TopicService(session)
+    db_topic = topic_service.get_topic_by_code(code)
+
+    if not db_topic:
+        raise HTTPException(
+            status_code=fastapi_status.HTTP_404_NOT_FOUND, detail="Topic not found"
+        )
+
+    # If topic is not public, only teacher or admin can view it
+    if (
+        not db_topic.public
+        and db_topic.teacher_id != current_user.id
+        and not current_user.is_superuser
+    ):
+        raise HTTPException(
+            status_code=fastapi_status.HTTP_403_FORBIDDEN,
+            detail="Not authorized to view this topic",
+        )
+
+    # Convert Topic object to TopicOut object with teacher info
+    teacher_info = (
+        TeacherInfo(
+            id=db_topic.teacher.id,
+            full_name=db_topic.teacher.full_name,
+            username=db_topic.teacher.username,
+        )
+        if db_topic.teacher
+        else None
+    )
+
+    topic_out = TopicOut(
+        id=db_topic.id,
+        title=db_topic.title,
+        description=db_topic.description,
+        teacher_id=db_topic.teacher_id,
+        deadline=db_topic.deadline,
+        max_file_size=db_topic.max_file_size,
+        allowed_extensions=db_topic.allowed_extensions,
+        code=db_topic.code,
+        public=db_topic.public,
+        require_approval=db_topic.require_approval,
+        max_uploads=db_topic.max_uploads,
+        threshold=db_topic.threshold,
+        created_at=db_topic.created_at,
+        updated_at=db_topic.updated_at,
+        teacher_info=teacher_info,
+    )
+
+    return topic_out
+
+
+# Get a single topic by ID
+@router.get("/{topic_id}", response_model=TopicOut)
+def get_topic(
+    *,
+    topic_id: int,
+    session: Session = Depends(get_session),
+    current_user: User = Depends(get_current_user),
+):
+    """Get a single topic by ID"""
+    topic_service = TopicService(session)
+    db_topic = topic_service.get_topic(topic_id)
+
+    if not db_topic:
+        raise HTTPException(
+            status_code=fastapi_status.HTTP_404_NOT_FOUND, detail="Topic not found"
+        )
+
+    # Check permission - only teacher who created the topic, admin, or members can view it
+    is_teacher_or_admin = (
+        db_topic.teacher_id == current_user.id or current_user.is_superuser
+    )
+
+    # Check if user is a member of the topic
+    is_member = False
+    if current_user.role == "student":
+        from sqlmodel import select
+        from app.models.topic_member import TopicMember
+        from app.models.enums import MemberStatus
+
+        member_query = select(TopicMember).where(
+            TopicMember.topic_id == topic_id,
+            TopicMember.student_id == current_user.id,
+            TopicMember.status == MemberStatus.ACCEPTED,
+        )
+        member = session.exec(member_query).first()
+        is_member = member is not None
+
+    # If topic is not public, only teacher, admin, or accepted members can view it
+    if not db_topic.public and not is_teacher_or_admin and not is_member:
+        raise HTTPException(
+            status_code=fastapi_status.HTTP_403_FORBIDDEN,
+            detail="Not authorized to view this topic",
+        )
+
+    # Convert Topic object to TopicOut object with teacher info
+    teacher_info = (
+        TeacherInfo(
+            id=db_topic.teacher.id,
+            full_name=db_topic.teacher.full_name,
+            username=db_topic.teacher.username,
+        )
+        if db_topic.teacher
+        else None
+    )
+
+    topic_out = TopicOut(
+        id=db_topic.id,
+        title=db_topic.title,
+        description=db_topic.description,
+        teacher_id=db_topic.teacher_id,
+        deadline=db_topic.deadline,
+        max_file_size=db_topic.max_file_size,
+        allowed_extensions=db_topic.allowed_extensions,
+        code=db_topic.code,
+        public=db_topic.public,
+        require_approval=db_topic.require_approval,
+        max_uploads=db_topic.max_uploads,
+        threshold=db_topic.threshold,
+        created_at=db_topic.created_at,
+        updated_at=db_topic.updated_at,
+        teacher_info=teacher_info,
+    )
+
+    return topic_out
 
 
 # Create a new topic
@@ -98,56 +457,6 @@ def delete_topic(
         raise HTTPException(
             status_code=fastapi_status.HTTP_403_FORBIDDEN, detail=str(e)
         )
-
-
-# Search topics
-@router.get("/", response_model=List[Topic])
-def search_topics(
-    *,
-    skip: int = 0,
-    limit: int = 100,
-    status: Optional[TopicStatus] = None,
-    title: Optional[str] = None,
-    code: Optional[str] = None,
-    session: Session = Depends(get_session),
-    current_user: User = Depends(get_current_user),
-):
-    """Search topics with optional filters"""
-    topic_service = TopicService(session)
-    return topic_service.search_topics(
-        skip, limit, status, title, code, current_user.role
-    )
-
-
-# Get topic by code
-@router.get("/code/{code}", response_model=Topic)
-def get_topic_by_code(
-    *,
-    code: str,
-    session: Session = Depends(get_session),
-    current_user: User = Depends(get_current_user),
-):
-    """Get a topic by its code"""
-    topic_service = TopicService(session)
-    db_topic = topic_service.get_topic_by_code(code)
-
-    if not db_topic:
-        raise HTTPException(
-            status_code=fastapi_status.HTTP_404_NOT_FOUND, detail="Topic not found"
-        )
-
-    # If topic is not public, only teacher or admin can view it
-    if (
-        not db_topic.public
-        and db_topic.teacher_id != current_user.id
-        and not current_user.is_superuser
-    ):
-        raise HTTPException(
-            status_code=fastapi_status.HTTP_403_FORBIDDEN,
-            detail="Not authorized to view this topic",
-        )
-
-    return db_topic
 
 
 # Request to join a topic
@@ -274,31 +583,8 @@ def update_member_status(
         )
 
 
-# Get topics created by current user (teacher) or joined by user (student)
-@router.get("/my-topics", response_model=List[Topic])
-def get_my_topics(
-    *,
-    skip: int = 0,
-    limit: int = 100,
-    session: Session = Depends(get_session),
-    current_user: User = Depends(get_current_user),
-):
-    """Get topics created by the current user (teacher) or joined by user (student)"""
-    # Ensure user ID is not None
-    if current_user.id is None:
-        raise HTTPException(
-            status_code=fastapi_status.HTTP_400_BAD_REQUEST,
-            detail="User ID is required",
-        )
-
-    topic_service = TopicService(session)
-    return topic_service.get_user_topics(
-        current_user.id, current_user.role, skip, limit
-    )
-
-
 # Get students in a topic
-@router.get("/{topic_id}/students", response_model=List[TopicMember])
+@router.get("/{topic_id}/students", response_model=List[TopicMemberOut])
 def get_topic_students(
     *,
     topic_id: int,
@@ -325,56 +611,47 @@ def get_topic_students(
                 detail="Not authorized to view students in this topic",
             )
 
-        return topic_service.get_topic_students(topic_id, status, skip, limit)
+        topic_members = topic_service.get_topic_students(topic_id, status, skip, limit)
+
+        # Convert TopicMember objects to TopicMemberOut objects
+        members_out = []
+        for member in topic_members:
+            # Create student profile info if available
+            student_profile_info = None
+            if member.student_profile:
+                student_profile_info = StudentProfileInfo(
+                    student_id=member.student_profile.student_id,
+                    major=member.student_profile.major,
+                )
+
+            # Create student info
+            student_info = StudentInfo(
+                id=member.student.id if member.student and member.student.id else None,
+                username=member.student.username if member.student else None,
+                full_name=(
+                    member.student.full_name
+                    if member.student and hasattr(member.student, "full_name")
+                    else None
+                ),
+                email=member.student.email if member.student else None,
+                student_profile=student_profile_info,
+            )
+
+            # Create TopicMemberOut object
+            member_out = TopicMemberOut(
+                id=member.id,
+                topic_id=member.topic_id,
+                student_id=member.student_id,
+                status=member.status,
+                note=member.note,
+                requested_at=member.requested_at,
+                responded_at=member.responded_at,
+                responded_by=member.responded_by,
+                student=student_info,
+            )
+            members_out.append(member_out)
+        return members_out
     except ValueError as e:
         raise HTTPException(
             status_code=fastapi_status.HTTP_404_NOT_FOUND, detail=str(e)
-        )
-
-
-# Get topics user has joined (student) - alternative endpoint
-@router.get("/my-joined-topics", response_model=List[Topic])
-def get_my_joined_topics(
-    *,
-    status: Optional[MemberStatus] = None,
-    skip: int = 0,
-    limit: int = 100,
-    session: Session = Depends(get_session),
-    current_user: User = Depends(get_current_user),
-):
-    """Get topics the current user has joined"""
-    # Ensure user ID is not None
-    if current_user.id is None:
-        raise HTTPException(
-            status_code=fastapi_status.HTTP_400_BAD_REQUEST,
-            detail="User ID is required",
-        )
-
-    # This is the same as my-topics for students, but with explicit status filtering
-    topic_service = TopicService(session)
-
-    # For students, we want to filter by membership status
-    if current_user.role == "student":
-        # Get topic members for this student with specified status
-        query = select(TopicMember).where(TopicMember.student_id == current_user.id)
-
-        # Apply status filter if provided
-        if status:
-            query = query.where(TopicMember.status == status)
-
-        topic_members = list(session.exec(query.offset(skip).limit(limit)).all())
-
-        # Get the topics from the topic members
-        topic_ids = [tm.topic_id for tm in topic_members]
-        if not topic_ids:
-            return []
-
-        # Use col() function for proper SQL IN clause
-        topics_query = select(Topic).where(col(Topic.id).in_(topic_ids))
-        topics = list(session.exec(topics_query).all())
-        return topics
-    else:
-        # For teachers, return their created topics
-        return topic_service.get_user_topics(
-            current_user.id, current_user.role, skip, limit
         )

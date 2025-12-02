@@ -14,10 +14,9 @@ export default async function AuthLayout({
 
   // Validate the request
   const { user } = await validateRequest();
-
   // Redirect if already authenticated
   if (token && user) {
-    redirect('/');
+    redirect('/dashboard');
   }
 
   return <div>{children}</div>;

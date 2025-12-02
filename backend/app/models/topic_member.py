@@ -26,10 +26,11 @@ class TopicMember(TopicMemberBase, table=True):
         back_populates="members", sa_relationship_kwargs={"lazy": "selectin"}
     )
     student: "User" = Relationship(
+        back_populates="topic_memberships",
         sa_relationship_kwargs={
             "foreign_keys": "TopicMember.student_id",
             "lazy": "selectin",
-        }
+        },
     )
     responder: Optional["User"] = Relationship(
         sa_relationship_kwargs={

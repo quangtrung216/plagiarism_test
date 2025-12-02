@@ -26,8 +26,7 @@ export default function SignInPage() {
       const result = await signIn(formData);
 
       if (result.success) {
-        // Redirect to home page
-        router.push('/');
+        router.push('/dashboard');
         router.refresh();
       } else {
         setError(result.error || 'Failed to sign in');

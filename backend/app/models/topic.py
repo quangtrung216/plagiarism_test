@@ -1,10 +1,10 @@
 from sqlmodel import SQLModel, Field, Relationship
 from typing import List, Optional, TYPE_CHECKING
 from datetime import datetime
-from app.models.enums import TopicStatus
 import sqlalchemy.dialects.postgresql as pg
 import secrets
 import string
+from pydantic import field_validator
 
 if TYPE_CHECKING:
     from app.models.user import User, Teacher
@@ -16,15 +16,16 @@ class TopicBase(SQLModel):
     title: str = Field(max_length=500)
     description: Optional[str] = None
     teacher_id: int = Field(foreign_key="user.id")
-    status: TopicStatus = Field(default=TopicStatus.DRAFT)
     deadline: Optional[datetime] = None
     max_file_size: int = Field(default=10485760)  # 10MB default
     allowed_extensions: List[str] = Field(
         default=["pdf", "doc", "docx", "txt"], sa_type=pg.ARRAY(pg.VARCHAR)
     )
-    code: str = Field(default=None, max_length=20, unique=True, index=True)
+    code: Optional[str] = Field(default=None, max_length=20, unique=True, index=True)
     public: bool = Field(default=False)
     require_approval: bool = Field(default=True)
+    max_uploads: Optional[int] = Field(default=1)  # Default to 1 upload
+    threshold: Optional[float] = Field(default=0.8)  # Default to 80% threshold
 
 
 class Topic(TopicBase, table=True):
@@ -63,16 +64,45 @@ class Topic(TopicBase, table=True):
     )
 
 
-class TopicCreate(TopicBase):
-    pass
+class TopicCreate(SQLModel):
+    title: str = Field(max_length=500)
+    description: Optional[str] = None
+    deadline: Optional[datetime] = None
+    max_file_size: int = Field(default=10485760)  # 10MB default
+    allowed_extensions: List[str] = Field(
+        default=["pdf", "doc", "docx", "txt"], sa_type=pg.ARRAY(pg.VARCHAR)
+    )
+    code: Optional[str] = Field(default=None, max_length=20, unique=True, index=True)
+    public: bool = Field(default=False)
+    require_approval: bool = Field(default=True)
+    max_uploads: Optional[int] = Field(default=1)  # Default to 1 upload
+    threshold: Optional[float] = Field(default=0.8)  # Default to 80% threshold
+
+    @field_validator("deadline", mode="before")
+    @classmethod
+    def empty_deadline_is_none(cls, v):
+        """Convert empty string to None for deadline field"""
+        if v == "":
+            return None
+        return v
 
 
 class TopicUpdate(SQLModel):
     title: Optional[str] = None
     description: Optional[str] = None
-    status: Optional[TopicStatus] = None
     deadline: Optional[datetime] = None
     max_file_size: Optional[int] = None
     allowed_extensions: Optional[List[str]] = None
+    code: Optional[str] = None
     public: Optional[bool] = None
     require_approval: Optional[bool] = None
+    max_uploads: Optional[int] = None
+    threshold: Optional[float] = None
+
+    @field_validator("deadline", mode="before")
+    @classmethod
+    def empty_deadline_is_none(cls, v):
+        """Convert empty string to None for deadline field"""
+        if v == "":
+            return None
+        return v

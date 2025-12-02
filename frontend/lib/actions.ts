@@ -1,14 +1,16 @@
 'use server';
 
-import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
-import authService from '@/services/authService';
-import { LoginRequest, RegisterRequest } from '@/services/authService';
+import authService, { LoginRequest, RegisterRequest } from '@/services/authService';
 
 export async function signIn(formData: FormData) {
   try {
     const username = formData.get('username') as string;
     const password = formData.get('password') as string;
+
+    if (!username || !password) {
+      return { success: false, error: 'Vui lòng nhập đầy đủ thông tin.' };
+    }
 
     // Call the authentication service
     const credentials: LoginRequest = { username, password };
@@ -16,22 +18,22 @@ export async function signIn(formData: FormData) {
 
     if (result.access_token) {
       // Set the token in cookies
-      (await cookies()).set('token', result.access_token, {
+      const cookieStore = await cookies();
+      cookieStore.set('token', result.access_token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
         maxAge: 60 * 60 * 24 * 7, // One week
+        path: '/',
+        sameSite: 'lax',
       });
 
       return { success: true };
     } else {
       return { success: false, error: 'Thông tin tài khoản không chính xác. Vui lòng thử lại.' };
     }
-  } catch (error: unknown) {
+  } catch (error : any) {
     console.error('Sign in error:', error);
-    if (error instanceof Error) {
-      return { success: false, error: error.message || 'Đăng nhập thất bại. Vui lòng thử lại.' };
-    }
-    return { success: false, error: 'Đăng nhập thất bại' };
+    return { success: false, error: error.message || 'Đăng nhập thất bại. Vui lòng thử lại.' };
   }
 }
 
@@ -43,16 +45,20 @@ export async function register(formData: FormData, role: 'student' | 'teacher') 
     const fullName = formData.get('fullName') as string;
     const classOrDepartment = formData.get('classOrDepartment') as string;
 
+    if (!username || !email || !password || !fullName || !classOrDepartment) {
+      return { success: false, error: 'Vui lòng nhập đầy đủ thông tin.' };
+    }
+
     // Prepare registration data
     const registerData: RegisterRequest = {
       username,
       email,
       password,
       full_name: fullName,
-      role: role === 'student' ? 'student' : 'teacher',
+      role,
     };
 
-    // Call the authentication service with enhanced registration
+    // Call the authentication service
     const result = await authService.register(registerData, classOrDepartment);
 
     if (result.user_id) {
@@ -60,26 +66,19 @@ export async function register(formData: FormData, role: 'student' | 'teacher') 
     } else {
       return { success: false, error: 'Đăng ký thất bại' };
     }
-  } catch (error: unknown) {
+  } catch (error: any) {
     console.error('Registration error:', error);
-    if (error instanceof Error) {
-
-      return { success: false, error: error.message || 'Đăng ký thất bại. Vui lòng thử lại.' };
-    }
-    return { success: false, error: 'Đăng ký thất bại. Vui lòng thử lại.' };
+    return { success: false, error: error.message || 'Đăng ký thất bại. Vui lòng thử lại.' };
   }
 }
 
 export async function signOut() {
   try {
-    // Clear the token cookie
-    (await cookies()).delete('token');
-
-    // Redirect to sign-in page
-    redirect('/sign-in');
-  } catch (error: unknown) {
+    const cookieStore = await cookies();
+    cookieStore.delete('token');
+    return { success: true };
+  } catch (error) {
     console.error('Sign out error:', error);
-    // Even if there's an error, we still want to redirect to sign-in
-    redirect('/sign-in');
+    return { success: false, error: 'Đăng xuất thất bại' };
   }
 }
