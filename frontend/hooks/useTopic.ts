@@ -29,7 +29,7 @@ export function useTopic(id: number) {
     if (id && user) {
       fetchTopic();
     }
-}, [id, user,fetchTopic]);
+}, [id, user]);
 
   return {
     topic,

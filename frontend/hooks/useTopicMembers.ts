@@ -42,7 +42,7 @@ export function useTopicMembers(topicId: number | null) {
 
   useEffect(() => {
     fetchMembers();
-  }, [topicId,fetchMembers]);
+  }, [topicId]);
 
   return {
     members,
