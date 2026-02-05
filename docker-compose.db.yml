@@ -16,9 +16,18 @@ services:
       - "5432:5432"
     networks:
       - plagiarism_network
+  redis:
+    image: redis:7.2
+    container_name: redis_progress
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: ["redis-server", "--appendonly", "yes"]
+    restart: unless-stopped
 
-# Volumes
 volumes:
+  redis_data:
   postgres_data:
 
 # Networks

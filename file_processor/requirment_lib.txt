@@ -1,0 +1,6 @@
+sentence-transformers
+pyvi
+nltk
+undertheseas
+streamlit
+pymilvus
