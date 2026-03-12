@@ -1,13 +1,9 @@
-"""
-File Processor Service Main Entry Point
-"""
+from fastapi import FastAPI
+from app.upload import router as upload_router
+app = FastAPI(title="Plagiarism Detection File Processor")
 
-from dotenv import load_dotenv
-from consumer import start_consumer
+app.include_router(upload_router,prefix="/api")
 
-# Load environment variables from .env file
-load_dotenv()
-
-if __name__ == "__main__":
-    print("Starting File Processor Service...")
-    start_consumer()
+@app.get("/")
+def root():
+    return {"status": "running"}
