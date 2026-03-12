@@ -8,10 +8,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(BASE_DIR)
 
 from worker.pdf_worker import process_message
-
-
 load_dotenv()
-
 
 # Load env
 RABBIT_HOST = os.getenv("RABBITMQ_HOST", "localhost")
@@ -20,6 +17,10 @@ RABBIT_USER = os.getenv("RABBITMQ_USER", "guest")
 RABBIT_PASS = os.getenv("RABBITMQ_PASSWORD", "guest")
 
 QUEUE_NAME = os.getenv("FILE_PROCESSING_QUEUE", "file_processing_queue")
+
+RETRY_QUEUE_NAME = os.getenv("FILE_PROCESSING_RETRY_QUEUE", f"{QUEUE_NAME}.retry")
+DLQ_NAME = os.getenv("FILE_PROCESSING_DLQ", f"{QUEUE_NAME}.dlq")
+RETRY_DELAY_MS = int(os.getenv("FILE_PROCESSING_RETRY_DELAY_MS", "30000"))
 
 
 def start_consumer():
@@ -46,6 +47,21 @@ def start_consumer():
     channel.queue_declare(
         queue=QUEUE_NAME,
         durable=True
+    )
+
+    channel.queue_declare(
+        queue=RETRY_QUEUE_NAME,
+        durable=True,
+        arguments={
+            "x-message-ttl": RETRY_DELAY_MS,
+            "x-dead-letter-exchange": "",
+            "x-dead-letter-routing-key": QUEUE_NAME,
+        },
+    )
+
+    channel.queue_declare(
+        queue=DLQ_NAME,
+        durable=True,
     )
 
     # Only take 1 job at a time

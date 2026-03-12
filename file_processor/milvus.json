@@ -1,0 +1,40 @@
+{
+  "collection_name": "plagiarism_sentences",
+  "description": "Sentence embeddings for plagiarism detection",
+  "fields": [
+    {
+      "name": "id",
+      "data_type": "Int64",
+      "is_primary_key": true,
+      "auto_id": true
+    },
+    {
+      "name": "embedding",
+      "data_type": "FloatVector",
+      "type_params": {
+        "dim": "768"
+      }
+    },
+    {
+      "name": "document_id",
+      "data_type": "VarChar",
+      "type_params": {
+        "max_length": "256"
+      }
+    },
+    {
+      "name": "sentence_id",
+      "data_type": "VarChar",
+      "type_params": {
+        "max_length": "256"
+      }
+    },
+    {
+      "name": "text",
+      "data_type": "VarChar",
+      "type_params": {
+        "max_length": "4096"
+      }
+    }
+  ]
+}

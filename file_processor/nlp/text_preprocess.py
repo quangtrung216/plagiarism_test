@@ -5,6 +5,7 @@ import nltk
 from nltk.tokenize import sent_tokenize
 from underthesea import sent_tokenize as vi_sent_tokenize
 import os 
+import fitz
 
 # STOPWORDS = {
 #     "là", "và", "thì", "được", "của", "với", "cho", "trong",
@@ -18,67 +19,96 @@ import os
 #     text = re.sub(r"[^a-zA-Z0-9àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđĐ\s]", " ", text)
 #     return text
 
-def is_toc_line(text: str) -> bool:
-
-    text = text.lower().strip()
-
-    # Có chữ "mục lục"
-    if "mục lục" in text:
-        return True
-
-    # Dạng: chương 1 ..... 3
-    if re.search(r"\.{3,}\s*\d+$", text):
-        return True
-
-    # Dạng: title + số trang
-    if re.search(r"\s+\d+$", text) and len(text.split()) < 8:
-        return True
-
-    return False
-
-# Load stopwords from file
-def load_stopwords(file_path: str) -> set:
-    stopwords = set()
-    if not os.path.exists(file_path):
-        print(f"[WARN] Stopwords file not found: {file_path}")
-        return stopwords
-    with open(file_path, "r", encoding="utf-8") as f:
-        for line in f:
-            word = line.strip().lower()
-            if word:
-                stopwords.add(word)
-    return stopwords
-
-# Remove stopwords from text
-def remove_stopword(text: str, stopwords: set) -> str:
-    if not text:
-        return ""
-    words = text.split()
-    filtered_words = [word for word in words if word not in stopwords]
-    return " ".join(filtered_words)
-
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-STOPWORDS_FILE = os.path.join(BASE_DIR, "../data/vietnamese-stopwords.txt")
-VI_STOPWORDS = load_stopwords(STOPWORDS_FILE)
-
-IGNORE_SECTIONS = [
-    "BÌA",
-    "NHẬN XÉT",
+IGNORE_START = [
     "LỜI CAM ĐOAN",
     "LỜI CẢM ƠN",
     "MỤC LỤC",
-    "DANH MỤC",
+    "DANH MỤC"
 ]
 
+START_CONTENT = [
+    r"CHƯƠNG\s+1",
+    r"CHƯƠNG\s+I",
+    r"PHẦN\s+1",
+    r"GIỚI\s+THIỆU"
+]
 
+STOP_CONTENT = [
+    "TÀI LIỆU THAM KHẢO",
+    "REFERENCES",
+    "PHỤ LỤC"
+]
 
-# Viết thường cho các kí tự
-def normalize_text_lowercase(text: str) -> str:
+def normalize_full_text(text: str) -> str:
+    if not text:
+        return ""
+
+    text = unicodedata.normalize("NFC", text)
+
+    # Chuẩn newline
+    text = re.sub(r'\r\n?', '\n', text)
+
+    # Bỏ multiple spaces
+    text = re.sub(r'[ \t]+', ' ', text)
+
+    # Bỏ ký tự trang
+    text = text.replace("\f", " ")
+
+    return text.strip()
+
+def normalize_full_text(text: str) -> str:
     if not text:
         return ""
     text = unicodedata.normalize("NFC", text)
-    text = text.lower()
-    return text
+    # Chuẩn newline
+    text = re.sub(r'\r\n?', '\n', text)
+    # Bỏ multiple spaces
+    text = re.sub(r'[ \t]+', ' ', text)
+    # Bỏ ký tự trang
+    text = text.replace("\f", " ")
+    return text.strip()
+
+def extract_plagiarism_zone(text: str) -> str:
+    lines = text.split("\n")
+
+    start_idx = None
+    stop_idx = None
+
+    for i, line in enumerate(lines):
+        upper_line = line.strip().upper()
+
+        # Tìm điểm bắt đầu
+        if start_idx is None:
+            for pattern in START_CONTENT:
+                if re.search(pattern, upper_line):
+                    start_idx = i
+                    break
+
+        # Tìm điểm dừng
+        if any(keyword in upper_line for keyword in STOP_CONTENT):
+            stop_idx = i
+            break
+
+    if start_idx is None:
+        # Nếu không tìm thấy chương → fallback lấy toàn bộ
+        start_idx = 0
+
+    if stop_idx is None:
+        stop_idx = len(lines)
+
+    return "\n".join(lines[start_idx:stop_idx])
+
+
+def has_valid_citation(sentence: str) -> bool:
+    # (Nguyễn Văn A, 2020)
+    if re.search(r'\([A-Za-zÀ-ỹ\s]+,\s*\d{4}\)', sentence):
+        return True
+
+    # [1]
+    if re.search(r'\[\d+\]', sentence):
+        return True
+
+    return False
 
 
 # Xoá xuống dòng
@@ -129,22 +159,71 @@ def extract_academic_content(text: str) -> str:
         return ""
     return main_text[first_chapter.start():].strip()
 
+# xử lí trích dẫn
+def is_citation_sentence(text: str) -> bool:
+    text = text.strip()
+    # Có dấu ngoặc kép
+    if re.search(r'“.*?”|".*?"', text):
+        return True
+    # (Author, 2020)
+    if re.search(r'\([A-Za-zÀ-ỹ\s]+,\s*\d{4}\)', text):
+        return True
+    if re.search(r'\[\d+\]', text):
+        return True
+
+    return False
 
 # Luồng
-def preprocess_pdf_text(raw_text: str, language: str = "vi", min_words: int = 8, max_words: int = 200) -> str:
+def preprocess_pdf_text(raw_text: str, language: str = "vi", min_words: int = 8, max_words: int = 200, use_zone: bool = True) -> str:
     if not raw_text:
         return []
-    academic_text = extract_academic_content(raw_text)
-    if not academic_text:
+     # ===== BƯỚC 1: Chuẩn hóa =====
+    text = normalize_full_text(raw_text)
+
+    # ===== BƯỚC 2: Cắt vùng tính đạo văn =====
+    plagiarism_zone = extract_plagiarism_zone(text) if use_zone else text
+
+    if not plagiarism_zone.strip():
         return []
-    academic_text = normalize_text_lowercase(academic_text)
-    academic_text = normalize_lines(academic_text)
-    sentences = extract_valid_sentences(academic_text, min_words=min_words, language=language)
+
+    # ===== BƯỚC 3: Tách câu =====
+    sentences = vi_sent_tokenize(plagiarism_zone)
+
     clean_sentences = []
+
     for sentence in sentences:
-        s_clean = remove_stopword(sentence, VI_STOPWORDS)
-        if s_clean.strip():
-            clean_sentences.append(s_clean)
+        sentence = sentence.strip()
+
+        if not sentence:
+            continue
+
+        word_count = len(sentence.split())
+
+        # Điều kiện >= 8 từ
+        if word_count < min_words or word_count > max_words:
+            continue
+
+        # Nếu có trích dẫn hợp lệ → bỏ qua
+        if has_valid_citation(sentence):
+            continue
+
+        clean_sentences.append(sentence.lower())
+
+    if clean_sentences:
+        return clean_sentences
+
+    # Fallback: khi xử lý theo block nhỏ (ít dấu câu / ít từ) thì filter mặc định có thể loại hết.
+    # Nới điều kiện để không trả về rỗng quá thường xuyên.
+    relaxed_min_words = min(5, min_words)
+    for sentence in sentences:
+        sentence = sentence.strip()
+        if not sentence:
+            continue
+        word_count = len(sentence.split())
+        if word_count < relaxed_min_words or word_count > max_words:
+            continue
+        clean_sentences.append(sentence.lower())
+
     return clean_sentences
 
 
@@ -188,3 +267,5 @@ def preprocess_pdf_text(raw_text: str, language: str = "vi", min_words: int = 8,
 
 # if __name__ == "__main__":
 #     main()
+
+
