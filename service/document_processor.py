@@ -9,7 +9,7 @@ from pathlib import Path
 
 from text_process import TextPreprocessor, PDFProcessor
 from .embedding_service import EmbeddingService
-from ..db.metadata_service import MetadataService
+from db.metadata_service import MetadataService
 from .highlight_service import HighlightService
 
 

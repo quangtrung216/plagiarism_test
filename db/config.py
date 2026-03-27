@@ -13,8 +13,8 @@ MILVUS_ALIAS = _env("MILVUS_ALIAS", "default")
 
 # Postgres
 POSTGRES_HOST = _env("POSTGRES_HOST", "localhost")
-POSTGRES_PORT = int(_env("POSTGRES_PORT", "5432"))
-POSTGRES_DB = _env("POSTGRES_DB", "plagiarism")
+POSTGRES_PORT = int(_env("POSTGRES_PORT", "15432"))
+POSTGRES_DB = _env("POSTGRES_DB", "plagiarism_detection")
 POSTGRES_USER = _env("POSTGRES_USER", "plagiarism")
 POSTGRES_PASSWORD = _env("POSTGRES_PASSWORD", "plagiarism")
 

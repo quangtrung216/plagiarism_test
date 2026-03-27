@@ -117,7 +117,25 @@ def ensure_collection_and_index(
         return collection
     except MilvusException as e:
         # If collection already exists, just load it
-        if e.message and "already exists" in e.message.lower():
-            return get_collection(collection_name=collection_name, alias=alias)
+        if e.message and ("already exists" in e.message.lower() or "schema inconsistent" in e.message.lower()):
+            try:
+                # Try to drop the existing collection with inconsistent schema
+                from pymilvus import utility
+                if utility.has_collection(collection_name, using=alias):
+                    utility.drop_collection(collection_name, using=alias)
+                    print(f"Dropped existing collection '{collection_name}' due to schema inconsistency")
+                
+                # Create new collection
+                collection = create_plagiarism_collection(
+                    collection_name=collection_name,
+                    dim=dim,
+                    metric_type=metric_type,
+                    alias=alias,
+                )
+                return collection
+            except Exception as drop_error:
+                # If dropping fails, try to get existing collection
+                print(f"Could not drop collection, trying to load existing: {drop_error}")
+                return get_collection(collection_name=collection_name, alias=alias)
         else:
             raise

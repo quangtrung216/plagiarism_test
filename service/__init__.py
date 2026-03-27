@@ -2,17 +2,7 @@
 Service module for document embedding and similarity detection.
 """
 
-from .embedding_service import DEk21HCMUTEEmbedding, EmbeddingService
-from .document_processor import DocumentProcessor
+# Only import what we need for the API
+from .document_service import DocumentService
 
-__all__ = ['DEk21HCMUTEEmbedding', 'EmbeddingService', 'DocumentProcessor']
-
-"""
-Service module for document embedding and similarity detection.
-"""
-
-from .embedding_service import DEk21HCMUTEEmbedding, EmbeddingService
-from .document_processor import DocumentProcessor
-from .highlight_service import HighlightService
-
-__all__ = ['DEk21HCMUTEEmbedding', 'EmbeddingService', 'DocumentProcessor', 'HighlightService']
+__all__ = ['DocumentService']

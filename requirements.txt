@@ -1,3 +1,11 @@
+# Web framework
+fastapi>=0.104.0
+uvicorn>=0.24.0
+python-multipart>=0.0.22
+
+# HTTP requests
+requests>=2.33.0
+
 # PDF processing
 PyPDF2>=3.0.0
 
@@ -14,6 +22,9 @@ psycopg2-binary>=2.9.0
 sentence-transformers>=2.2.0
 torch>=2.0.0
 numpy>=1.24.0
+
+# MinHash for similarity detection
+datasketch>=1.6.4
 
 # Other dependencies
 python-dotenv>=1.0.0

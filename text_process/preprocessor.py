@@ -14,7 +14,7 @@ except ImportError:
 class TextPreprocessor:
     """Text preprocessing utilities for Vietnamese text processing."""
     
-    def __init__(self, min_words: int = 8):
+    def __init__(self, min_words: int = 2):
         """
         Initialize text preprocessor.
         

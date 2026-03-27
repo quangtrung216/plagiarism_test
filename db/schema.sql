@@ -1,3 +1,4 @@
+-- Active: 1772621494298@@127.0.0.1@5432
 -- PostgreSQL schema for plagiarism detection system
 -- Contains tables for document metadata, sentences, and plagiarism results
 
