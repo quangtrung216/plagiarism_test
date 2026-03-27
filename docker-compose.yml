@@ -48,6 +48,7 @@ services:
       MINIO_ACCESS_KEY: minioadmin1
       MINIO_SECRET_KEY: minioadmin1
       MINIO_USE_SSL: "false"
+      COMMON_STORAGE_TYPE: "local"  # Use local storage instead of MinIO for testing
     volumes:
       - milvus_data:/var/lib/milvus
     ports:
