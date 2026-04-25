@@ -2,6 +2,7 @@ import io
 import os
 import uuid
 import re
+import asyncio
 import fitz
 from db.minio import get_client
 from db.milvus import connect
@@ -10,7 +11,11 @@ from pymilvus import Collection
 from services.embedding_service import embed_texts
 from services.pdf_extract import extract_pdf_blocks_with_bbox
 from services.subject_service import validate_subject_exists
-from nlp.text_preprocess import preprocess_pdf_text, START_CONTENT, STOP_CONTENT
+from nlp.text_preprocess import (
+    preprocess_pdf_text,
+    START_CONTENT_PATTERNS,
+    STOP_CONTENT_PATTERNS,
+)
 
 
 def _milvus_metric_and_dim(col: Collection):
@@ -56,6 +61,25 @@ def _get_document_filename(doc_id: str):
         release_conn(conn)
 
 
+def _get_document_filenames(doc_ids: list[str]) -> dict[str, str]:
+    if not doc_ids:
+        return {}
+    conn = get_conn()
+    try:
+        cur = conn.cursor()
+        try:
+            cur.execute(
+                "SELECT document_id, filename FROM documents WHERE document_id = ANY(%s)",
+                (doc_ids,),
+            )
+            rows = cur.fetchall()
+            return {row[0]: row[1] for row in rows}
+        finally:
+            cur.close()
+    finally:
+        release_conn(conn)
+
+
 def _highlight_pdf(pdf_bytes: bytes, highlights: list[dict]) -> bytes:
     doc = fitz.open(stream=pdf_bytes, filetype="pdf")
     for h in highlights:
@@ -86,26 +110,38 @@ def _find_content_page_range(pages: list[dict]) -> tuple[int, int]:
             if not text:
                 continue
             if not found_start:
-                for pattern in START_CONTENT:
+                for pattern in START_CONTENT_PATTERNS:
                     if re.search(pattern, text):
                         start_page = page_no
                         found_start = True
                         break
-            if any(keyword in text for keyword in STOP_CONTENT):
-                stop_page = page_no
-                return start_page, stop_page
+            for pattern in STOP_CONTENT_PATTERNS:
+                if re.search(pattern, text):
+                    stop_page = page_no
+                    return start_page, stop_page
 
     return start_page, stop_page
 
 
 async def handle_check(file, subject_id: str = "", document_type: str = ""):
     content = await file.read()
+
+    debug = os.getenv("PLAGIARISM_DEBUG") == "1"
+    if debug:
+        print(f"DEBUG: handle_check called")
+        print(f"DEBUG: subject_id = '{subject_id}' (type: {type(subject_id)})")
+        print(f"DEBUG: document_type = '{document_type}' (type: {type(document_type)})")
     
     # Validate subject if provided
     if subject_id and not validate_subject_exists(subject_id):
+        if debug:
+            print(f"DEBUG: Subject validation failed for '{subject_id}'")
         return {"error": f"Subject '{subject_id}' does not exist"}
 
-    pages = extract_pdf_blocks_with_bbox(content)
+    if debug:
+        print(f"DEBUG: Subject validation passed for '{subject_id}'")
+
+    pages = await asyncio.to_thread(extract_pdf_blocks_with_bbox, content)
     if not pages:
         return {"error": "No text extracted from PDF"}
 
@@ -143,8 +179,14 @@ async def handle_check(file, subject_id: str = "", document_type: str = ""):
     if not all_sentences:
         return {"error": "No valid sentences found"}
 
-    vectors = embed_texts(all_sentences)
-    connect()
+    max_sentences = int(os.getenv("PLAGIARISM_MAX_SENTENCES", "600"))
+    if max_sentences > 0 and len(all_sentences) > max_sentences:
+        step = len(all_sentences) / float(max_sentences)
+        selected_indices = [min(int(i * step), len(all_sentences) - 1) for i in range(max_sentences)]
+        all_sentences = [all_sentences[i] for i in selected_indices]
+        sentence_meta = [sentence_meta[i] for i in selected_indices]
+
+    vectors = await asyncio.to_thread(embed_texts, all_sentences)
 
     # Get candidate document_ids from Postgres based on subject_id and document_type filtering
     candidate_doc_ids = None
@@ -170,21 +212,31 @@ async def handle_check(file, subject_id: str = "", document_type: str = ""):
             release_conn(conn)
 
     collection_name = os.getenv("MILVUS_COLLECTION", "plagiarism_sentences")
-    alias = os.getenv("MILVUS_ALIAS", "plagiarism_db")
+    alias = "default"  # Use same alias as connect() function
+    
+    # Connect to Milvus first
+    connect()
+    if debug:
+        print(f"DEBUG: Connected to Milvus")
+    
     col = Collection(collection_name, using=alias)
+    if debug:
+        print(f"DEBUG: Got collection: {collection_name}")
     
     # Use partition based on subject_id if provided
     partition_name = None
     if subject_id:
         partition_name = f"subject_{subject_id}"
-        print(f"DEBUG: Using partition: {partition_name}")
+        if debug:
+            print(f"DEBUG: Using partition: {partition_name}")
     
     col.load(partition_names=[partition_name] if partition_name else None)
-    print(f"DEBUG: Loaded collection with partition: {partition_name or 'all'}")
+    if debug:
+        print(f"DEBUG: Loaded collection with partition: {partition_name or 'all'}")
 
     metric_type, _ = _milvus_metric_and_dim(col)
     top_k = int(os.getenv("PLAGIARISM_TOPK", "3"))
-    sentence_threshold = float(os.getenv("PLAGIARISM_SENTENCE_SIM_THRESHOLD", "0.6"))
+    sentence_threshold = float(os.getenv("PLAGIARISM_SENTENCE_SIM_THRESHOLD", "0.8"))  # Increased from 0.6 to 0.8
 
     search_params = {"metric_type": metric_type, "params": {"nprobe": 10}}
 
@@ -194,10 +246,12 @@ async def handle_check(file, subject_id: str = "", document_type: str = ""):
         # Create expression for filtering by document_id list
         doc_id_list = ", ".join([f'"{doc_id}"' for doc_id in candidate_doc_ids])
         expr = f"document_id in [{doc_id_list}]"
-        print(f"DEBUG: Filtering by {len(candidate_doc_ids)} candidate documents")
-        print(f"DEBUG: Expression: {expr}")
+        if debug:
+            print(f"DEBUG: Filtering by {len(candidate_doc_ids)} candidate documents")
+            print(f"DEBUG: Expression: {expr}")
     elif subject_id or document_type:
-        print(f"DEBUG: No candidate documents found for subject_id={subject_id}, document_type={document_type}")
+        if debug:
+            print(f"DEBUG: No candidate documents found for subject_id={subject_id}, document_type={document_type}")
         return {"error": "No reference documents found for the specified subject and document type"}
 
     results = col.search(
@@ -212,19 +266,19 @@ async def handle_check(file, subject_id: str = "", document_type: str = ""):
     matched: list[dict] = []
     per_source: dict[str, dict] = {}
 
-    debug = os.getenv("PLAGIARISM_DEBUG") == "1"
-
     for idx, hits in enumerate(results):
         if not hits:
             continue
         best = hits[0]
         sim = _distance_to_similarity(metric_type, best.distance)
-        if debug and idx < 3:
+        if debug and idx < 5:  # Show more debug info
             print(
                 "DEBUG check hit",
-                {"idx": idx, "metric": metric_type, "raw_distance": float(best.distance), "similarity": sim},
+                {"idx": idx, "metric": metric_type, "raw_distance": float(best.distance), "similarity": sim, "threshold": sentence_threshold},
             )
         if sim < sentence_threshold:
+            if debug and idx < 3:  # Show why filtered out
+                print(f"DEBUG: Filtered out - similarity {sim:.3f} < threshold {sentence_threshold}")
             continue
 
         entity = best.entity
@@ -239,6 +293,7 @@ async def handle_check(file, subject_id: str = "", document_type: str = ""):
         matched.append(
             {
                 "query_sentence_index": sentence_meta[idx]["sentence_index"],
+                "query_text": all_sentences[idx],
                 "page_number": sentence_meta[idx]["page_number"],
                 "bbox": sentence_meta[idx]["bbox"],
                 "similarity": sim,
@@ -258,11 +313,13 @@ async def handle_check(file, subject_id: str = "", document_type: str = ""):
     is_plagiarism = overall_ratio >= plagiarism_threshold
 
     sources = []
+    doc_ids = list(per_source.keys())
+    filenames = _get_document_filenames(doc_ids)
     for doc_id, info in per_source.items():
         sources.append(
             {
                 "document_id": doc_id,
-                "filename": _get_document_filename(doc_id),
+                "filename": filenames.get(doc_id),
                 "matched_sentences": info["count"],
                 "matched_ratio": info["count"] / total if total else 0.0,
             }
@@ -270,7 +327,7 @@ async def handle_check(file, subject_id: str = "", document_type: str = ""):
     sources.sort(key=lambda x: x["matched_sentences"], reverse=True)
     best_source_document_id = sources[0]["document_id"] if sources else None
 
-    result_pdf_bytes = _highlight_pdf(content, matched)
+    result_pdf_bytes = await asyncio.to_thread(_highlight_pdf, content, matched)
 
     minio = get_client()
     result_bucket = os.getenv("MINIO_RESULT_BUCKET", "result")

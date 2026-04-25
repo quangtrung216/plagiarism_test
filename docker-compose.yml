@@ -51,79 +51,79 @@ services:
     command: server /data --console-address ":9001"
 
   # Backend API Service
-  backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
-    container_name: plagiarism_backend
-    restart: always
-    ports:
-      - "8000:8000"
-    environment:
-      - DATABASE_URL=postgresql://postgres:postgres@db:5432/plagiarism_detection
-      - SECRET_KEY=your-super-secret-key-change-this-in-production
-      - RABBITMQ_HOST=rabbitmq
-      - RABBITMQ_PORT=5672
-      - RABBITMQ_USER=guest
-      - RABBITMQ_PASSWORD=guest
-      - FILE_PROCESSING_QUEUE=file_processing_queue
-      - MINIO_ENDPOINT=minio:9000
-      - MINIO_ACCESS_KEY=minioadmin
-      - MINIO_SECRET_KEY=minioadmin
-      - MINIO_BUCKET_NAME=plagiarism-files
-      - MINIO_SECURE=false
-    depends_on:
-      - db
-      - rabbitmq
-      - minio
-    networks:
-      - plagiarism_network
-    volumes:
-      - ./backend:/app
-    command: python start.py
+  # backend:
+  #   build:
+  #     context: ./backend
+  #     dockerfile: Dockerfile
+  #   container_name: plagiarism_backend
+  #   restart: always
+  #   ports:
+  #     - "8000:8000"
+  #   environment:
+  #     - DATABASE_URL=postgresql://postgres:postgres@db:5432/plagiarism_detection
+  #     - SECRET_KEY=your-super-secret-key-change-this-in-production
+  #     - RABBITMQ_HOST=rabbitmq
+  #     - RABBITMQ_PORT=5672
+  #     - RABBITMQ_USER=guest
+  #     - RABBITMQ_PASSWORD=guest
+  #     - FILE_PROCESSING_QUEUE=file_processing_queue
+  #     - MINIO_ENDPOINT=minio:9000
+  #     - MINIO_ACCESS_KEY=minioadmin
+  #     - MINIO_SECRET_KEY=minioadmin
+  #     - MINIO_BUCKET_NAME=plagiarism-files
+  #     - MINIO_SECURE=false
+  #   depends_on:
+  #     - db
+  #     - rabbitmq
+  #     - minio
+  #   networks:
+  #     - plagiarism_network
+  #   volumes:
+  #     - ./backend:/app
+  #   command: python start.py
 
-  # File Processor Service
-  file_processor:
-    build:
-      context: ./file_processor
-      dockerfile: Dockerfile
-    container_name: plagiarism_file_processor
-    restart: always
-    environment:
-      - RABBITMQ_HOST=rabbitmq
-      - RABBITMQ_PORT=5672
-      - RABBITMQ_USER=guest
-      - RABBITMQ_PASSWORD=guest
-      - FILE_PROCESSING_QUEUE=file_processing_queue
-      - PREFETCH_COUNT=1
-      - MINIO_ENDPOINT=minio:9000
-      - MINIO_ACCESS_KEY=minioadmin
-      - MINIO_SECRET_KEY=minioadmin
-      - MINIO_BUCKET_NAME=plagiarism-files
-      - MINIO_SECURE=false
-    depends_on:
-      - rabbitmq
-      - minio
-    networks:
-      - plagiarism_network
-    volumes:
-      - ./file_processor:/app
+  # # File Processor Service
+  # file_processor:
+  #   build:
+  #     context: ./file_processor
+  #     dockerfile: Dockerfile
+  #   container_name: plagiarism_file_processor
+  #   restart: always
+  #   environment:
+  #     - RABBITMQ_HOST=rabbitmq
+  #     - RABBITMQ_PORT=5672
+  #     - RABBITMQ_USER=guest
+  #     - RABBITMQ_PASSWORD=guest
+  #     - FILE_PROCESSING_QUEUE=file_processing_queue
+  #     - PREFETCH_COUNT=1
+  #     - MINIO_ENDPOINT=minio:9000
+  #     - MINIO_ACCESS_KEY=minioadmin
+  #     - MINIO_SECRET_KEY=minioadmin
+  #     - MINIO_BUCKET_NAME=plagiarism-files
+  #     - MINIO_SECURE=false
+  #   depends_on:
+  #     - rabbitmq
+  #     - minio
+  #   networks:
+  #     - plagiarism_network
+  #   volumes:
+  #     - ./file_processor:/app
 
-  # Frontend Service
-  frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    container_name: plagiarism_frontend
-    restart: always
-    ports:
-      - "3000:3000"
-    environment:
-      - NODE_ENV=production
-    depends_on:
-      - backend
-    networks:
-      - plagiarism_network
+#   # Frontend Service
+#   frontend:
+#     build:
+#       context: ./frontend
+#       dockerfile: Dockerfile
+#     container_name: plagiarism_frontend
+#     restart: always
+#     ports:
+#       - "3000:3000"
+#     environment:
+#       - NODE_ENV=production
+#     depends_on:
+#       - backend
+#     networks:
+#       - plagiarism_network
 
 # Volumes
 volumes:

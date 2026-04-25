@@ -1,7 +1,8 @@
 import json
+from pymilvus import Collection
 from db.minio import get_client
 from db.postgres import get_conn, release_conn
-from db.milvus import connect, insert_vectors, _stable_int64
+from db.milvus import connect, insert_vectors, _stable_int64, COLLECTION
 from services.embedding_service import embed_texts
 from nlp.text_preprocess import preprocess_pdf_text
 from services.pdf_extract import extract_pdf_text, extract_pdf_blocks_with_bbox
@@ -94,20 +95,32 @@ def process_message(ch, method, props, body):
         
         connect()
         try:
+            # Create partition if it doesn't exist
+            partition_name = f"subject_{subject_id}"
+            col = Collection(COLLECTION)
+            
+            # Check if partition exists, create if not
+            try:
+                col.create_partition(partition_name)
+                print(f"✅ Created partition: {partition_name}")
+            except Exception as e:
+                if "already exists" not in str(e).lower():
+                    print(f"⚠️  Partition creation warning: {e}")
+            
             sentence_ids = [str(m["sentence_index"]) for m in sentence_meta]
             document_ids = [str(doc_id)] * len(vectors_list)
             # Generate primary key IDs
             primary_ids = [_stable_int64(f"{doc_id}:{m['sentence_index']}") for m in sentence_meta]
             
             milvus_ids = insert_vectors(
-                vectors_list,                                 # List of lists, each with 1024 dims
+                vectors_list,                                 # List of lists, each with 768 dims
                 document_ids=document_ids,
                 sentence_ids=sentence_ids,
                 texts=all_sentences,
                 subject_ids=[subject_id] * len(vectors_list),      # NEW: Add subject_id
                 document_types=[document_type] * len(vectors_list),   # NEW: Add document_type
                 ids=primary_ids,                               # NEW: Add primary key (already a list)
-                partition_name=f"subject_{subject_id}",
+                partition_name=partition_name,
             )
 
         except Exception as e:

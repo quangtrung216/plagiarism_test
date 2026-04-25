@@ -78,6 +78,8 @@ def insert_vectors(vectors, document_ids=None, sentence_ids=None, texts=None, id
     
     # Insert with partition if specified
     if partition_name:
+        if not col.has_partition(partition_name):
+            col.create_partition(partition_name)
         res = col.insert(insert_data, partition_name=partition_name)
     else:
         res = col.insert(insert_data)

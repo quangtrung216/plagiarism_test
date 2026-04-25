@@ -17,11 +17,7 @@ ALLOWED_CONTENT_TYPES = {"application/pdf", "application/vnd.openxmlformats-offi
 MINHASH_THRESHOLD = 0.05   # lọc thô: giữ tài liệu có Jaccard >= 5%
 
 
-@router.post(
-    "/check-plagiarism",
-    response_model=Response,
-    summary="Kiểm tra đạo văn của tài liệu đẩy lên",
-)
+@router.post("/check",response_model=Response,summary="Kiểm tra đạo văn của tài liệu đẩy lên",)
 async def check_plagiarism(
     subject_id: str = Form(..., description="ID môn học"),
     file: UploadFile = File(..., description="File PDF hoặc DOCX cần kiểm tra"),
@@ -84,7 +80,7 @@ async def check_plagiarism(
     # 4. Tính MinHash → lọc thô candidates
     minhash_values = compute_minhash(full_text)
 
-    conn = get_conn()
+    conn = await get_conn()
     try:
         candidates = await find_candidates_by_minhash(
             conn=conn,
@@ -93,7 +89,7 @@ async def check_plagiarism(
             threshold=MINHASH_THRESHOLD,
         )
     finally:
-        release_conn(conn)
+        await release_conn(conn)
 
     # Không có tài liệu nào vượt ngưỡng lọc thô
     if not candidates:
@@ -102,7 +98,7 @@ async def check_plagiarism(
             plagiarized_sentences=0,
             plagiarism_ratio=0.0,
             is_plagiarized=False,
-            sentence_labels=[0] * len(query_sentences),
+            # sentence_labels=[0] * len(query_sentences),
             references=[],
         )
 

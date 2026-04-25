@@ -1,0 +1,3367 @@
+{
+  "total_sentences": 211,
+  "matched_sentences": 209,
+  "matched_ratio": 0.990521327014218,
+  "is_plagiarism": true,
+  "threshold": 0.2,
+  "sentence_similarity_threshold": 0.8,
+  "best_source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+  "top_sources": [
+    {
+      "document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "filename": "1365.pdf",
+      "matched_sentences": 209,
+      "matched_ratio": 0.990521327014218
+    }
+  ],
+  "matches": [
+    {
+      "query_sentence_index": 0,
+      "page_number": 1,
+      "bbox": [
+        179.69000244140625,
+        106.7926025390625,
+        454.53997802734375,
+        121.13932800292969
+      ],
+      "similarity": 1,
+      "raw_distance": 1.0000001192092896,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "0",
+      "source_text": "ministry of education and training"
+    },
+    {
+      "query_sentence_index": 1,
+      "page_number": 1,
+      "bbox": [
+        121.58000183105469,
+        129.23260498046875,
+        512.739990234375,
+        143.57933044433594
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "1",
+      "source_text": "hung yen university of technology and education"
+    },
+    {
+      "query_sentence_index": 2,
+      "page_number": 1,
+      "bbox": [
+        132.25999450683594,
+        345.7096252441406,
+        502.69000244140625,
+        363.3773498535156
+      ],
+      "similarity": 1,
+      "raw_distance": 1.0000001192092896,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "2",
+      "source_text": "english for information technology 1"
+    },
+    {
+      "query_sentence_index": 3,
+      "page_number": 2,
+      "bbox": [
+        99.26399993896484,
+        43.172611236572266,
+        364.3899841308594,
+        57.51932907104492
+      ],
+      "similarity": 1,
+      "raw_distance": 1.0000001192092896,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "11",
+      "source_text": "data mining methods for recommender systems"
+    },
+    {
+      "query_sentence_index": 4,
+      "page_number": 3,
+      "bbox": [
+        99.26399993896484,
+        43.172611236572266,
+        364.3899841308594,
+        57.51932907104492
+      ],
+      "similarity": 1,
+      "raw_distance": 1.0000001192092896,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "11",
+      "source_text": "data mining methods for recommender systems"
+    },
+    {
+      "query_sentence_index": 5,
+      "page_number": 3,
+      "bbox": [
+        126.26000213623047,
+        121.91259765625,
+        541.8838500976562,
+        136.2593231201172
+      ],
+      "similarity": 1,
+      "raw_distance": 1.0000001192092896,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "5",
+      "source_text": "i guarantee that the assignment \"data mining methods for recommender"
+    },
+    {
+      "query_sentence_index": 7,
+      "page_number": 3,
+      "bbox": [
+        99.26399993896484,
+        144.35260009765625,
+        541.874267578125,
+        158.69932556152344
+      ],
+      "similarity": 0.9999999403953552,
+      "raw_distance": 0.9999999403953552,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "6",
+      "source_text": "the content used in the assignment is not copied"
+    },
+    {
+      "query_sentence_index": 8,
+      "page_number": 3,
+      "bbox": [
+        99.26399993896484,
+        166.7926025390625,
+        541.82958984375,
+        181.1393280029297
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "7",
+      "source_text": "the cited content is made in accordance with the regulations on"
+    },
+    {
+      "query_sentence_index": 9,
+      "page_number": 3,
+      "bbox": [
+        99.26399993896484,
+        189.23260498046875,
+        541.5961303710938,
+        203.57933044433594
+      ],
+      "similarity": 0.9999999403953552,
+      "raw_distance": 0.9999999403953552,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "8",
+      "source_text": "the results presented in the assignment are entirely the"
+    },
+    {
+      "query_sentence_index": 10,
+      "page_number": 3,
+      "bbox": [
+        99.26399993896484,
+        211.5526123046875,
+        541.6494140625,
+        225.8993377685547
+      ],
+      "similarity": 1,
+      "raw_distance": 1.000000238418579,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "9",
+      "source_text": "results of my own research work under the guidance of teachers."
+    },
+    {
+      "query_sentence_index": 11,
+      "page_number": 3,
+      "bbox": [
+        99.26399993896484,
+        234.02264404296875,
+        426.4599914550781,
+        248.36936950683594
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "10",
+      "source_text": "errors, i will be fully responsible to the faculty and the school."
+    },
+    {
+      "query_sentence_index": 12,
+      "page_number": 4,
+      "bbox": [
+        99.26399993896484,
+        43.172611236572266,
+        364.3899841308594,
+        57.51932907104492
+      ],
+      "similarity": 1,
+      "raw_distance": 1.0000001192092896,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "11",
+      "source_text": "data mining methods for recommender systems"
+    },
+    {
+      "query_sentence_index": 13,
+      "page_number": 4,
+      "bbox": [
+        99.26399993896484,
+        121.7926025390625,
+        541.951904296875,
+        189.8993377685547
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "12",
+      "source_text": "to be able to complete this assignment, first of all, i would like to express my deepest gratitude to the faculty of information technology - hung yen university of technical education for creating favorable conditions for me to carry out this assignment."
+    },
+    {
+      "query_sentence_index": 14,
+      "page_number": 4,
+      "bbox": [
+        99.26399993896484,
+        195.95263671875,
+        541.7942504882812,
+        264.0893249511719
+      ],
+      "similarity": 1,
+      "raw_distance": 1.0000001192092896,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "13",
+      "source_text": "in particular, i would like to sincerely thank mr. nguyen minh tien for his enthusiastic guidance and instruction during this period."
+    },
+    {
+      "query_sentence_index": 15,
+      "page_number": 4,
+      "bbox": [
+        99.26399993896484,
+        195.95263671875,
+        541.7942504882812,
+        264.0893249511719
+      ],
+      "similarity": 1,
+      "raw_distance": 1.0000001192092896,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "14",
+      "source_text": "his valuable insights and continuous support have been instrumental in the successful completion of this project."
+    },
+    {
+      "query_sentence_index": 16,
+      "page_number": 4,
+      "bbox": [
+        99.26399993896484,
+        270.14263916015625,
+        541.8353271484375,
+        356.24932861328125
+      ],
+      "similarity": 1,
+      "raw_distance": 1.0000001192092896,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "15",
+      "source_text": "i would also like to extend my heartfelt thanks to all the teachers at the university for their dedicated teaching and for equipping me with the necessary and valuable knowledge that has helped me carry out this assignment."
+    },
+    {
+      "query_sentence_index": 17,
+      "page_number": 4,
+      "bbox": [
+        99.26399993896484,
+        270.14263916015625,
+        541.8353271484375,
+        356.24932861328125
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "16",
+      "source_text": "their commitment to providing quality education has been a great source of inspiration and support throughout my academic journey."
+    },
+    {
+      "query_sentence_index": 18,
+      "page_number": 4,
+      "bbox": [
+        99.26399993896484,
+        362.1826171875,
+        541.8638916015625,
+        448.309326171875
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "17",
+      "source_text": "although i have tried my best, with my limited level, there are inevitably shortcomings in the process of carrying out this project."
+    },
+    {
+      "query_sentence_index": 19,
+      "page_number": 4,
+      "bbox": [
+        99.26399993896484,
+        362.1826171875,
+        541.8638916015625,
+        448.309326171875
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "18",
+      "source_text": "i hope to receive constructive comments and suggestions from the teachers on the implementation results of this assignment."
+    },
+    {
+      "query_sentence_index": 20,
+      "page_number": 4,
+      "bbox": [
+        99.26399993896484,
+        362.1826171875,
+        541.8638916015625,
+        448.309326171875
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "19",
+      "source_text": "your feedback will be invaluable in helping me improve and learn from this experience."
+    },
+    {
+      "query_sentence_index": 21,
+      "page_number": 4,
+      "bbox": [
+        126.26000213623047,
+        454.36260986328125,
+        452.3800048828125,
+        468.7093200683594
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "20",
+      "source_text": "i sincerely thank you all for your time, support, and guidance!"
+    },
+    {
+      "query_sentence_index": 22,
+      "page_number": 5,
+      "bbox": [
+        99.26399993896484,
+        43.172611236572266,
+        364.3899841308594,
+        57.51932907104492
+      ],
+      "similarity": 1,
+      "raw_distance": 1.0000001192092896,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "11",
+      "source_text": "data mining methods for recommender systems"
+    },
+    {
+      "query_sentence_index": 23,
+      "page_number": 5,
+      "bbox": [
+        127.58000183105469,
+        184.672607421875,
+        540.695068359375,
+        199.0193328857422
+      ],
+      "similarity": 1,
+      "raw_distance": 1.0000001192092896,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "22",
+      "source_text": "table of contents ................................................................................... 4"
+    },
+    {
+      "query_sentence_index": 24,
+      "page_number": 5,
+      "bbox": [
+        127.58000183105469,
+        205.672607421875,
+        540.695068359375,
+        220.0193328857422
+      ],
+      "similarity": 1,
+      "raw_distance": 1.0000001192092896,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "23",
+      "source_text": "list of figures ............................................................................................ 5"
+    },
+    {
+      "query_sentence_index": 25,
+      "page_number": 5,
+      "bbox": [
+        127.58000183105469,
+        247.5826416015625,
+        540.695068359375,
+        261.9293518066406
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "24",
+      "source_text": "chapter 1: overview ............................................................................... 7"
+    },
+    {
+      "query_sentence_index": 26,
+      "page_number": 5,
+      "bbox": [
+        130.82000732421875,
+        268.5826416015625,
+        540.695068359375,
+        282.9293518066406
+      ],
+      "similarity": 0.9999999403953552,
+      "raw_distance": 0.9999999403953552,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "25",
+      "source_text": "1.1 introduction and context ............................................................................ 7"
+    },
+    {
+      "query_sentence_index": 27,
+      "page_number": 5,
+      "bbox": [
+        130.82000732421875,
+        291.74261474609375,
+        540.695068359375,
+        306.0893249511719
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "26",
+      "source_text": "1.2 the role of business intelligence .............................................................. 7"
+    },
+    {
+      "query_sentence_index": 28,
+      "page_number": 5,
+      "bbox": [
+        130.82000732421875,
+        314.902587890625,
+        540.695068359375,
+        329.2492980957031
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "27",
+      "source_text": "1.3 the general data mining process .............................................................. 8"
+    },
+    {
+      "query_sentence_index": 29,
+      "page_number": 5,
+      "bbox": [
+        127.58000183105469,
+        338.0626220703125,
+        540.695068359375,
+        352.4093322753906
+      ],
+      "similarity": 1,
+      "raw_distance": 1.0000001192092896,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "28",
+      "source_text": "chapter 2: advanced data mining techniques ..................... 10"
+    },
+    {
+      "query_sentence_index": 30,
+      "page_number": 5,
+      "bbox": [
+        130.82000732421875,
+        359.0626220703125,
+        540.695068359375,
+        373.4093322753906
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "29",
+      "source_text": "2.1 association rule mining (market basket analysis) ................................ 10"
+    },
+    {
+      "query_sentence_index": 31,
+      "page_number": 5,
+      "bbox": [
+        130.82000732421875,
+        410.6826171875,
+        540.695068359375,
+        425.0293273925781
+      ],
+      "similarity": 1,
+      "raw_distance": 1.0000001192092896,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "30",
+      "source_text": "2.1.2 mathematical formulas ......................................................................... 10"
+    },
+    {
+      "query_sentence_index": 32,
+      "page_number": 5,
+      "bbox": [
+        130.82000732421875,
+        439.12261962890625,
+        540.695068359375,
+        453.4693298339844
+      ],
+      "similarity": 1,
+      "raw_distance": 1.0000001192092896,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "31",
+      "source_text": "2.1.3 key algorithms ...................................................................................... 11"
+    },
+    {
+      "query_sentence_index": 33,
+      "page_number": 5,
+      "bbox": [
+        130.82000732421875,
+        467.5626220703125,
+        540.695068359375,
+        481.9093322753906
+      ],
+      "similarity": 0.9999998807907104,
+      "raw_distance": 0.9999998807907104,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "32",
+      "source_text": "2.2 clustering techniques .............................................................................. 12"
+    },
+    {
+      "query_sentence_index": 34,
+      "page_number": 5,
+      "bbox": [
+        130.82000732421875,
+        490.7226257324219,
+        540.695068359375,
+        505.0693359375
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "33",
+      "source_text": "2.2.1 key algorithms ...................................................................................... 12"
+    },
+    {
+      "query_sentence_index": 35,
+      "page_number": 5,
+      "bbox": [
+        130.82000732421875,
+        519.16259765625,
+        540.695068359375,
+        533.5093383789062
+      ],
+      "similarity": 0.9999999403953552,
+      "raw_distance": 0.9999999403953552,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "34",
+      "source_text": "2.3 classification algorithms ........................................................................ 13"
+    },
+    {
+      "query_sentence_index": 36,
+      "page_number": 5,
+      "bbox": [
+        130.82000732421875,
+        542.3226318359375,
+        540.695068359375,
+        556.6693725585938
+      ],
+      "similarity": 0.9999999403953552,
+      "raw_distance": 0.9999999403953552,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "35",
+      "source_text": "2.3.1 common algorithms ............................................................................. 13"
+    },
+    {
+      "query_sentence_index": 37,
+      "page_number": 5,
+      "bbox": [
+        130.82000732421875,
+        570.7926025390625,
+        540.695068359375,
+        585.1393432617188
+      ],
+      "similarity": 0.9999999403953552,
+      "raw_distance": 0.9999999403953552,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "36",
+      "source_text": "2.4 sequential pattern mining (spm) ............................................................. 13"
+    },
+    {
+      "query_sentence_index": 38,
+      "page_number": 5,
+      "bbox": [
+        127.58000183105469,
+        650.8326416015625,
+        540.695068359375,
+        665.1793823242188
+      ],
+      "similarity": 0.9999998807907104,
+      "raw_distance": 0.9999998807907104,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "37",
+      "source_text": "chapter 3: application, evaluation ............................................ 15"
+    },
+    {
+      "query_sentence_index": 39,
+      "page_number": 5,
+      "bbox": [
+        130.82000732421875,
+        671.8326416015625,
+        540.695068359375,
+        686.1793823242188
+      ],
+      "similarity": 1,
+      "raw_distance": 1.0000001192092896,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "38",
+      "source_text": "3.1 mapping techniques to recommender models ....................................... 15"
+    },
+    {
+      "query_sentence_index": 40,
+      "page_number": 5,
+      "bbox": [
+        130.82000732421875,
+        694.9926147460938,
+        540.695068359375,
+        709.33935546875
+      ],
+      "similarity": 0.9999999403953552,
+      "raw_distance": 0.9999999403953552,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "39",
+      "source_text": "3.2 performance evaluation metrics .............................................................. 15"
+    },
+    {
+      "query_sentence_index": 41,
+      "page_number": 6,
+      "bbox": [
+        99.26399993896484,
+        43.172611236572266,
+        364.3899841308594,
+        57.51932907104492
+      ],
+      "similarity": 1,
+      "raw_distance": 1.0000001192092896,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "11",
+      "source_text": "data mining methods for recommender systems"
+    },
+    {
+      "query_sentence_index": 42,
+      "page_number": 6,
+      "bbox": [
+        127.58000183105469,
+        133.91259765625,
+        540.695068359375,
+        148.2593231201172
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "41",
+      "source_text": "figure 1: diagram of the 5-step data mining process ....................................... 8"
+    },
+    {
+      "query_sentence_index": 43,
+      "page_number": 6,
+      "bbox": [
+        127.58000183105469,
+        162.35260009765625,
+        540.695068359375,
+        176.69932556152344
+      ],
+      "similarity": 1,
+      "raw_distance": 1.0000001192092896,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "42",
+      "source_text": "figure 2: example of market basket analysis visualization ........................... 10"
+    },
+    {
+      "query_sentence_index": 44,
+      "page_number": 6,
+      "bbox": [
+        127.58000183105469,
+        190.7926025390625,
+        540.695068359375,
+        205.1393280029297
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "43",
+      "source_text": "figure 3: formula for support .......................................................................... 11"
+    },
+    {
+      "query_sentence_index": 45,
+      "page_number": 6,
+      "bbox": [
+        127.58000183105469,
+        219.23260498046875,
+        540.695068359375,
+        233.57933044433594
+      ],
+      "similarity": 1,
+      "raw_distance": 1.000000238418579,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "44",
+      "source_text": "figure 4: formula for confidence .................................................................... 11"
+    },
+    {
+      "query_sentence_index": 46,
+      "page_number": 6,
+      "bbox": [
+        127.58000183105469,
+        247.5826416015625,
+        540.695068359375,
+        261.9293518066406
+      ],
+      "similarity": 1,
+      "raw_distance": 1.0000001192092896,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "45",
+      "source_text": "figure 5: formula for lift ................................................................................ 11"
+    },
+    {
+      "query_sentence_index": 47,
+      "page_number": 6,
+      "bbox": [
+        127.58000183105469,
+        276.02264404296875,
+        540.695068359375,
+        290.3693542480469
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "46",
+      "source_text": "figure 6: clustering algorithm flowchart ....................................................... 12"
+    },
+    {
+      "query_sentence_index": 48,
+      "page_number": 6,
+      "bbox": [
+        127.58000183105469,
+        304.46258544921875,
+        540.695068359375,
+        318.8092956542969
+      ],
+      "similarity": 0.9999998211860657,
+      "raw_distance": 0.9999998211860657,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "47",
+      "source_text": "figure 7: classfication algorithm flowchart .................................................. 13"
+    },
+    {
+      "query_sentence_index": 49,
+      "page_number": 7,
+      "bbox": [
+        99.26399993896484,
+        43.172611236572266,
+        364.3899841308594,
+        57.51932907104492
+      ],
+      "similarity": 1,
+      "raw_distance": 1.0000001192092896,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "11",
+      "source_text": "data mining methods for recommender systems"
+    },
+    {
+      "query_sentence_index": 50,
+      "page_number": 7,
+      "bbox": [
+        127.58000183105469,
+        122.27264404296875,
+        541.8709106445312,
+        136.61936950683594
+      ],
+      "similarity": 0.9999998807907104,
+      "raw_distance": 0.9999998807907104,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "49",
+      "source_text": "this report investigates the critical application of data mining techniques"
+    },
+    {
+      "query_sentence_index": 51,
+      "page_number": 7,
+      "bbox": [
+        99.26399993896484,
+        144.71258544921875,
+        541.848876953125,
+        159.05931091308594
+      ],
+      "similarity": 1,
+      "raw_distance": 1.000000238418579,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "50",
+      "source_text": "as the volume of digital information grows"
+    },
+    {
+      "query_sentence_index": 52,
+      "page_number": 7,
+      "bbox": [
+        99.26399993896484,
+        167.152587890625,
+        541.6233520507812,
+        181.4993133544922
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "51",
+      "source_text": "exponentially, the ability to filter and personalize content becomes essential for user"
+    },
+    {
+      "query_sentence_index": 53,
+      "page_number": 7,
+      "bbox": [
+        99.26399993896484,
+        189.59259033203125,
+        541.9379272460938,
+        203.93931579589844
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "52",
+      "source_text": "this study explores four primary data mining"
+    },
+    {
+      "query_sentence_index": 54,
+      "page_number": 7,
+      "bbox": [
+        99.26399993896484,
+        211.91259765625,
+        541.6896362304688,
+        226.2593231201172
+      ],
+      "similarity": 1,
+      "raw_distance": 1.0000001192092896,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "53",
+      "source_text": "methodologies: association rule mining, clustering, classification, and sequential"
+    },
+    {
+      "query_sentence_index": 55,
+      "page_number": 7,
+      "bbox": [
+        99.26399993896484,
+        234.38262939453125,
+        541.8058471679688,
+        248.72935485839844
+      ],
+      "similarity": 0.9999998211860657,
+      "raw_distance": 0.9999998211860657,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "54",
+      "source_text": "furthermore, it analyzes how these techniques are integrated into rs"
+    },
+    {
+      "query_sentence_index": 56,
+      "page_number": 7,
+      "bbox": [
+        99.26399993896484,
+        256.8226318359375,
+        542.0199584960938,
+        271.1693420410156
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "55",
+      "source_text": "models and evaluated using standard metrics such as rmse, precision, and recall."
+    },
+    {
+      "query_sentence_index": 57,
+      "page_number": 7,
+      "bbox": [
+        99.26399993896484,
+        279.26263427734375,
+        541.5886840820312,
+        293.6093444824219
+      ],
+      "similarity": 0.9999999403953552,
+      "raw_distance": 0.9999999403953552,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "56",
+      "source_text": "the findings demonstrate that data mining is the core computational engine driving"
+    },
+    {
+      "query_sentence_index": 58,
+      "page_number": 8,
+      "bbox": [
+        99.26399993896484,
+        43.172611236572266,
+        364.3899841308594,
+        57.51932907104492
+      ],
+      "similarity": 1,
+      "raw_distance": 1.0000001192092896,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "11",
+      "source_text": "data mining methods for recommender systems"
+    },
+    {
+      "query_sentence_index": 59,
+      "page_number": 8,
+      "bbox": [
+        127.58000183105469,
+        150.35260009765625,
+        541.8593139648438,
+        164.69932556152344
+      ],
+      "similarity": 1,
+      "raw_distance": 1.0000001192092896,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "58",
+      "source_text": "in the modern digital era, we are witnessing an unprecedented explosion of data."
+    },
+    {
+      "query_sentence_index": 60,
+      "page_number": 8,
+      "bbox": [
+        99.26399993896484,
+        172.7926025390625,
+        541.8488159179688,
+        187.1393280029297
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "59",
+      "source_text": "from social media interactions to e-commerce transaction logs, the volume of"
+    },
+    {
+      "query_sentence_index": 61,
+      "page_number": 8,
+      "bbox": [
+        99.26399993896484,
+        195.23260498046875,
+        541.7914428710938,
+        209.57933044433594
+      ],
+      "similarity": 1,
+      "raw_distance": 1.0000001192092896,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "60",
+      "source_text": "this phenomenon leads to a problem known"
+    },
+    {
+      "query_sentence_index": 62,
+      "page_number": 8,
+      "bbox": [
+        99.26399993896484,
+        217.5526123046875,
+        541.78564453125,
+        231.8993377685547
+      ],
+      "similarity": 1,
+      "raw_distance": 1.0000001192092896,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "61",
+      "source_text": "as \"information overload,\" where users are overwhelmed by choices."
+    },
+    {
+      "query_sentence_index": 63,
+      "page_number": 8,
+      "bbox": [
+        99.26399993896484,
+        240.02264404296875,
+        541.6146240234375,
+        254.36936950683594
+      ],
+      "similarity": 1,
+      "raw_distance": 1.0000001192092896,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "62",
+      "source_text": "recommender systems (rs) have emerged as essential tools to filter noise and"
+    },
+    {
+      "query_sentence_index": 64,
+      "page_number": 8,
+      "bbox": [
+        127.58000183105469,
+        290.902587890625,
+        541.6908569335938,
+        305.2492980957031
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "63",
+      "source_text": "data mining is defined as the computational process of discovering hidden,"
+    },
+    {
+      "query_sentence_index": 65,
+      "page_number": 8,
+      "bbox": [
+        99.26399993896484,
+        313.34259033203125,
+        541.9522094726562,
+        327.6893005371094
+      ],
+      "similarity": 1,
+      "raw_distance": 1.0000001192092896,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "64",
+      "source_text": "useful, and actionable information within these large-scale datasets."
+    },
+    {
+      "query_sentence_index": 66,
+      "page_number": 8,
+      "bbox": [
+        99.26399993896484,
+        335.7826232910156,
+        541.679443359375,
+        350.12933349609375
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "65",
+      "source_text": "the extraction of data, but a method of utilizing sophisticated techniques and"
+    },
+    {
+      "query_sentence_index": 67,
+      "page_number": 8,
+      "bbox": [
+        99.26399993896484,
+        358.2226257324219,
+        541.659423828125,
+        372.5693359375
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "66",
+      "source_text": "algorithms from the field of data science to identify patterns, rules, or valuable"
+    },
+    {
+      "query_sentence_index": 68,
+      "page_number": 8,
+      "bbox": [
+        99.26399993896484,
+        380.5426025390625,
+        541.7853393554688,
+        394.8893127441406
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "67",
+      "source_text": "in information technology, data mining serves as the crucial bridge"
+    },
+    {
+      "query_sentence_index": 69,
+      "page_number": 8,
+      "bbox": [
+        99.26399993896484,
+        403.00262451171875,
+        454.6600036621094,
+        417.3493347167969
+      ],
+      "similarity": 1,
+      "raw_distance": 1.0000001192092896,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "68",
+      "source_text": "between raw, unstructured data and actionable business knowledge."
+    },
+    {
+      "query_sentence_index": 70,
+      "page_number": 8,
+      "bbox": [
+        99.26399993896484,
+        431.2611999511719,
+        321.30999755859375,
+        445.7893371582031
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "69",
+      "source_text": "1.2 the role of business intelligence"
+    },
+    {
+      "query_sentence_index": 71,
+      "page_number": 8,
+      "bbox": [
+        126.26000213623047,
+        459.88262939453125,
+        541.8368530273438,
+        474.2293395996094
+      ],
+      "similarity": 1,
+      "raw_distance": 1.0000001192092896,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "70",
+      "source_text": "data mining is a fundamental subset of the broader business intelligence (bi)"
+    },
+    {
+      "query_sentence_index": 72,
+      "page_number": 8,
+      "bbox": [
+        99.26399993896484,
+        482.3226013183594,
+        496.8999938964844,
+        496.6693115234375
+      ],
+      "similarity": 1,
+      "raw_distance": 1.0000001192092896,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "71",
+      "source_text": "real-world applications are ubiquitous across various industries:"
+    },
+    {
+      "query_sentence_index": 73,
+      "page_number": 8,
+      "bbox": [
+        145.5800018310547,
+        510.24993896484375,
+        541.8197631835938,
+        525.1093139648438
+      ],
+      "similarity": 0.9999998807907104,
+      "raw_distance": 0.9999998807907104,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "72",
+      "source_text": "• e-commerce: major platforms like shopee or amazon utilize mining"
+    },
+    {
+      "query_sentence_index": 74,
+      "page_number": 8,
+      "bbox": [
+        163.5800018310547,
+        533.20263671875,
+        541.9544677734375,
+        547.5493774414062
+      ],
+      "similarity": 0.9999998807907104,
+      "raw_distance": 0.9999998807907104,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "73",
+      "source_text": "algorithms to analyze purchase history."
+    },
+    {
+      "query_sentence_index": 75,
+      "page_number": 8,
+      "bbox": [
+        163.5800018310547,
+        533.20263671875,
+        541.9544677734375,
+        547.5493774414062
+      ],
+      "similarity": 1,
+      "raw_distance": 1.0000001192092896,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "74",
+      "source_text": "by understanding what a user has"
+    },
+    {
+      "query_sentence_index": 76,
+      "page_number": 8,
+      "bbox": [
+        163.5800018310547,
+        555.5526123046875,
+        541.9281005859375,
+        569.8993530273438
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "75",
+      "source_text": "bought, the system can recommend relevant products, thereby increasing"
+    },
+    {
+      "query_sentence_index": 77,
+      "page_number": 8,
+      "bbox": [
+        145.5800018310547,
+        605.9151611328125,
+        541.7927856445312,
+        621.7393188476562
+      ],
+      "similarity": 1,
+      "raw_distance": 1.0000001192092896,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "76",
+      "source_text": "• streaming services: platforms such as netflix and youtube analyze"
+    },
+    {
+      "query_sentence_index": 78,
+      "page_number": 8,
+      "bbox": [
+        163.5800018310547,
+        629.8326416015625,
+        541.86376953125,
+        644.1793823242188
+      ],
+      "similarity": 0.9999999403953552,
+      "raw_distance": 0.9999999403953552,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "77",
+      "source_text": "they track what you watch, how long"
+    },
+    {
+      "query_sentence_index": 79,
+      "page_number": 8,
+      "bbox": [
+        163.5800018310547,
+        652.2725830078125,
+        541.77880859375,
+        666.6193237304688
+      ],
+      "similarity": 1,
+      "raw_distance": 1.0000001192092896,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "78",
+      "source_text": "you watch, and what you skip to suggest new videos, keeping users"
+    },
+    {
+      "query_sentence_index": 80,
+      "page_number": 8,
+      "bbox": [
+        163.5800018310547,
+        674.712646484375,
+        393.30999755859375,
+        689.0593872070312
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "79",
+      "source_text": "engaged on the platform for longer periods."
+    },
+    {
+      "query_sentence_index": 81,
+      "page_number": 9,
+      "bbox": [
+        99.26399993896484,
+        43.172611236572266,
+        364.3899841308594,
+        57.51932907104492
+      ],
+      "similarity": 1,
+      "raw_distance": 1.0000001192092896,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "11",
+      "source_text": "data mining methods for recommender systems"
+    },
+    {
+      "query_sentence_index": 82,
+      "page_number": 9,
+      "bbox": [
+        145.5800018310547,
+        85.27518463134766,
+        541.7477416992188,
+        101.09934997558594
+      ],
+      "similarity": 1,
+      "raw_distance": 1.000000238418579,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "81",
+      "source_text": "• finance: banks employ anomaly detection (a specialized form of data"
+    },
+    {
+      "query_sentence_index": 83,
+      "page_number": 9,
+      "bbox": [
+        163.5800018310547,
+        109.0726318359375,
+        541.7138671875,
+        123.41935729980469
+      ],
+      "similarity": 0.9999998807907104,
+      "raw_distance": 0.9999998807907104,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "82",
+      "source_text": "mining) to identify irregular patterns indicative of fraudulent"
+    },
+    {
+      "query_sentence_index": 84,
+      "page_number": 9,
+      "bbox": [
+        163.5800018310547,
+        131.51263427734375,
+        376.2699890136719,
+        145.85935974121094
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "83",
+      "source_text": "transactions, ensuring security for users."
+    },
+    {
+      "query_sentence_index": 85,
+      "page_number": 9,
+      "bbox": [
+        127.58000183105469,
+        159.95263671875,
+        541.9011840820312,
+        174.2993621826172
+      ],
+      "similarity": 1,
+      "raw_distance": 1.000000238418579,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "84",
+      "source_text": "the integration of data mining into recommender systems is driven by two"
+    },
+    {
+      "query_sentence_index": 86,
+      "page_number": 9,
+      "bbox": [
+        145.5800018310547,
+        210.6511993408203,
+        541.744873046875,
+        225.1793670654297
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "85",
+      "source_text": "1) data volume : the sheer volume of user data (logs, clicks, ratings)"
+    },
+    {
+      "query_sentence_index": 87,
+      "page_number": 9,
+      "bbox": [
+        145.5800018310547,
+        261.5611877441406,
+        541.9680786132812,
+        276.0893249511719
+      ],
+      "similarity": 1,
+      "raw_distance": 1.0000001192092896,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "86",
+      "source_text": "2) accuracy requirements : withot sophisticated data mining, recommen"
+    },
+    {
+      "query_sentence_index": 88,
+      "page_number": 9,
+      "bbox": [
+        163.5800018310547,
+        284.0626220703125,
+        494.739990234375,
+        298.4093322753906
+      ],
+      "similarity": 0.9999999403953552,
+      "raw_distance": 0.9999999403953552,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "87",
+      "source_text": "would be random or generic, leading to poor use satisfaction."
+    },
+    {
+      "query_sentence_index": 89,
+      "page_number": 9,
+      "bbox": [
+        99.26399993896484,
+        312.3211975097656,
+        327.0699768066406,
+        326.8493347167969
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "88",
+      "source_text": "1.3 the general data mining process"
+    },
+    {
+      "query_sentence_index": 90,
+      "page_number": 9,
+      "bbox": [
+        127.58000183105469,
+        340.942626953125,
+        541.976806640625,
+        355.2893371582031
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "89",
+      "source_text": "to implement a robust recommender system, a structured five-step process is"
+    },
+    {
+      "query_sentence_index": 91,
+      "page_number": 9,
+      "bbox": [
+        199.85000610351562,
+        616.663330078125,
+        440.9800109863281,
+        628.8846435546875
+      ],
+      "similarity": 0.9999998807907104,
+      "raw_distance": 0.9999998807907104,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "90",
+      "source_text": "figure 1: diagram of the 5-step data mining process"
+    },
+    {
+      "query_sentence_index": 92,
+      "page_number": 9,
+      "bbox": [
+        145.5800018310547,
+        640.9552001953125,
+        541.9046630859375,
+        656.7793579101562
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "91",
+      "source_text": "• data collection: this involves gathering raw data from various sources."
+    },
+    {
+      "query_sentence_index": 93,
+      "page_number": 9,
+      "bbox": [
+        163.5800018310547,
+        664.8726196289062,
+        541.7138061523438,
+        679.2193603515625
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "92",
+      "source_text": "it includes user data (demographics), item data (attributes, metadata),"
+    },
+    {
+      "query_sentence_index": 94,
+      "page_number": 9,
+      "bbox": [
+        163.5800018310547,
+        687.3126220703125,
+        455.739990234375,
+        701.6593627929688
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "93",
+      "source_text": "and interaction data (ratings, clicks, purchase history) ."
+    },
+    {
+      "query_sentence_index": 95,
+      "page_number": 10,
+      "bbox": [
+        99.26399993896484,
+        43.172611236572266,
+        364.3899841308594,
+        57.51932907104492
+      ],
+      "similarity": 1,
+      "raw_distance": 1.0000001192092896,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "11",
+      "source_text": "data mining methods for recommender systems"
+    },
+    {
+      "query_sentence_index": 96,
+      "page_number": 10,
+      "bbox": [
+        145.5800018310547,
+        85.27518463134766,
+        541.7606811523438,
+        101.09934997558594
+      ],
+      "similarity": 1,
+      "raw_distance": 1.0000001192092896,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "95",
+      "source_text": "• data preprocessing: raw data is often incomplete or noisy."
+    },
+    {
+      "query_sentence_index": 97,
+      "page_number": 10,
+      "bbox": [
+        163.5800018310547,
+        109.0726318359375,
+        541.689453125,
+        123.41935729980469
+      ],
+      "similarity": 1,
+      "raw_distance": 1.0000001192092896,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "96",
+      "source_text": "involves handling missing values (imputation) and removing noise to"
+    },
+    {
+      "query_sentence_index": 98,
+      "page_number": 10,
+      "bbox": [
+        145.5800018310547,
+        159.43516540527344,
+        541.8753662109375,
+        175.2593231201172
+      ],
+      "similarity": 1,
+      "raw_distance": 1.0000001192092896,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "97",
+      "source_text": "• data mining: this is the core phase where algorithms such as clustering"
+    },
+    {
+      "query_sentence_index": 99,
+      "page_number": 10,
+      "bbox": [
+        163.5800018310547,
+        183.35260009765625,
+        444.2200012207031,
+        197.69932556152344
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "98",
+      "source_text": "or association rules are applied to discover patterns."
+    },
+    {
+      "query_sentence_index": 100,
+      "page_number": 10,
+      "bbox": [
+        145.5800018310547,
+        211.2751922607422,
+        541.9036254882812,
+        227.09934997558594
+      ],
+      "similarity": 1,
+      "raw_distance": 1.0000001192092896,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "99",
+      "source_text": "• model building: the discovered patterns are transformed into"
+    },
+    {
+      "query_sentence_index": 101,
+      "page_number": 10,
+      "bbox": [
+        163.5800018310547,
+        235.10260009765625,
+        541.9945068359375,
+        249.44932556152344
+      ],
+      "similarity": 0.9999998807907104,
+      "raw_distance": 0.9999998807907104,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "100",
+      "source_text": "predictive models, such as collaborative filtering or content-based"
+    },
+    {
+      "query_sentence_index": 102,
+      "page_number": 10,
+      "bbox": [
+        145.5800018310547,
+        285.4651794433594,
+        541.8117065429688,
+        301.2893371582031
+      ],
+      "similarity": 1,
+      "raw_distance": 1.0000001192092896,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "101",
+      "source_text": "• evaluation: the system is tested using metrics to ensure reliability"
+    },
+    {
+      "query_sentence_index": 103,
+      "page_number": 11,
+      "bbox": [
+        99.26399993896484,
+        43.172611236572266,
+        364.3899841308594,
+        57.51932907104492
+      ],
+      "similarity": 1,
+      "raw_distance": 1.0000001192092896,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "11",
+      "source_text": "data mining methods for recommender systems"
+    },
+    {
+      "query_sentence_index": 104,
+      "page_number": 11,
+      "bbox": [
+        99.26399993896484,
+        85.47379302978516,
+        489.7300109863281,
+        101.21263122558594
+      ],
+      "similarity": 1,
+      "raw_distance": 1.0000001192092896,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "103",
+      "source_text": "chapter 2: advanced data mining techniques"
+    },
+    {
+      "query_sentence_index": 105,
+      "page_number": 11,
+      "bbox": [
+        99.26399993896484,
+        121.73116302490234,
+        419.8299865722656,
+        136.2593231201172
+      ],
+      "similarity": 1,
+      "raw_distance": 1.000000238418579,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "104",
+      "source_text": "2.1 association rule mining (market basket analysis)"
+    },
+    {
+      "query_sentence_index": 106,
+      "page_number": 11,
+      "bbox": [
+        127.58000183105469,
+        150.35260009765625,
+        541.9016723632812,
+        164.69932556152344
+      ],
+      "similarity": 0.9999998807907104,
+      "raw_distance": 0.9999998807907104,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "105",
+      "source_text": "association rule mining is a rule-based machine learning method for"
+    },
+    {
+      "query_sentence_index": 107,
+      "page_number": 11,
+      "bbox": [
+        99.26399993896484,
+        172.7926025390625,
+        541.9484252929688,
+        187.1393280029297
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "106",
+      "source_text": "discovering interesting relations between variables in large databases ."
+    },
+    {
+      "query_sentence_index": 108,
+      "page_number": 11,
+      "bbox": [
+        99.26399993896484,
+        195.23260498046875,
+        294.04998779296875,
+        209.57933044433594
+      ],
+      "similarity": 0.9999999403953552,
+      "raw_distance": 0.9999999403953552,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "107",
+      "source_text": "known as \"market basket analysis.\""
+    },
+    {
+      "query_sentence_index": 109,
+      "page_number": 11,
+      "bbox": [
+        172.4600067138672,
+        446.9533386230469,
+        468.2200012207031,
+        459.17462158203125
+      ],
+      "similarity": 1,
+      "raw_distance": 1.000000238418579,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "108",
+      "source_text": "figure 2: example of market basket analysis visualization"
+    },
+    {
+      "query_sentence_index": 110,
+      "page_number": 11,
+      "bbox": [
+        127.58000183105469,
+        500.09893798828125,
+        411.54998779296875,
+        514.54931640625
+      ],
+      "similarity": 1,
+      "raw_distance": 1.0000001192092896,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "109",
+      "source_text": "the fundamental rule is expressed in the form x → y."
+    },
+    {
+      "query_sentence_index": 111,
+      "page_number": 11,
+      "bbox": [
+        145.5800018310547,
+        528.1299438476562,
+        541.7999267578125,
+        542.9893188476562
+      ],
+      "similarity": 0.9999997019767761,
+      "raw_distance": 0.9999997019767761,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "110",
+      "source_text": "• meaning: \"if a customer buys item set x, there is a high probability they"
+    },
+    {
+      "query_sentence_index": 112,
+      "page_number": 11,
+      "bbox": [
+        145.5800018310547,
+        579.0352172851562,
+        541.846923828125,
+        594.859375
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "111",
+      "source_text": "• antecedent (x): the \"if\" part – the set of items present in the"
+    },
+    {
+      "query_sentence_index": 113,
+      "page_number": 11,
+      "bbox": [
+        145.5800018310547,
+        630.7551879882812,
+        541.9568481445312,
+        646.579345703125
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "112",
+      "source_text": "• consequent (y): the \"then\" part – the set of items likely to appear with"
+    },
+    {
+      "query_sentence_index": 114,
+      "page_number": 11,
+      "bbox": [
+        127.58000183105469,
+        715.5325927734375,
+        448.6600036621094,
+        729.8793334960938
+      ],
+      "similarity": 1,
+      "raw_distance": 1.0000001192092896,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "113",
+      "source_text": "to evaluate the strength of a rule, three key metrics are used:"
+    },
+    {
+      "query_sentence_index": 115,
+      "page_number": 12,
+      "bbox": [
+        99.26399993896484,
+        43.172611236572266,
+        364.3899841308594,
+        57.51932907104492
+      ],
+      "similarity": 1,
+      "raw_distance": 1.0000001192092896,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "11",
+      "source_text": "data mining methods for recommender systems"
+    },
+    {
+      "query_sentence_index": 116,
+      "page_number": 12,
+      "bbox": [
+        145.5800018310547,
+        85.61116790771484,
+        541.3200073242188,
+        100.13932800292969
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "115",
+      "source_text": "support : measures how frequently the item set appears in the database."
+    },
+    {
+      "query_sentence_index": 117,
+      "page_number": 12,
+      "bbox": [
+        145.5800018310547,
+        207.6511993408203,
+        541.9791259765625,
+        222.1793670654297
+      ],
+      "similarity": 1,
+      "raw_distance": 1.0000001192092896,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "116",
+      "source_text": "confidence: measures the reliability of the inference."
+    },
+    {
+      "query_sentence_index": 118,
+      "page_number": 12,
+      "bbox": [
+        163.5800018310547,
+        230.3026123046875,
+        535.1799926757812,
+        244.6493377685547
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "117",
+      "source_text": "conditional probability that a transaction containing x also contains y."
+    },
+    {
+      "query_sentence_index": 119,
+      "page_number": 12,
+      "bbox": [
+        243.1699981689453,
+        325.97332763671875,
+        397.510009765625,
+        338.1946105957031
+      ],
+      "similarity": 1,
+      "raw_distance": 1.0000001192092896,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "118",
+      "source_text": "figure 4: formula for confidence"
+    },
+    {
+      "query_sentence_index": 120,
+      "page_number": 12,
+      "bbox": [
+        145.5800018310547,
+        350.6011962890625,
+        541.9201049804688,
+        365.12933349609375
+      ],
+      "similarity": 1,
+      "raw_distance": 1.0000001192092896,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "119",
+      "source_text": "lift: measures the strength of the rule over random chance."
+    },
+    {
+      "query_sentence_index": 121,
+      "page_number": 12,
+      "bbox": [
+        163.5800018310547,
+        373.2226257324219,
+        366.54998779296875,
+        387.5693359375
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "120",
+      "source_text": "indicates a strong positive association."
+    },
+    {
+      "query_sentence_index": 122,
+      "page_number": 12,
+      "bbox": [
+        145.5800018310547,
+        521.6452026367188,
+        541.78564453125,
+        537.4693603515625
+      ],
+      "similarity": 0.9999998211860657,
+      "raw_distance": 0.9999998211860657,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "121",
+      "source_text": "• apriori : this algorithm generates frequent itemsets by creating"
+    },
+    {
+      "query_sentence_index": 123,
+      "page_number": 12,
+      "bbox": [
+        163.5800018310547,
+        545.5626220703125,
+        541.7871704101562,
+        559.9093627929688
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "122",
+      "source_text": "candidate sets and pruning those that do not meet the minimum support"
+    },
+    {
+      "query_sentence_index": 124,
+      "page_number": 12,
+      "bbox": [
+        163.5800018310547,
+        568.0325927734375,
+        537.7000122070312,
+        582.3793334960938
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "123",
+      "source_text": "it is simple but computationally expensive for large datasets."
+    },
+    {
+      "query_sentence_index": 125,
+      "page_number": 12,
+      "bbox": [
+        145.5800018310547,
+        595.9552001953125,
+        541.9314575195312,
+        611.7793579101562
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "124",
+      "source_text": "• fp-growth (frequent pattern growth) : this method avoids"
+    },
+    {
+      "query_sentence_index": 126,
+      "page_number": 12,
+      "bbox": [
+        163.5800018310547,
+        619.7526245117188,
+        541.9015502929688,
+        634.099365234375
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "125",
+      "source_text": "candidate generation by building an fp-tree structure."
+    },
+    {
+      "query_sentence_index": 127,
+      "page_number": 12,
+      "bbox": [
+        163.5800018310547,
+        642.192626953125,
+        542.0399780273438,
+        656.5393676757812
+      ],
+      "similarity": 1,
+      "raw_distance": 1.0000001192092896,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "126",
+      "source_text": "improves performance compared to apriori, especially on large datasets."
+    },
+    {
+      "query_sentence_index": 128,
+      "page_number": 12,
+      "bbox": [
+        145.5800018310547,
+        670.115234375,
+        541.9934692382812,
+        685.9393920898438
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "127",
+      "source_text": "• eclat (equivalence class clustering and bottom-up lattice"
+    },
+    {
+      "query_sentence_index": 129,
+      "page_number": 12,
+      "bbox": [
+        163.5800018310547,
+        694.0325927734375,
+        541.7697143554688,
+        708.3793334960938
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "128",
+      "source_text": "traversal) : this algorithm uses a vertical data format with transaction"
+    },
+    {
+      "query_sentence_index": 130,
+      "page_number": 12,
+      "bbox": [
+        163.5800018310547,
+        716.4926147460938,
+        541.9757690429688,
+        730.83935546875
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "129",
+      "source_text": "id (tid) sets and discovers frequent itemsets through set intersection"
+    },
+    {
+      "query_sentence_index": 131,
+      "page_number": 13,
+      "bbox": [
+        99.26399993896484,
+        43.172611236572266,
+        364.3899841308594,
+        57.51932907104492
+      ],
+      "similarity": 1,
+      "raw_distance": 1.0000001192092896,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "11",
+      "source_text": "data mining methods for recommender systems"
+    },
+    {
+      "query_sentence_index": 132,
+      "page_number": 13,
+      "bbox": [
+        127.58000183105469,
+        138.8326416015625,
+        541.729736328125,
+        153.1793670654297
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "131",
+      "source_text": "clustering is an unsupervised learning technique that groups a set of objects in"
+    },
+    {
+      "query_sentence_index": 133,
+      "page_number": 13,
+      "bbox": [
+        99.26399993896484,
+        161.27264404296875,
+        541.8868408203125,
+        175.61936950683594
+      ],
+      "similarity": 0.9999998807907104,
+      "raw_distance": 0.9999998807907104,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "132",
+      "source_text": "such a way that objects in the same group (cluster) are more similar to each other than"
+    },
+    {
+      "query_sentence_index": 134,
+      "page_number": 13,
+      "bbox": [
+        99.26399993896484,
+        183.71258544921875,
+        384.54998779296875,
+        198.05931091308594
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "133",
+      "source_text": "to those in other groups.key tools in adobe indesign:"
+    },
+    {
+      "query_sentence_index": 135,
+      "page_number": 13,
+      "bbox": [
+        225.52999877929688,
+        421.87335205078125,
+        415.27001953125,
+        434.0946350097656
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "134",
+      "source_text": "figure 6: clustering algorithm flowchart"
+    },
+    {
+      "query_sentence_index": 136,
+      "page_number": 13,
+      "bbox": [
+        145.5800018310547,
+        474.72515869140625,
+        541.8114624023438,
+        490.54931640625
+      ],
+      "similarity": 1,
+      "raw_distance": 1.0000001192092896,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "135",
+      "source_text": "• k-means: this algorithm partitions data into k distinct clusters."
+    },
+    {
+      "query_sentence_index": 137,
+      "page_number": 13,
+      "bbox": [
+        163.5800018310547,
+        498.5226135253906,
+        541.73974609375,
+        512.8693237304688
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "136",
+      "source_text": "by iterating to minimize the variance within each cluster until the"
+    },
+    {
+      "query_sentence_index": 138,
+      "page_number": 13,
+      "bbox": [
+        163.5800018310547,
+        520.962646484375,
+        541.8228759765625,
+        535.3093872070312
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "137",
+      "source_text": "it is highly efficient for large datasets but"
+    },
+    {
+      "query_sentence_index": 139,
+      "page_number": 13,
+      "bbox": [
+        163.5800018310547,
+        543.402587890625,
+        344.4700012207031,
+        557.7493286132812
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "138",
+      "source_text": "requires specifying k in advance ."
+    },
+    {
+      "query_sentence_index": 140,
+      "page_number": 13,
+      "bbox": [
+        145.5800018310547,
+        571.355224609375,
+        541.8320922851562,
+        587.1793823242188
+      ],
+      "similarity": 0.9999998807907104,
+      "raw_distance": 0.9999998807907104,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "139",
+      "source_text": "• hierarchical clustering: this method builds a hierarchy of clusters,"
+    },
+    {
+      "query_sentence_index": 141,
+      "page_number": 13,
+      "bbox": [
+        163.5800018310547,
+        595.152587890625,
+        541.944091796875,
+        609.4993286132812
+      ],
+      "similarity": 1,
+      "raw_distance": 1.0000001192092896,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "140",
+      "source_text": "either agglomerative (bottom-up) or divisive (top-down)."
+    },
+    {
+      "query_sentence_index": 142,
+      "page_number": 13,
+      "bbox": [
+        163.5800018310547,
+        617.5926513671875,
+        458.2599792480469,
+        631.9393920898438
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "141",
+      "source_text": "dendrogram which is useful for taxonomy visualization."
+    },
+    {
+      "query_sentence_index": 143,
+      "page_number": 13,
+      "bbox": [
+        145.5800018310547,
+        645.5151977539062,
+        541.7692260742188,
+        661.33935546875
+      ],
+      "similarity": 1,
+      "raw_distance": 1.0000001192092896,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "142",
+      "source_text": "• dbscan (density-based spatial clustering of applications with"
+    },
+    {
+      "query_sentence_index": 144,
+      "page_number": 13,
+      "bbox": [
+        163.5800018310547,
+        669.4326171875,
+        542.0037231445312,
+        683.7793579101562
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "143",
+      "source_text": "noise): unlike k-means, dbscan groups points based on density."
+    },
+    {
+      "query_sentence_index": 145,
+      "page_number": 13,
+      "bbox": [
+        163.5800018310547,
+        691.8726196289062,
+        541.7268676757812,
+        706.2193603515625
+      ],
+      "similarity": 0.9999999403953552,
+      "raw_distance": 0.9999999403953552,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "144",
+      "source_text": "particularly powerful because it can detect outliers (noise) and find"
+    },
+    {
+      "query_sentence_index": 146,
+      "page_number": 14,
+      "bbox": [
+        99.26399993896484,
+        43.172611236572266,
+        364.3899841308594,
+        57.51932907104492
+      ],
+      "similarity": 1,
+      "raw_distance": 1.0000001192092896,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "11",
+      "source_text": "data mining methods for recommender systems"
+    },
+    {
+      "query_sentence_index": 147,
+      "page_number": 14,
+      "bbox": [
+        127.58000183105469,
+        114.23260498046875,
+        542.001708984375,
+        128.57933044433594
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "146",
+      "source_text": "classification is a supervised learning technique used to predict categorical"
+    },
+    {
+      "query_sentence_index": 148,
+      "page_number": 14,
+      "bbox": [
+        99.26399993896484,
+        136.5526123046875,
+        541.8762817382812,
+        150.8993377685547
+      ],
+      "similarity": 1,
+      "raw_distance": 1.0000001192092896,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "147",
+      "source_text": "class labels for new data based on past observations."
+    },
+    {
+      "query_sentence_index": 149,
+      "page_number": 14,
+      "bbox": [
+        99.26399993896484,
+        158.99261474609375,
+        471.8199768066406,
+        173.33934020996094
+      ],
+      "similarity": 0.9999999403953552,
+      "raw_distance": 0.9999999403953552,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "148",
+      "source_text": "is often used to predict whether a user will \"like\" or \"dislike\" an item."
+    },
+    {
+      "query_sentence_index": 150,
+      "page_number": 14,
+      "bbox": [
+        218.3300018310547,
+        379.49334716796875,
+        422.5,
+        391.7146301269531
+      ],
+      "similarity": 0.9999998807907104,
+      "raw_distance": 0.9999998807907104,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "149",
+      "source_text": "figure 7: classfication algorithm flowchart"
+    },
+    {
+      "query_sentence_index": 151,
+      "page_number": 14,
+      "bbox": [
+        145.5800018310547,
+        432.36517333984375,
+        541.8746948242188,
+        448.1893310546875
+      ],
+      "similarity": 1,
+      "raw_distance": 1.0000001192092896,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "150",
+      "source_text": "• decision trees: a flowchart-like structure where internal nodes"
+    },
+    {
+      "query_sentence_index": 152,
+      "page_number": 14,
+      "bbox": [
+        163.5800018310547,
+        456.1626281738281,
+        541.9747924804688,
+        470.50933837890625
+      ],
+      "similarity": 1,
+      "raw_distance": 1.0000001192092896,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "151",
+      "source_text": "represent feature tests, and leaf nodes represent class labels."
+    },
+    {
+      "query_sentence_index": 153,
+      "page_number": 14,
+      "bbox": [
+        163.5800018310547,
+        478.60260009765625,
+        337.2699890136719,
+        492.9493103027344
+      ],
+      "similarity": 1,
+      "raw_distance": 1.0000001192092896,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "152",
+      "source_text": "is easy to interpret and visualize."
+    },
+    {
+      "query_sentence_index": 154,
+      "page_number": 14,
+      "bbox": [
+        145.5800018310547,
+        506.5251770019531,
+        541.9552612304688,
+        522.349365234375
+      ],
+      "similarity": 0.9999999403953552,
+      "raw_distance": 0.9999999403953552,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "153",
+      "source_text": "• knn (k-nearest neighbors): a \"lazy learning\" algorithm that"
+    },
+    {
+      "query_sentence_index": 155,
+      "page_number": 14,
+      "bbox": [
+        163.5800018310547,
+        530.442626953125,
+        541.7037353515625,
+        544.7893676757812
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "154",
+      "source_text": "classifies a data point based on the majority class of its k nearest"
+    },
+    {
+      "query_sentence_index": 156,
+      "page_number": 14,
+      "bbox": [
+        163.5800018310547,
+        552.91259765625,
+        325.3899841308594,
+        567.2593383789062
+      ],
+      "similarity": 1,
+      "raw_distance": 1.0000001192092896,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "155",
+      "source_text": "neighbors in the feature space."
+    },
+    {
+      "query_sentence_index": 157,
+      "page_number": 14,
+      "bbox": [
+        145.5800018310547,
+        580.7152099609375,
+        541.8355102539062,
+        596.5393676757812
+      ],
+      "similarity": 0.9999999403953552,
+      "raw_distance": 0.9999999403953552,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "156",
+      "source_text": "• logistic regression: a statistical model used for binary classification"
+    },
+    {
+      "query_sentence_index": 158,
+      "page_number": 14,
+      "bbox": [
+        163.5800018310547,
+        604.6326293945312,
+        542.0399780273438,
+        618.9793701171875
+      ],
+      "similarity": 1,
+      "raw_distance": 1.0000001192092896,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "157",
+      "source_text": "(e.g., spam/not spam), estimating the probability of an event occurring."
+    },
+    {
+      "query_sentence_index": 159,
+      "page_number": 14,
+      "bbox": [
+        99.26399993896484,
+        632.8911743164062,
+        325.2699890136719,
+        647.4193725585938
+      ],
+      "similarity": 0.9999999403953552,
+      "raw_distance": 0.9999999403953552,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "158",
+      "source_text": "2.4 sequential pattern mining (spm)"
+    },
+    {
+      "query_sentence_index": 160,
+      "page_number": 14,
+      "bbox": [
+        127.58000183105469,
+        661.5126342773438,
+        541.7037353515625,
+        675.859375
+      ],
+      "similarity": 0.9999999403953552,
+      "raw_distance": 0.9999999403953552,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "159",
+      "source_text": "sequential pattern mining differs from standard association rules by"
+    },
+    {
+      "query_sentence_index": 161,
+      "page_number": 14,
+      "bbox": [
+        99.26399993896484,
+        683.95263671875,
+        541.8701782226562,
+        698.2993774414062
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "160",
+      "source_text": "incorporating the dimension of time."
+    },
+    {
+      "query_sentence_index": 162,
+      "page_number": 14,
+      "bbox": [
+        99.26399993896484,
+        683.95263671875,
+        541.8701782226562,
+        698.2993774414062
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "161",
+      "source_text": "it discovers subsequences that appear frequently"
+    },
+    {
+      "query_sentence_index": 163,
+      "page_number": 15,
+      "bbox": [
+        99.26399993896484,
+        43.172611236572266,
+        364.3899841308594,
+        57.51932907104492
+      ],
+      "similarity": 1,
+      "raw_distance": 1.0000001192092896,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "11",
+      "source_text": "data mining methods for recommender systems"
+    },
+    {
+      "query_sentence_index": 164,
+      "page_number": 15,
+      "bbox": [
+        127.58000183105469,
+        114.23260498046875,
+        354.0699768066406,
+        128.57933044433594
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "163",
+      "source_text": "consider the following transaction history:"
+    },
+    {
+      "query_sentence_index": 165,
+      "page_number": 15,
+      "bbox": [
+        145.5800018310547,
+        142.0352020263672,
+        392.8299865722656,
+        157.85935974121094
+      ],
+      "similarity": 1,
+      "raw_distance": 1.0000001192092896,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "164",
+      "source_text": "• customer a: buy a → buy b, c → buy d"
+    },
+    {
+      "query_sentence_index": 166,
+      "page_number": 15,
+      "bbox": [
+        145.5800018310547,
+        171.43516540527344,
+        376.8699951171875,
+        187.2593231201172
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "165",
+      "source_text": "• customer b: buy a → buy c → buy d"
+    },
+    {
+      "query_sentence_index": 167,
+      "page_number": 15,
+      "bbox": [
+        145.5800018310547,
+        200.83518981933594,
+        376.8699951171875,
+        216.6593475341797
+      ],
+      "similarity": 0.9999998807907104,
+      "raw_distance": 0.9999998807907104,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "166",
+      "source_text": "• customer c: buy a → buy b → buy d"
+    },
+    {
+      "query_sentence_index": 168,
+      "page_number": 15,
+      "bbox": [
+        127.58000183105469,
+        230.5589141845703,
+        541.9129028320312,
+        245.0093231201172
+      ],
+      "similarity": 0.9999998807907104,
+      "raw_distance": 0.9999998807907104,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "167",
+      "source_text": "the algorithm identifies the common pattern: a → b → d. this implies that"
+    },
+    {
+      "query_sentence_index": 169,
+      "page_number": 15,
+      "bbox": [
+        99.26399993896484,
+        253.10260009765625,
+        472.6600036621094,
+        267.4493103027344
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "168",
+      "source_text": "customers who buy a often eventually buy d, even if not immediately."
+    },
+    {
+      "query_sentence_index": 170,
+      "page_number": 15,
+      "bbox": [
+        145.5800018310547,
+        313.4251403808594,
+        541.9973754882812,
+        329.2492980957031
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "169",
+      "source_text": "• user behavior analysis : analyzing clickstreams (page a → page b"
+    },
+    {
+      "query_sentence_index": 171,
+      "page_number": 15,
+      "bbox": [
+        145.5800018310547,
+        365.2651672363281,
+        542.0003662109375,
+        381.0893249511719
+      ],
+      "similarity": 0.9999998807907104,
+      "raw_distance": 0.9999998807907104,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "170",
+      "source_text": "• healthcare : predicting symptom progression: symptom → diagnosis"
+    },
+    {
+      "query_sentence_index": 172,
+      "page_number": 15,
+      "bbox": [
+        145.5800018310547,
+        417.0051574707031,
+        541.8239135742188,
+        432.8293151855469
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "171",
+      "source_text": "• fraud detection : identifying sequences of actions that typically precede"
+    },
+    {
+      "query_sentence_index": 173,
+      "page_number": 16,
+      "bbox": [
+        99.26399993896484,
+        43.172611236572266,
+        364.3899841308594,
+        57.51932907104492
+      ],
+      "similarity": 1,
+      "raw_distance": 1.0000001192092896,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "11",
+      "source_text": "data mining methods for recommender systems"
+    },
+    {
+      "query_sentence_index": 174,
+      "page_number": 16,
+      "bbox": [
+        99.26399993896484,
+        121.91259765625,
+        387.78997802734375,
+        136.2593231201172
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "173",
+      "source_text": "3.1 mapping techniques to recommender models"
+    },
+    {
+      "query_sentence_index": 175,
+      "page_number": 16,
+      "bbox": [
+        127.58000183105469,
+        150.35260009765625,
+        541.760009765625,
+        164.69932556152344
+      ],
+      "similarity": 1,
+      "raw_distance": 1.0000001192092896,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "174",
+      "source_text": "different data mining techniques serve different types of recommender"
+    },
+    {
+      "query_sentence_index": 176,
+      "page_number": 16,
+      "bbox": [
+        99.26399993896484,
+        172.7926025390625,
+        541.6932983398438,
+        187.1393280029297
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "175",
+      "source_text": "the following mapping illustrates how these methods are applied in"
+    },
+    {
+      "query_sentence_index": 177,
+      "page_number": 16,
+      "bbox": [
+        145.5800018310547,
+        223.3711700439453,
+        434.2599792480469,
+        237.8993377685547
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "176",
+      "source_text": "sequential pattern mining → sequence-aware rs:"
+    },
+    {
+      "query_sentence_index": 178,
+      "page_number": 16,
+      "bbox": [
+        163.5800018310547,
+        251.510009765625,
+        531.7000122070312,
+        266.3693542480469
+      ],
+      "similarity": 1,
+      "raw_distance": 1.0000001192092896,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "177",
+      "source_text": "• description : predicts the next item based on time-ordered history."
+    },
+    {
+      "query_sentence_index": 179,
+      "page_number": 16,
+      "bbox": [
+        163.5800018310547,
+        279.9451599121094,
+        461.8599853515625,
+        295.7693176269531
+      ],
+      "similarity": 0.9999998807907104,
+      "raw_distance": 0.9999998807907104,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "178",
+      "source_text": "• use case : next-song recommendation in music apps."
+    },
+    {
+      "query_sentence_index": 180,
+      "page_number": 16,
+      "bbox": [
+        163.5800018310547,
+        337.78997802734375,
+        541.7734985351562,
+        352.6493225097656
+      ],
+      "similarity": 1,
+      "raw_distance": 1.0000001192092896,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "179",
+      "source_text": "• description : recommends items with similar attributes to those a"
+    },
+    {
+      "query_sentence_index": 181,
+      "page_number": 16,
+      "bbox": [
+        163.5800018310547,
+        388.5651550292969,
+        473.739990234375,
+        404.3893127441406
+      ],
+      "similarity": 1,
+      "raw_distance": 1.0000001192092896,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "180",
+      "source_text": "• use case : suggesting news articles based on keywords."
+    },
+    {
+      "query_sentence_index": 182,
+      "page_number": 16,
+      "bbox": [
+        145.5800018310547,
+        418.3011779785156,
+        426.5799865722656,
+        432.8293151855469
+      ],
+      "similarity": 1,
+      "raw_distance": 1.0000001192092896,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "181",
+      "source_text": "clustering → user-based collaborative filtering:"
+    },
+    {
+      "query_sentence_index": 183,
+      "page_number": 16,
+      "bbox": [
+        163.5800018310547,
+        446.40997314453125,
+        541.7140502929688,
+        461.2693176269531
+      ],
+      "similarity": 0.9999998807907104,
+      "raw_distance": 0.9999998807907104,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "182",
+      "source_text": "• description : groups similar users to recommend items liked by the"
+    },
+    {
+      "query_sentence_index": 184,
+      "page_number": 16,
+      "bbox": [
+        163.5800018310547,
+        497.28515625,
+        462.6999816894531,
+        513.1093139648438
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "183",
+      "source_text": "• use case : \"users who are similar to you also liked...\""
+    },
+    {
+      "query_sentence_index": 185,
+      "page_number": 16,
+      "bbox": [
+        145.5800018310547,
+        526.9011840820312,
+        435.6999816894531,
+        541.4293823242188
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "184",
+      "source_text": "association rule mining → knowledge-based rs:"
+    },
+    {
+      "query_sentence_index": 186,
+      "page_number": 16,
+      "bbox": [
+        163.5800018310547,
+        555.03515625,
+        541.9006958007812,
+        570.8593139648438
+      ],
+      "similarity": 1,
+      "raw_distance": 1.000000238418579,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "185",
+      "source_text": "• description : suggests items based on explicit rules (e.g., \"people"
+    },
+    {
+      "query_sentence_index": 187,
+      "page_number": 16,
+      "bbox": [
+        127.58000183105469,
+        635.712646484375,
+        541.7556762695312,
+        650.0593872070312
+      ],
+      "similarity": 0.9999998807907104,
+      "raw_distance": 0.9999998807907104,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "186",
+      "source_text": "to ensure the effectiveness of the recommender system, appropriate"
+    },
+    {
+      "query_sentence_index": 188,
+      "page_number": 16,
+      "bbox": [
+        99.26399993896484,
+        658.152587890625,
+        439.7799987792969,
+        672.4993286132812
+      ],
+      "similarity": 1,
+      "raw_distance": 1.000000238418579,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "187",
+      "source_text": "evaluation metrics must be selected based on the algorithm used."
+    },
+    {
+      "query_sentence_index": 189,
+      "page_number": 16,
+      "bbox": [
+        163.5800018310547,
+        686.0800170898438,
+        541.9810180664062,
+        700.9393920898438
+      ],
+      "similarity": 0.9999999403953552,
+      "raw_distance": 0.9999999403953552,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "188",
+      "source_text": "• for association rules: metrics include support , confidence , and"
+    },
+    {
+      "query_sentence_index": 190,
+      "page_number": 17,
+      "bbox": [
+        99.26399993896484,
+        43.172611236572266,
+        364.3899841308594,
+        57.51932907104492
+      ],
+      "similarity": 1,
+      "raw_distance": 1.0000001192092896,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "11",
+      "source_text": "data mining methods for recommender systems"
+    },
+    {
+      "query_sentence_index": 191,
+      "page_number": 17,
+      "bbox": [
+        163.5800018310547,
+        85.27518463134766,
+        541.9762573242188,
+        101.09934997558594
+      ],
+      "similarity": 0.9999999403953552,
+      "raw_distance": 0.9999999403953552,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "190",
+      "source_text": "• for clustering: the silhouette coefficient is used to measure"
+    },
+    {
+      "query_sentence_index": 192,
+      "page_number": 17,
+      "bbox": [
+        181.61000061035156,
+        109.0726318359375,
+        541.8303833007812,
+        123.41935729980469
+      ],
+      "similarity": 0.9999998807907104,
+      "raw_distance": 0.9999998807907104,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "191",
+      "source_text": "cluster quality, along with precision@k for recommendation"
+    },
+    {
+      "query_sentence_index": 193,
+      "page_number": 17,
+      "bbox": [
+        163.5800018310547,
+        159.43516540527344,
+        541.9839477539062,
+        175.2593231201172
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "192",
+      "source_text": "• for classification: standard metrics include precision (exactness),"
+    },
+    {
+      "query_sentence_index": 194,
+      "page_number": 17,
+      "bbox": [
+        181.61000061035156,
+        183.35260009765625,
+        491.8599853515625,
+        197.69932556152344
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "193",
+      "source_text": "recall (completeness), and auc (area under the curve) ."
+    },
+    {
+      "query_sentence_index": 195,
+      "page_number": 17,
+      "bbox": [
+        163.5800018310547,
+        211.2751922607422,
+        541.9594116210938,
+        227.09934997558594
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "194",
+      "source_text": "• for sequential mining: metrics focus on rank accuracy, such as"
+    },
+    {
+      "query_sentence_index": 196,
+      "page_number": 17,
+      "bbox": [
+        181.61000061035156,
+        235.10260009765625,
+        430.17999267578125,
+        249.44932556152344
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "195",
+      "source_text": "recall@k and mrr (mean reciprocal rank)."
+    },
+    {
+      "query_sentence_index": 197,
+      "page_number": 17,
+      "bbox": [
+        127.58000183105469,
+        263.5426025390625,
+        394.5099792480469,
+        277.8893127441406
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "196",
+      "source_text": "evaluations are typically conducted in two phases:"
+    },
+    {
+      "query_sentence_index": 198,
+      "page_number": 17,
+      "bbox": [
+        145.5800018310547,
+        291.469970703125,
+        541.8566284179688,
+        306.3293151855469
+      ],
+      "similarity": 0.9999998807907104,
+      "raw_distance": 0.9999998807907104,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "197",
+      "source_text": "• offline evaluation: using historical datasets to calculate rmse or"
+    },
+    {
+      "query_sentence_index": 199,
+      "page_number": 17,
+      "bbox": [
+        145.5800018310547,
+        342.34515380859375,
+        541.9873046875,
+        358.1693115234375
+      ],
+      "similarity": 0.9999999403953552,
+      "raw_distance": 0.9999999403953552,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "198",
+      "source_text": "• online evaluation: real-time testing using a/b testing, click-through"
+    },
+    {
+      "query_sentence_index": 200,
+      "page_number": 17,
+      "bbox": [
+        163.5800018310547,
+        366.1426086425781,
+        346.6300048828125,
+        380.48931884765625
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "199",
+      "source_text": "rate (ctr), and conversion rate."
+    },
+    {
+      "query_sentence_index": 201,
+      "page_number": 18,
+      "bbox": [
+        99.26399993896484,
+        43.172611236572266,
+        364.3899841308594,
+        57.51932907104492
+      ],
+      "similarity": 1,
+      "raw_distance": 1.0000001192092896,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "11",
+      "source_text": "data mining methods for recommender systems"
+    },
+    {
+      "query_sentence_index": 202,
+      "page_number": 18,
+      "bbox": [
+        127.58000183105469,
+        121.91259765625,
+        541.7296752929688,
+        136.2593231201172
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "201",
+      "source_text": "in conclusion, data mining is indispensable for the functionality of modern"
+    },
+    {
+      "query_sentence_index": 203,
+      "page_number": 18,
+      "bbox": [
+        99.26399993896484,
+        144.35260009765625,
+        541.8452758789062,
+        158.69932556152344
+      ],
+      "similarity": 1,
+      "raw_distance": 1.0000001192092896,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "202",
+      "source_text": "by systematically applying techniques such as association"
+    },
+    {
+      "query_sentence_index": 204,
+      "page_number": 18,
+      "bbox": [
+        99.26399993896484,
+        166.7926025390625,
+        541.8115844726562,
+        181.1393280029297
+      ],
+      "similarity": 1,
+      "raw_distance": 1.0000001192092896,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "203",
+      "source_text": "rules to understand item relationships, clustering to segment users, classification to"
+    },
+    {
+      "query_sentence_index": 206,
+      "page_number": 18,
+      "bbox": [
+        99.26399993896484,
+        211.5526123046875,
+        309.9100036621094,
+        225.8993377685547
+      ],
+      "similarity": 1,
+      "raw_distance": 1.0000001192092896,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "204",
+      "source_text": "can handle massive datasets effectively."
+    },
+    {
+      "query_sentence_index": 207,
+      "page_number": 18,
+      "bbox": [
+        127.58000183105469,
+        240.02264404296875,
+        541.9839477539062,
+        254.36936950683594
+      ],
+      "similarity": 1,
+      "raw_distance": 1,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "205",
+      "source_text": "the success of these systems is rigorously measured through both offline and"
+    },
+    {
+      "query_sentence_index": 208,
+      "page_number": 18,
+      "bbox": [
+        99.26399993896484,
+        262.46258544921875,
+        541.7313232421875,
+        276.8092956542969
+      ],
+      "similarity": 1,
+      "raw_distance": 1.0000001192092896,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "206",
+      "source_text": "online evaluation metrics, ensuring that they deliver accurate, personalized value to"
+    },
+    {
+      "query_sentence_index": 209,
+      "page_number": 18,
+      "bbox": [
+        99.26399993896484,
+        284.902587890625,
+        541.6917724609375,
+        299.2492980957031
+      ],
+      "similarity": 1,
+      "raw_distance": 1.0000001192092896,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "207",
+      "source_text": "as technology evolves, the integration of these data mining methods"
+    },
+    {
+      "query_sentence_index": 210,
+      "page_number": 18,
+      "bbox": [
+        99.26399993896484,
+        307.34259033203125,
+        541.9902954101562,
+        321.6893005371094
+      ],
+      "similarity": 0.9999999403953552,
+      "raw_distance": 0.9999999403953552,
+      "metric_type": "COSINE",
+      "source_document_id": "07301705-15f8-4553-a2a0-8d33b2a418ae",
+      "source_sentence_id": "208",
+      "source_text": "with emerging ai technologies will continue to redefine how we interact with digital"
+    }
+  ],
+  "result_pdf": {
+    "bucket": "result",
+    "path": "result/c80934f0-e982-476a-981d-d3b69fb2eafb.pdf"
+  }
+}
