@@ -1,4 +1,4 @@
-from db.postgres import get_conn, release_conn
+from db.postgres import get_conn, release_conn # file liên quan tới môn học - ko cần quan tâm
 
 def get_all_subjects():
     """Get all subjects from database"""

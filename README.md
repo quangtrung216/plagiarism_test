@@ -8,79 +8,87 @@ This project detects plagiarism in uploaded documents.
 - [frontend](frontend/) - Next.js frontend application
 - [file_processor](file_processor/) - File processing service
 
-## GitHub Actions Workflows
+## Luồng API (File Processor)
 
-This project includes several GitHub Actions workflows for CI/CD:
+### Endpoint
 
-1. **Comprehensive CI/CD Pipeline** - Runs code quality checks, builds, and deploys Docker images
-2. **Code Quality** - Runs linting and formatting checks for all components
-3. **Dependency Security Check** - Checks for security vulnerabilities in dependencies
-4. **Deploy Application** - Manually triggered deployment workflow
-5. **Run Tests** - Runs unit tests for all components (placeholders currently)
+`POST /check`
 
-Workflows are triggered on push/PR to main/master branches, and can also be triggered manually.
+Được cài đặt tại: `file_processor/app/check_plagiarism.py` (hàm `check_plagiarism`).
 
-## Pre-commit Hooks
+### Request
 
-This project uses pre-commit hooks to ensure code quality and consistency.
+Content-Type: `multipart/form-data`
 
-### Setup
+Các trường:
 
-Run the setup script:
+- `subject_id` (string, bắt buộc): ID môn học.
+- `file` (file, bắt buộc): Tài liệu cần kiểm tra.
+  - Chỉ chấp nhận `content_type`:
+    - `application/pdf`
+    - `application/vnd.openxmlformats-officedocument.wordprocessingml.document` (DOCX)
 
-**Windows:**
-```bash
-scripts\setup-precommit.bat
+### Sơ đồ luồng
+
+```mermaid
+flowchart TD
+  Client[Client] --> API[FastAPI: check_plagiarism\nPOST /check (multipart/form-data)\nsubject_id + file]
+  API --> Validate{Kiểm tra đầu vào\n- content_type (PDF/DOCX)\n- file không rỗng}
+
+  Validate -->|Không hợp lệ| Err400A[HTTP 400\nSai loại file hoặc file rỗng]
+  Validate -->|Hợp lệ| Extract[Trích xuất văn bản\nFileProcessService.extract_text_from_file]
+
+  Extract -->|Thất bại| Err400B[HTTP 400\nLỗi trích xuất văn bản]
+  Extract -->|Thành công| Split[Tiền xử lý + tách câu\npreprocess_pdf_text]
+
+  Split -->|Không có câu| Err400C[HTTP 400\nKhông trích xuất được câu nào]
+  Split -->|Có câu| Minhash[Tính MinHash\ncompute_minhash(full_text)]
+
+  Minhash --> Query[Lọc candidates (Postgres)\nfind_candidates_by_minhash\nsubject_id + threshold 0.05]
+  Query --> Cand{Có candidates?}
+
+  Cand -->|Không có candidates| Zero[Response\n0% đạo văn\nreferences=[]]
+  Cand -->|Có candidates| Embed[Embedding câu\nembed_texts]
+  Embed --> Match[So khớp chi tiết\nrun_plagiarism_check]
+  Match --> Res[Response\nmodel.check.Response]
 ```
 
-**Linux/Mac:**
-```bash
-chmod +x scripts/setup-precommit.sh
-./scripts/setup-precommit.sh
-```
+### Các bước xử lý (tóm tắt)
 
-Or manually install:
+1. Kiểm tra loại file (PDF/DOCX) và file không rỗng.
+2. Trích xuất toàn bộ văn bản từ file qua `FileProcessService.extract_text_from_file`.
+3. Tiền xử lý và tách câu bằng `preprocess_pdf_text` (tiếng Việt):
+   - `min_words=8`
+   - `max_words=200`
+4. Tính MinHash từ `full_text` bằng `compute_minhash`.
+5. Kết nối Postgres và lọc thô danh sách tài liệu tham chiếu theo:
+   - `subject_id`
+   - ngưỡng `MINHASH_THRESHOLD = 0.05`
+   sử dụng `find_candidates_by_minhash`.
+6. Nếu không có tài liệu nào vượt ngưỡng lọc thô: trả về kết quả 0% đạo văn.
+7. Nếu có candidates: tạo embedding cho các câu bằng `embed_texts`.
+8. So khớp chi tiết với từng tài liệu tham chiếu bằng `run_plagiarism_check`.
+9. Trả về kết quả dạng `model.check.Response`.
 
-```bash
-pip install pre-commit
-pre-commit install
-pre-commit install --hook-type commit-msg
-```
+### Response
 
-### Hooks Included
+Response thành công theo model: `model.check.Response`.
 
-1. **Black** - Python code formatting
-2. **Flake8** - Python linting
-3. **ESLint** - JavaScript/TypeScript linting
-4. **Prettier** - Code formatting for various file types
-5. **Conventional Commits** - Commit message validation
+Khi không có candidates vượt ngưỡng lọc thô (MinHash), API trả về:
 
-### Commit Message Format
+- `total_sentences`: số câu trích xuất được
+- `plagiarized_sentences`: `0`
+- `plagiarism_ratio`: `0.0`
+- `is_plagiarized`: `false`
+- `references`: `[]`
 
-This project follows the Conventional Commits specification:
+### Trường hợp lỗi
 
-```
-<type>(<scope>): <subject>
+- `400`:
+  - Không đúng loại file (không phải PDF/DOCX)
+  - File rỗng
+  - Trích xuất văn bản thất bại (`Lỗi trích xuất văn bản: ...`)
+  - Không trích xuất được câu nào từ file
+- `500`:
+  - Lỗi ngoài dự kiến trong quá trình xử lý file (`Lỗi xử lý file: ...`)
 
-<body>
-
-<footer>
-```
-
-Types:
-- feat: A new feature
-- fix: A bug fix
-- chore: Maintenance work
-- docs: Documentation changes
-- style: Code style changes
-- refactor: Code refactoring
-- perf: Performance improvements
-- test: Adding or modifying tests
-
-Examples:
-```
-feat(auth): add login functionality
-fix(api): resolve user data validation issue
-chore(deps): update dependencies
-docs(readme): add installation instructions
-```
